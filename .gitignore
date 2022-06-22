@@ -1,0 +1,9 @@
+*.user
+/cmake-build-debug
+/cmake-build-release
+/lib
+/bin
+/include
+/venv
+.idea
+.vs

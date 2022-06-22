@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file>layout/main.qml</file>
+        <file>component/CusPage.qml</file>
+        <file>component/CusSliderBar.qml</file>
+        <file>component/CusToolBar.qml</file>
+        <file>component/CusToolButton.qml</file>
+        <file>component/CusWindow.qml</file>
+        <file>component/WindowResize.qml</file>
+        <file>image/bg_shadow_border.png</file>
+        <file>storage/AppStorage.qml</file>
+        <file>storage/qmldir</file>
+        <file>storage/Theme.qml</file>
+        <file>view/Rectangle.qml</file>
+        <file>font/iconfont.ttf</file>
+        <file>image/ic_logo.ico</file>
+        <file>layout/MainHome.qml</file>
+        <file>layout/MainSetting.qml</file>
+        <file>storage/Router.qml</file>
+        <file>component/CusLineEditArea.qml</file>
+        <file>third/colorpicker/Checkerboard.qml</file>
+        <file>third/colorpicker/ColorPicker.qml</file>
+        <file>third/colorpicker/ColorSlider.qml</file>
+        <file>third/colorpicker/NumberBox.qml</file>
+        <file>third/colorpicker/Palette.qml</file>
+        <file>third/colorpicker/Palettes.qml</file>
+        <file>third/colorpicker/PanelBorder.qml</file>
+        <file>third/colorpicker/SBPicker.qml</file>
+        <file>global/global.js</file>
+        <file>layout/MainAbout.qml</file>
+        <file>image/paycode.png</file>
+        <file>component/ItemSelectArea.qml</file>
+        <file>component/CusMenuBar.qml</file>
+        <file>component/CusMenu.qml</file>
+        <file>component/CusMenuBarItem.qml</file>
+        <file>component/CusMenuItem.qml</file>
+        <file>component/CusMenuSeparator.qml</file>
+        <file>component/CusButton.qml</file>
+        <file>image/ic_logo.png</file>
+        <file>layout/Login.qml</file>
+        <file>layout/ColorPickerWindow.qml</file>
+    </qresource>
+</RCC>

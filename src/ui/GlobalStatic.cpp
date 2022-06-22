@@ -1,0 +1,1 @@
+#include "GlobalStatic.h"
