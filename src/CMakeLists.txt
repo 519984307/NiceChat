@@ -23,7 +23,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
             )
 endif()
 
-
 install(FILES ${OPENSSL_BIN} DESTINATION bin)
 install(FILES ${FRAMELESS_BIN} DESTINATION bin)
 install(FILES ${GLOG_BIN} DESTINATION bin)
