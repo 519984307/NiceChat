@@ -4,7 +4,7 @@ import "../storage"
 
 QtObject{
 
-    property string colorPrimary: "#197DFF"
+    property string colorPrimary: "#07C160"
 
     property string colorBackground:AppStorage.isDark?"#000000":"#FFFFFF"
     property string colorBackground1:AppStorage.isDark?"#333333":"#F7F7F7"

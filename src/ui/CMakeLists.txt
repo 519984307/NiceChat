@@ -4,6 +4,7 @@
         QUIHelper.cpp
         QLogHelper.cpp
         GlobalStatic.cpp
+        LoginController.cpp
         )
 
 set(UILibrary_HEADERS
@@ -11,6 +12,7 @@ set(UILibrary_HEADERS
         QUIHelper.h
         QLogHelper.h
         GlobalStatic.h
+        LoginController.h
         )
 
 set(UILibrary_RCC
@@ -31,11 +33,10 @@ endif()
 install(FILES ${UILibrary_HEADERS} DESTINATION include/${CMAKE_PROJECT_NAME}/ui)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
+        IM
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Quick
         Qt${QT_VERSION_MAJOR}::QuickControls2
-        Qt${QT_VERSION_MAJOR}::Multimedia
-        Qt${QT_VERSION_MAJOR}::WebEngine
         )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -57,6 +58,7 @@ endif()
 target_include_directories(
         ${CMAKE_PROJECT_NAME} SYSTEM PUBLIC
         ${CMAKE_SOURCE_DIR}/src/ui
+        ${CMAKE_SOURCE_DIR}/src/im
         ${THIRD_DIR_PATH}/frameless/include
         ${THIRD_DIR_PATH}/glog/include
         ${THIRD_DIR_PATH}/hotkey/include

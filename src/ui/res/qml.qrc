@@ -39,5 +39,7 @@
         <file>image/ic_logo.png</file>
         <file>layout/Login.qml</file>
         <file>layout/ColorPickerWindow.qml</file>
+        <file>component/PrimaryButton.qml</file>
+        <file>component/PrimaryTextField.qml</file>
     </qresource>
 </RCC>

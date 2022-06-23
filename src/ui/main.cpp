@@ -1,7 +1,6 @@
 ﻿#include <QGuiApplication>
 #include "MainWindow.h"
 #include <QFont>
-#include <QtWebEngine>
 #include <QHotkey>
 
 
@@ -15,7 +14,6 @@ int main(int argc, char *argv[])
 #endif
 #endif
 //    QQuickWindow::setSceneGraphBackend(QSGRendererInterface::Software);
-    QtWebEngine::initialize();
     QGuiApplication::setApplicationName("NiceChat");
     QGuiApplication::setApplicationVersion("1.0.0.0");
     QGuiApplication::setOrganizationName("zzc");

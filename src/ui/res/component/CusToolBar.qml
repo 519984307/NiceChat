@@ -47,7 +47,7 @@ Rectangle {
 
     Rectangle {
         id:layout_top
-        color: Theme.colorBackground1
+        color: Theme.colorBackground
         anchors.fill: parent
 
         MouseArea{
@@ -124,6 +124,8 @@ Rectangle {
                     else
                         window.close();
                 }
+                hoverColor: "#E81123"
+                hoverTextColor: "#FFFFFF"
                 visible: closeEnable
                 iconSize : 14
                 Component.onCompleted: Window.window.setHitTestVisible(btnClose, true)

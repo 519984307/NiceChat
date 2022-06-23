@@ -6,6 +6,8 @@
 #include <QQuickStyle>
 #include <QIcon>
 #include <framelessquickhelper.h>
+#include "LoginController.h"
+#include <IMGlobalStatic.h>
 
 FRAMELESSHELPER_USE_NAMESPACE
 
@@ -26,7 +28,12 @@ MainWindow::MainWindow(char *argv[]) {
     p_logHelper->initGoogleLog(argv);
     m_engine.rootContext()->setContextProperty("LogHelper",p_logHelper);
 
-    qmlRegisterType<FramelessQuickHelper>("com.dotool.ui", 1, 0, "FramelessHelper");
+    QIM *p_im = qim();
+    m_engine.rootContext()->setContextProperty("IM",p_im);
+
+    qmlRegisterType<FramelessQuickHelper>("UI", 1, 0, "FramelessHelper");
+
+    qmlRegisterType<LoginController>("Controller", 1, 0, "LoginController");
 
 }
 

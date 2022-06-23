@@ -1,4 +1,5 @@
 ﻿add_subdirectory(ui)
+add_subdirectory(im)
 
 set(OPENSSL_BIN
         ${THIRD_DIR_PATH}/openssl/bin/win64/libcrypto-1_1-x64.dll

@@ -4,16 +4,28 @@ Item {
     id:root
 
     property alias icon : textIcon.text
-    property alias color : textIcon.color
+    property color color : "#BBB"
     signal clickEvent
     property alias iconSize: textIcon.font.pixelSize
+
+    property color normalColor : "#00000000"
+    property color hoverColor: "#11000000"
+
+    property color hoverTextColor : color
 
     height: 30
     width: 30
 
     Rectangle{
         anchors.fill: parent
-        color: mouseArea.containsMouse ? "#11000000" : "#00000000"
+        color: mouseArea.containsMouse ? hoverColor : normalColor
+    }
+
+    MouseArea {
+        id:mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: clickEvent()
     }
 
     FontLoader {
@@ -25,16 +37,8 @@ Item {
         id:textIcon
         font.pixelSize: 20
         font.family: awesome.name
-        color: "#BBB"
+        color: mouseArea.containsMouse ? hoverTextColor : root.color
         anchors.centerIn: parent
-    }
-
-    MouseArea {
-        id:mouseArea
-        cursorShape: Qt.PointingHandCursor
-        anchors.fill: parent
-        hoverEnabled: true
-        onClicked: clickEvent()
     }
 
 }

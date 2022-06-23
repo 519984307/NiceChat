@@ -5,7 +5,6 @@ import "../component"
 import "../third/colorpicker"
 import "../storage"
 import QtQuick.Window 2.15
-import com.dotool.ui 1.0
 
 CusWindow {
 
