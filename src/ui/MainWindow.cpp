@@ -13,7 +13,7 @@ FRAMELESSHELPER_USE_NAMESPACE
 
 MainWindow::MainWindow(char *argv[]) {
 
-    QGuiApplication::setQuitOnLastWindowClosed(false);
+//    QGuiApplication::setQuitOnLastWindowClosed(true);
     QFont font;
     font.setFamily("Microsoft YaHei");
     QGuiApplication::setFont(font);

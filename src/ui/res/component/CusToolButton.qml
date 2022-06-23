@@ -4,7 +4,7 @@ Item {
     id:root
 
     property alias icon : textIcon.text
-    property color color : "#BBB"
+    property color color : "#666"
     signal clickEvent
     property alias iconSize: textIcon.font.pixelSize
 

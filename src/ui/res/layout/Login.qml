@@ -11,7 +11,7 @@ CusWindow {
     id:window
     width: 280
     height: 380
-    title: qsTr(UIHelper.appName())
+    title: "登录"
 
     LoginController{
         id:controller
@@ -19,29 +19,27 @@ CusWindow {
 
     Connections{
         target: IM
-        onLoginFail:
-            ()=>{
+        function onLoginFail(){
+            hideLoading()
+            showToast("登录失败")
+        }
+        function onLoginSuccess(){
+            hideLoading()
+            showToast("登录成功")
+            close()
+            navigate(Router.window_main)
+        }
+        function onStateChanged(){
+            if(IM.state==0){
                 hideLoading()
-                showToast("登录失败")
+                showToast("网络异常")
             }
-        onLoginSuccess:
-            ()=>{
-                hideLoading()
-                showToast("登录成功")
-                close()
-                navigate(Router.window_main)
-            }
-    }
-
-    onClosing: function(closeevent){
-        visible = false
-        closeevent.accepted = false
+        }
     }
 
     Component.onCompleted: {
         resizable = false
     }
-
 
     page: CusPage{
 
@@ -51,9 +49,6 @@ CusWindow {
             darkEnable: false
             topEnable: false
             isTop: false
-            onCloseEvent: function(){
-                window.close()
-            }
         }
 
 
@@ -72,7 +67,7 @@ CusWindow {
             id:fieldUrl
             width: 180
             lableText: "URL"
-            text:"ws://192.168.2.26:9999/ws"
+            text:"ws://127.0.0.1:9999/ws"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
@@ -86,7 +81,7 @@ CusWindow {
             id:fieldAccid
             width: 180
             lableText: "AccId"
-            text:"sunwukong"
+            text:"admin"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: fieldUrl.bottom

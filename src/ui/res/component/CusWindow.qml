@@ -18,14 +18,16 @@ ApplicationWindow {
     visible: true
     signal windowResult(int requestCode,int resultCode,var data)
 
-    onClosing: function(closeevent){
-        try{
-            window.destroy()
-            closeevent.accepted = false
-        }catch(err){
-            closeevent.accepted = false
-        }
-    }
+//    onClosing: function(closeevent){
+//        try{
+//            window.destroy()
+//            console.debug("123")
+//            closeevent.accepted = false
+//        }catch(err){
+//             console.debug("456")
+//            closeevent.accepted = false
+//        }
+//    }
 
     onResizableChanged: {
         if(resizable){

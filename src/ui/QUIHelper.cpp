@@ -124,6 +124,9 @@ QString QUIHelper::readFile(const QString &fileName)
     return content;
 }
 
+void QUIHelper::setQuitOnLastWindowClosed(bool quit){
+    QGuiApplication::setQuitOnLastWindowClosed(quit);
+}
 
 void QUIHelper::checkUpdate(){
     QString program("./maintenancetool.exe");

@@ -14,7 +14,7 @@
         <file>view/Rectangle.qml</file>
         <file>font/iconfont.ttf</file>
         <file>image/ic_logo.ico</file>
-        <file>layout/MainHome.qml</file>
+        <file>layout/MainSession.qml</file>
         <file>layout/MainSetting.qml</file>
         <file>storage/Router.qml</file>
         <file>component/CusLineEditArea.qml</file>
@@ -41,5 +41,6 @@
         <file>layout/ColorPickerWindow.qml</file>
         <file>component/PrimaryButton.qml</file>
         <file>component/PrimaryTextField.qml</file>
+        <file>layout/MainContact.qml</file>
     </qresource>
 </RCC>

@@ -47,6 +47,7 @@ public:
     Q_INVOKABLE QString sha384(const QString&);
     Q_INVOKABLE QString sha512(const QString&);
     Q_INVOKABLE QString readFile(const QString &fileName);
+    Q_INVOKABLE void setQuitOnLastWindowClosed(bool quit);
 
     Q_SIGNAL void checkUpdateResult(int status);
 

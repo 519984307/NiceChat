@@ -13,4 +13,15 @@ Item {
     }
 
 
+    Rectangle{
+        color : Theme.colorDivider
+        width: 1
+        height: parent.height
+        anchors{
+            left: parent.left
+            leftMargin: 250
+        }
+    }
+
+
 }

@@ -7,11 +7,12 @@ Rectangle {
 
     property int curIndex: 0
     property alias model: listView.model
+    property alias avatar: iconLogo.source
 
-    width: 70
+    width: 56
     height: parent.height
     anchors.left: parent.left
-    color: Theme.colorBackground
+    color: "#FF2E2E2E"
 
     FontLoader {
         id: awesome
@@ -19,9 +20,9 @@ Rectangle {
     }
 
     Item{
-        id:layout_logo
-        width: 70
-        height: 70
+        id:avatar
+        width: 56
+        height: 56
         anchors.top: parent.top
 
         Image{
@@ -32,42 +33,30 @@ Rectangle {
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                topMargin: 14
-            }
-        }
-
-        Text {
-            id:iconTitle
-            text: qsTr(UIHelper.appName())
-            color: Theme.colorPrimary
-            font.pixelSize: 12
-            anchors{
-                horizontalCenter: parent.horizontalCenter
-                top: iconLogo.bottom
-                topMargin: 3
+                topMargin: 32
             }
         }
 
     }
 
-
     ListView{
         id:listView
         boundsBehavior: Flickable.StopAtBounds
         anchors{
-            top:layout_logo.bottom
+            top:avatar.bottom
+            topMargin: 36
             left: parent.left
             right:parent.right
             bottom: parent.bottom
         }
         delegate: Item{
-            width: 70
-            height: 50
+            width: 56
+            height: 40
             Text{
                 anchors.centerIn: parent
                 text:model.icon
                 font.family: awesome.name
-                color:curIndex === model.index ? Theme.colorPrimary : Theme.colorFontPrimary
+                color:curIndex === model.index ? Theme.colorPrimary : "#999999"
                 font.pixelSize: model.fontSize
             }
             MouseArea{

@@ -1,4 +1,4 @@
-#include "QIM.h"
+﻿#include "QIM.h"
 
 QIM::QIM(QObject *parent)
     : QObject{parent}
@@ -17,38 +17,37 @@ QIM::QIM(QObject *parent)
         qDebug()<<"stateChanged:"<<state;
         switch (state) {
         case QAbstractSocket::UnconnectedState:
-            updateState(0);
+            setState(0);
             break;
         case QAbstractSocket::HostLookupState:
-            updateState(1);
+            setState(1);
             break;
         case QAbstractSocket::ConnectingState:
-            updateState(2);
+            setState(2);
             break;
         case QAbstractSocket::ConnectedState:
-            updateState(3);
+            setState(3);
             break;
         case QAbstractSocket::BoundState:
-            updateState(4);
+            setState(4);
             break;
         case QAbstractSocket::ClosingState:
-            updateState(5);
+            setState(5);
             break;
         case QAbstractSocket::ListeningState:
-            updateState(6);
+            setState(6);
             break;
         default:
-            updateState(-1);
+            setState(-1);
             break;
         }
     });
 
     connect(socket,&QWebSocket::binaryMessageReceived,this,[this](const QByteArray &frame){
         sh::ByteBuf buf(frame.toStdString());
-        switch (buf.readChar()) {
-        case 0x00:
+        auto commandId = buf.readChar();
+        if(commandId == 0x00){
             im::proto::Result result;
-            qDebug()<<QString::fromStdString(buf.toHexString());
             result.ParseFromString(buf.readBytes(frame.size()-1).data());
             if(result.command_id() == 0x03){
                 if(result.success()){
@@ -57,7 +56,13 @@ QIM::QIM(QObject *parent)
                     Q_EMIT loginFail();
                 }
             }
-            break;
+        }else if(commandId == 0x04){
+            im::proto::User user;
+            user.ParseFromString(buf.readBytes(frame.size()-1).data());
+            std::string json;
+            google::protobuf::util::MessageToJsonString(user,&json);
+            setUserInfo(QString::fromStdString(json));
+//            qDebug()<<"123456:"<<QString::fromStdString(json);
         }
 
         //        if((unsigned char)frame[0] == 0x1){

@@ -8,12 +8,21 @@ import "../storage"
 
 CusWindow {
     id:window
-    width: 596
-    height: 600
+    minimumWidth: 684
+    minimumHeight: 464
     title: qsTr(UIHelper.appName())
 
+    property var userInfo : JSON.parse(IM.userInfo)
+
+    Connections{
+        target: IM
+        function userInfoChanged(){
+            console.debug(IM.userInfo)
+        }
+    }
+
     onClosing: function(closeevent){
-        visible = false
+        window.visible = false
         closeevent.accepted = false
     }
 
@@ -43,29 +52,22 @@ CusWindow {
             id:toolBar
             onCloseEvent: function(){
                 window.close()
-                systemTray.showMessage("友情提示","程序已隐藏在托盘中。。。")
             }
         }
 
         ListModel{
             id:sliderModel
             ListElement{
-                name:"首页"
-                icon:"\ue719"
+                name:"消息"
+                icon:"\ue61a"
                 fontSize:24
-                url:"qrc:/layout/MainHome.qml"
+                url:"qrc:/layout/MainSession.qml"
             }
             ListElement{
-                name:"设置"
-                icon:"\ue6c7"
+                name:"联系人"
+                icon:"\ue7fe"
                 fontSize:24
-                url:"qrc:/layout/MainSetting.qml"
-            }
-            ListElement{
-                name:"关于"
-                icon:"\ue622"
-                fontSize:21
-                url:"qrc:/layout/MainAbout.qml"
+                url:"qrc:/layout/MainContact.qml"
             }
         }
 
@@ -73,12 +75,13 @@ CusWindow {
         CusSliderBar{
             id:slider
             model: sliderModel
+            avatar: userInfo.icon
         }
 
         Loader{
             id:content
             anchors{
-                top:toolBar.bottom
+                top:parent.top
                 left: slider.right
                 bottom: parent.bottom
                 right:parent.right

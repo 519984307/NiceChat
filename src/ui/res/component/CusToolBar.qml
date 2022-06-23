@@ -91,17 +91,17 @@ Rectangle {
 
             CusToolButton {
                 id:btnTop
-                icon: "\ue604"
+                icon: "\ue770"
                 onClickEvent: { isTop = !isTop }
-                iconSize : 14
+                iconSize : 16
                 visible: topEnable
-                color: isTop ? Theme.colorPrimary : "#BBB"
+                color: isTop ? Theme.colorPrimary : "#666"
                 Component.onCompleted: Window.window.setHitTestVisible(btnTop, true)
             }
 
             CusToolButton {
                 id:btnMin
-                icon: "\ue63d"
+                icon: "\ue664"
                 onClickEvent: window.showMinimized()
                 visible: minEnable
                 iconSize : 14
@@ -109,25 +109,25 @@ Rectangle {
             }
             CusToolButton {
                 id:btnMax
-                icon: window.visibility === Window.Maximized ? "\ue606" : "\ue607"
+                icon: window.visibility === Window.Maximized ? "\ue65d" : "\ue692"
                 onClickEvent: window.toggleMaximized();
                 visible: maxEnable
-                iconSize : 16
+                iconSize : 14
                 Component.onCompleted: Window.window.setHitTestVisible(btnMax, true)
             }
             CusToolButton {
                 id:btnClose
-                icon: "\ue600"
+                icon: "\ue6f4"
                 onClickEvent: {
                     if(onCloseEvent)
                         onCloseEvent()
                     else
-                        window.close();
+                        window.close()
                 }
                 hoverColor: "#E81123"
                 hoverTextColor: "#FFFFFF"
                 visible: closeEnable
-                iconSize : 14
+                iconSize : 15
                 Component.onCompleted: Window.window.setHitTestVisible(btnClose, true)
             }
         }
