@@ -4,19 +4,18 @@ QIM::QIM(QObject *parent)
     : QObject{parent}
 {
     socket = new QWebSocket();
-
-    connect(socket,&QWebSocket::connected,[]{
-        qDebug()<<"connected";
-    });
-
-    connect(socket,&QWebSocket::disconnected,[]{
-        qDebug()<<"disconnected";
-    });
-
+    m_timer_heart =new QTimer();
+    connect(m_timer_heart,&QTimer::timeout,this,&QIM::heartBeat);
+    m_timer_heart_count =new QTimer();
+    connect(m_timer_heart_count,&QTimer::timeout,this,&QIM::heartBeatCount);
+    m_timer_reconnect = new QTimer();
+    connect(m_timer_reconnect,&QTimer::timeout,this,&QIM::reconnect);
     connect(socket,&QWebSocket::stateChanged,this,[this](QAbstractSocket::SocketState state){
-        qDebug()<<"stateChanged:"<<state;
         switch (state) {
         case QAbstractSocket::UnconnectedState:
+            if(!m_userInfo.isEmpty()){
+                m_timer_reconnect->start(2000);
+            }
             setState(0);
             break;
         case QAbstractSocket::HostLookupState:
@@ -26,6 +25,8 @@ QIM::QIM(QObject *parent)
             setState(2);
             break;
         case QAbstractSocket::ConnectedState:
+            m_heart_count = 0;
+            m_timer_reconnect->stop();
             setState(3);
             break;
         case QAbstractSocket::BoundState:
@@ -45,12 +46,13 @@ QIM::QIM(QObject *parent)
 
     connect(socket,&QWebSocket::binaryMessageReceived,this,[this](const QByteArray &frame){
         sh::ByteBuf buf(frame.toStdString());
-        auto commandId = buf.readChar();
+        auto commandId = buf.readUnsignedChar();
         if(commandId == 0x00){
             im::proto::Result result;
             result.ParseFromString(buf.readBytes(frame.size()-1).data());
             if(result.command_id() == 0x03){
                 if(result.success()){
+                    startHeartBeat();
                     Q_EMIT loginSuccess();
                 }else{
                     Q_EMIT loginFail();
@@ -62,7 +64,8 @@ QIM::QIM(QObject *parent)
             std::string json;
             google::protobuf::util::MessageToJsonString(user,&json);
             setUserInfo(QString::fromStdString(json));
-//            qDebug()<<"123456:"<<QString::fromStdString(json);
+        }else if(commandId == 0xFF){
+            m_heart_count = 0;
         }
 
         //        if((unsigned char)frame[0] == 0x1){
@@ -80,15 +83,9 @@ QIM::QIM(QObject *parent)
         //        }
     });
 
-    connect(socket,&QWebSocket::bytesWritten,this,[](qint64 bytes){
-        qDebug()<<"bytesWritten"<<bytes;
-    });
-
-
     connect(socket, QOverload<QAbstractSocket::SocketError>::of(&QWebSocket::error),this,
             [=](QAbstractSocket::SocketError error){
-        qDebug()<<"binaryFrameReceived";
-        //        Q_EMIT errorMessage(QMetaEnum::fromType<QAbstractSocket::SocketError>().valueToKey(error));
+        Q_EMIT errorMessage(QMetaEnum::fromType<QAbstractSocket::SocketError>().valueToKey(error));
     });
 
 }
@@ -96,9 +93,44 @@ QIM::QIM(QObject *parent)
 QIM::~QIM()
 {
     socket->close();
+    m_timer_heart->stop();
+    m_timer_heart_count->stop();
+    m_timer_reconnect->stop();
     delete socket;
+    delete m_timer_heart;
+    delete m_timer_heart_count;
+    delete m_timer_reconnect;
 }
 
 void QIM::login(const QString& url,const QString& accid,const QString& token){
-    socket->open(url+"?accid="+accid+"&token="+token);
+    m_ws = url+"?accid="+accid+"&token="+token;
+    socket->open(m_ws);
+}
+
+void QIM::heartBeat(){
+    sh::ByteBuf buf;
+    buf.writeUnsignedChar(0xFF);
+    socket->sendBinaryMessage(buf.data());
+    socket->flush();
+}
+
+void QIM::reconnect(){
+    socket->open(m_ws);
+}
+
+void QIM::heartBeatCount(){
+    m_heart_count = m_heart_count + 1;
+    if(m_heart_count>10){
+        socket->close();
+    }
+}
+
+void QIM::startHeartBeat(){
+    m_timer_heart_count->start(1000);
+    m_timer_heart->start(9000);
+}
+
+void QIM::stopHeartBeat(){
+    m_timer_heart->stop();
+    m_timer_heart_count->stop();
 }

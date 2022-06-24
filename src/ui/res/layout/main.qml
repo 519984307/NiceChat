@@ -8,10 +8,9 @@ import "../storage"
 
 CusWindow {
     id:window
-    minimumWidth: 684
-    minimumHeight: 464
     title: qsTr(UIHelper.appName())
-
+    width: 700
+    height: 500
     property var userInfo : JSON.parse(IM.userInfo)
 
     Connections{
@@ -19,6 +18,11 @@ CusWindow {
         function userInfoChanged(){
             console.debug(IM.userInfo)
         }
+    }
+
+    Component.onCompleted: {
+        window.minimumWidth = 700
+        window.minimumHeight = 500
     }
 
     onClosing: function(closeevent){
@@ -76,6 +80,10 @@ CusWindow {
             id:slider
             model: sliderModel
             avatar: userInfo.icon
+            avatarName: userInfo.name.charAt(0)
+            onClickAvatar:{
+                showToast("点击头像")
+            }
         }
 
         Loader{
@@ -90,5 +98,24 @@ CusWindow {
         }
     }
 
+
+    NetWorkStatus{
+        id:networkWindow
+        visible: window.visible
+        x:window.x + (window.width - width)/2
+        y:Math.max(window.y - 40,0)
+        transientParent: window
+        opacity: IM.state !== 3
+        Connections{
+            target: window
+            function onActiveChanged(){
+                networkWindow.raise()
+            }
+
+            function onVisibilityChanged(){
+                networkWindow.raise()
+            }
+        }
+    }
 
 }

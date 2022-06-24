@@ -23,8 +23,8 @@ endif()
 
 add_definitions(-DGLOG_NO_ABBREVIATED_SEVERITIES)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 WebSockets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 WebSockets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 Concurrent WebSockets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 WebSockets Concurrent REQUIRED)
 
 get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)

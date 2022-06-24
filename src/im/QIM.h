@@ -7,6 +7,7 @@
 #include <proto/result.pb.h>
 #include <proto/user.pb.h>
 #include <google/protobuf/util/json_util.h>
+#include <QtConcurrent>
 
 class QIM : public QObject
 {
@@ -43,9 +44,23 @@ public:
     Q_SIGNAL void loginFail();
     Q_SIGNAL void loginSuccess();
 
+    void heartBeat();
+    void heartBeatCount();
+    void reconnect();
+
+    Q_INVOKABLE void startHeartBeat();
+    Q_INVOKABLE void stopHeartBeat();
+
 private:
     QWebSocket *socket;
-    QString m_userInfo = "{}";
+    QString m_userInfo = "";
+    QString m_ws ="";
+
+    QTimer *m_timer_heart;
+    QTimer *m_timer_heart_count;
+    QTimer *m_timer_reconnect;
+    int m_heart_count = 0;
+
     int m_state = -1;
 };
 

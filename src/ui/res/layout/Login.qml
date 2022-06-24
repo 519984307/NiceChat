@@ -51,7 +51,6 @@ CusWindow {
             isTop: false
         }
 
-
         Text{
             text: "NiceChat"
             anchors{
@@ -67,7 +66,7 @@ CusWindow {
             id:fieldUrl
             width: 180
             lableText: "URL"
-            text:"ws://127.0.0.1:9999/ws"
+            text:"ws://192.168.2.23:9999/ws"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
@@ -103,10 +102,9 @@ CusWindow {
             }
         }
 
-
-
         PrimaryButton{
             width: 180
+            text:"登录"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 bottom:parent.bottom
@@ -117,9 +115,6 @@ CusWindow {
                 IM.login(fieldUrl.text,fieldAccid.text,fieldToken.text)
             }
         }
-
-
     }
-
 
 }

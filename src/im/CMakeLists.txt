@@ -24,6 +24,7 @@ install(FILES ${IM_HEADERS} DESTINATION include/${CMAKE_PROJECT_NAME}/im)
 target_link_libraries(IM
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::WebSockets
+    Qt${QT_VERSION_MAJOR}::Concurrent
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

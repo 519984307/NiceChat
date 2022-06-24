@@ -42,5 +42,6 @@
         <file>component/PrimaryButton.qml</file>
         <file>component/PrimaryTextField.qml</file>
         <file>layout/MainContact.qml</file>
+        <file>layout/NetWorkStatus.qml</file>
     </qresource>
 </RCC>
