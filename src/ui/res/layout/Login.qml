@@ -66,7 +66,7 @@ CusWindow {
             id:fieldUrl
             width: 180
             lableText: "URL"
-            text:"ws://192.168.2.23:9999/ws"
+            text:"ws://localhost:9999/ws"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
@@ -103,6 +103,7 @@ CusWindow {
         }
 
         PrimaryButton{
+            id:btnLogin
             width: 180
             text:"登录"
             anchors{

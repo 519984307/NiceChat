@@ -5,6 +5,8 @@
         QLogHelper.cpp
         GlobalStatic.cpp
         LoginController.cpp
+        EmojiModel.cpp
+        TextDocument.cpp
         )
 
 set(UILibrary_HEADERS
@@ -13,6 +15,8 @@ set(UILibrary_HEADERS
         QLogHelper.h
         GlobalStatic.h
         LoginController.h
+        EmojiModel.h
+        TextDocument.h
         )
 
 set(UILibrary_RCC

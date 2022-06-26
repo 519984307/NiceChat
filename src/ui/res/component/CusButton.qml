@@ -1,12 +1,12 @@
-import QtQuick 2.15
+﻿import QtQuick 2.15
 import "../storage"
 
 Rectangle {
 
     id:layoutButton
     property string text : "Button"
-    property color backColor: AppStorage.isDark ? "#333333" : "#FFF6F8FA"
-    property color hoveColor: Qt.darker(backColor,1.3)
+    property color backColor: AppStorage.isDark ? "#333333" : "#EEEEEE"
+    property color hoveColor: Qt.darker(backColor,1.2)
     radius: 5
     border{
         width: 1
@@ -22,9 +22,8 @@ Rectangle {
     Text{
         id:textButton
         text: layoutButton.text
-        font.bold: true
         anchors.centerIn: parent
-        color: Theme.colorFontPrimary
+        color: Theme.colorPrimary
         font.pixelSize: 12
     }
 

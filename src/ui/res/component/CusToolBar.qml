@@ -17,7 +17,7 @@ Rectangle {
     property bool darkEnable: true
     property bool topEnable: true
     property bool isTop : false
-
+    color: Theme.colorBackground
     property var onCloseEvent
 
     clip: true
@@ -45,9 +45,8 @@ Rectangle {
         }
     }
 
-    Rectangle {
+    Item {
         id:layout_top
-        color: Theme.colorBackground
         anchors.fill: parent
 
         MouseArea{

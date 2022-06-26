@@ -171,3 +171,9 @@ void QUIHelper::checkUpdate(){
     LOG(INFO)<<data.toStdString();
     Q_EMIT checkUpdateResult(1);
 }
+
+QString QUIHelper::htmlToPlainText(const QString& html){
+    QTextDocument doc;
+    doc.setHtml(html);
+    return doc.toPlainText();
+}

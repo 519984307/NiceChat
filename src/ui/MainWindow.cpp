@@ -1,22 +1,14 @@
 ﻿#include "MainWindow.h"
-#include "qfontdatabase.h"
-#include "GlobalStatic.h"
-#include "QLogHelper.h"
-#include <QtQml>
-#include <QQuickStyle>
-#include <QIcon>
-#include <framelessquickhelper.h>
-#include "LoginController.h"
-#include <IMGlobalStatic.h>
 
 FRAMELESSHELPER_USE_NAMESPACE
 
 MainWindow::MainWindow(char *argv[]) {
 
-//    QGuiApplication::setQuitOnLastWindowClosed(true);
+    //    QGuiApplication::setQuitOnLastWindowClosed(true);
     QFont font;
     font.setFamily("Microsoft YaHei");
     QGuiApplication::setFont(font);
+    QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
     QGuiApplication::setWindowIcon(QIcon(":/image/ic_logo.png"));
     QQuickStyle::setStyle("Default");
 
@@ -32,6 +24,8 @@ MainWindow::MainWindow(char *argv[]) {
     m_engine.rootContext()->setContextProperty("IM",p_im);
 
     qmlRegisterType<FramelessQuickHelper>("UI", 1, 0, "FramelessHelper");
+    qmlRegisterType<EmojiModel>("UI", 1, 0, "EmojiModel");
+    qmlRegisterType<TextDocument>("UI", 1, 0, "TextDocument");
 
     qmlRegisterType<LoginController>("Controller", 1, 0, "LoginController");
 

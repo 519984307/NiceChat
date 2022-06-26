@@ -1,4 +1,5 @@
 ﻿#include <QGuiApplication>
+#include <QQuickWindow>
 #include "MainWindow.h"
 #include <QFont>
 #include <QHotkey>

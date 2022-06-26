@@ -1,14 +1,15 @@
 ﻿import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Window 2.15
 import "../view"
 import "../storage"
 
 Rectangle {
     id:root
 
-    property int curIndex: 0
     property alias model: listView.model
-    property alias avatar: iconLogo.source
-    property alias avatarName: textAvatar.text
+    property alias avatar: cusAvatar.avatar
+    property alias avatarName: cusAvatar.avatarName
     signal clickAvatar
 
     width: 56
@@ -21,56 +22,26 @@ Rectangle {
         source: "qrc:/font/iconfont.ttf"
     }
 
-    Item{
-        id:avatar
-        width: 56
-        height: 56
-        anchors.top: parent.top
 
-        Image{
-            id:iconLogo
-            width: 36
-            height: 36
-            anchors{
-                horizontalCenter: parent.horizontalCenter
-                top: parent.top
-                topMargin: 32
-            }
+    CusAvatar{
+        id:cusAvatar
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+            top: parent.top
+            topMargin: 38
         }
-
-        Rectangle{
-            color:Theme.colorPrimary
-            width: 36
-            height: 36
-            anchors.fill: iconLogo
-            radius: 4
-            visible: iconLogo.status != Image.Ready
-
-            Text {
-                id:textAvatar
-                anchors.centerIn: parent
-                color: "#FFFFFF"
-                font.pixelSize: 14
-            }
-
+        onClickAvatar: {
+            root.clickAvatar()
         }
-
-        MouseArea{
-            anchors.fill: iconLogo
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                clickAvatar()
-            }
-        }
-
     }
+
 
     ListView{
         id:listView
         boundsBehavior: Flickable.StopAtBounds
         anchors{
-            top:avatar.bottom
-            topMargin: 36
+            top:cusAvatar.bottom
+            topMargin: 14
             left: parent.left
             right:parent.right
             bottom: parent.bottom
@@ -82,17 +53,25 @@ Rectangle {
                 anchors.centerIn: parent
                 text:model.icon
                 font.family: awesome.name
-                color:curIndex === model.index ? Theme.colorPrimary : "#999999"
+                color: listView.currentIndex === index ? Theme.colorPrimary : "#999999"
                 font.pixelSize: model.fontSize
             }
             MouseArea{
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    curIndex = model.index
+                    listView.currentIndex = index
                 }
             }
         }
+    }
+
+    function getIndex(){
+        return listView.currentIndex
+    }
+
+    function setIndex(index){
+        listView.currentIndex = index
     }
 
     function getUrl(){

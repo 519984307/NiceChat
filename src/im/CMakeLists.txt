@@ -14,6 +14,7 @@ set(IM_SRS
     ./proto/session.pb.h ./proto/session.pb.cc
     ./proto/team.pb.h ./proto/team.pb.cc
     ./proto/user.pb.h ./proto/user.pb.cc
+    ./proto/friends.pb.h ./proto/friends.pb.cc
 )
 
 add_library(IM STATIC ${IM_SRS})

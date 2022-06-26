@@ -1,10 +1,12 @@
 ﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
+import QtQuick.Layouts 1.15
 import QtWebView 1.1
 import Qt.labs.platform 1.1
 import "../component"
 import "../storage"
+import "../global/global.js" as Global
 
 CusWindow {
     id:window
@@ -52,13 +54,6 @@ CusWindow {
 
     page: CusPage{
 
-        CusToolBar {
-            id:toolBar
-            onCloseEvent: function(){
-                window.close()
-            }
-        }
-
         ListModel{
             id:sliderModel
             ListElement{
@@ -86,7 +81,8 @@ CusWindow {
             }
         }
 
-        Loader{
+
+        StackLayout{
             id:content
             anchors{
                 top:parent.top
@@ -94,7 +90,26 @@ CusWindow {
                 bottom: parent.bottom
                 right:parent.right
             }
-            source: slider.getUrl()
+            currentIndex: slider.getIndex()
+            MainSession{
+                id:session
+            }
+            MainContact{
+                id:contact
+                onClickSend:
+                    (user)=>{
+                        slider.setIndex(0)
+                        session.addSession(Global.deepCopy(user))
+                    }
+            }
+        }
+
+        CusToolBar {
+            id:toolBar
+            color:"#00000000"
+            onCloseEvent: function(){
+                window.close()
+            }
         }
     }
 
@@ -104,18 +119,7 @@ CusWindow {
         visible: window.visible
         x:window.x + (window.width - width)/2
         y:Math.max(window.y - 40,0)
-        transientParent: window
         opacity: IM.state !== 3
-        Connections{
-            target: window
-            function onActiveChanged(){
-                networkWindow.raise()
-            }
-
-            function onVisibilityChanged(){
-                networkWindow.raise()
-            }
-        }
     }
 
 }

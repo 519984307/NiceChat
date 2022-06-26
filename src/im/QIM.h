@@ -6,6 +6,8 @@
 #include <ByteBuf.h>
 #include <proto/result.pb.h>
 #include <proto/user.pb.h>
+#include <proto/friends.pb.h>
+#include <proto/message.pb.h>
 #include <google/protobuf/util/json_util.h>
 #include <QtConcurrent>
 
@@ -14,6 +16,7 @@ class QIM : public QObject
     Q_OBJECT
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString userInfo READ userInfo WRITE setUserInfo NOTIFY userInfoChanged)
+    Q_PROPERTY(QString friends READ friends WRITE setFriends NOTIFY friendsChanged)
 public:
     explicit QIM(QObject *parent = nullptr);
     ~QIM();
@@ -38,6 +41,15 @@ public:
         return m_userInfo;
     }
 
+    Q_SIGNAL void friendsChanged();
+    void setFriends(QString const& friends){
+        m_friends = friends;
+        Q_EMIT friendsChanged();
+    }
+    [[nodiscard]] QString friends() const{
+        return m_friends;
+    }
+
 
     Q_INVOKABLE void login(const QString& url,const QString& accid,const QString& token);
     Q_SIGNAL void errorMessage(const QString& error);
@@ -51,9 +63,12 @@ public:
     Q_INVOKABLE void startHeartBeat();
     Q_INVOKABLE void stopHeartBeat();
 
+    Q_INVOKABLE void sendTextMessage(const QString& from,const QString& to,const QString& message);
+
 private:
     QWebSocket *socket;
     QString m_userInfo = "";
+    QString m_friends = "{}";
     QString m_ws ="";
 
     QTimer *m_timer_heart;

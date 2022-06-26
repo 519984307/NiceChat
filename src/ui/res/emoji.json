@@ -1,0 +1,1700 @@
+﻿{
+    "Smileys & Emotion": [
+        {
+            "code": "1f600",
+            "char": "😀",
+            "name": "grinning face",
+            "keywords": [
+                "face",
+                "grinning face",
+                "smile",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f603",
+            "char": "😃",
+            "name": "grinning face with big eyes",
+            "keywords": [
+                "face",
+                "mouth",
+                "open",
+                "smile",
+                "grinning face with big eyes",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f604",
+            "char": "😄",
+            "name": "grinning face with smiling eyes",
+            "keywords": [
+                "eye",
+                "face",
+                "mouth",
+                "open",
+                "smile",
+                "grinning face with smiling eyes",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f601",
+            "char": "😁",
+            "name": "beaming face with smiling eyes",
+            "keywords": [
+                "eye",
+                "face",
+                "grin",
+                "smile",
+                "beaming face with smiling eyes",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f606",
+            "char": "😆",
+            "name": "grinning squinting face",
+            "keywords": [
+                "face",
+                "laugh",
+                "mouth",
+                "satisfied",
+                "smile",
+                "grinning squinting face",
+                "lol",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f605",
+            "char": "😅",
+            "name": "grinning face with sweat",
+            "keywords": [
+                "cold",
+                "face",
+                "open",
+                "smile",
+                "sweat",
+                "grinning face with sweat",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f923",
+            "char": "🤣",
+            "name": "rolling on the floor laughing",
+            "keywords": [
+                "face",
+                "floor",
+                "laugh",
+                "rofl",
+                "rotfl",
+                "rolling on the floor laughing",
+                "lol",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f602",
+            "char": "😂",
+            "name": "face with tears of joy",
+            "keywords": [
+                "face with tears of joy",
+                "joy",
+                "laugh",
+                "tear",
+                "lol",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f642",
+            "char": "🙂",
+            "name": "slightly smiling face",
+            "keywords": [
+                "face",
+                "smile",
+                "slightly smiling face"
+            ]
+        },
+        {
+            "code": "1f643",
+            "char": "🙃",
+            "name": "upside-down face",
+            "keywords": [
+                "face",
+                "upside-down",
+                "smile"
+            ]
+        },
+        {
+            "code": "1f609",
+            "char": "😉",
+            "name": "winking face",
+            "keywords": [
+                "face",
+                "winking face"
+            ]
+        },
+        {
+            "code": "1f60a",
+            "char": "😊",
+            "name": "smiling face with smiling eyes",
+            "keywords": [
+                "blush",
+                "eye",
+                "face",
+                "smile",
+                "smiling face with smiling eyes"
+            ]
+        },
+        {
+            "code": "1f607",
+            "char": "😇",
+            "name": "smiling face with halo",
+            "keywords": [
+                "angel",
+                "face",
+                "fantasy",
+                "halo",
+                "innocent",
+                "smiling face with halo",
+                "smile"
+            ]
+        },
+        {
+            "code": "1f970",
+            "char": "🥰",
+            "name": "smiling face with hearts",
+            "keywords": [
+                "adore",
+                "crush",
+                "hearts",
+                "in love",
+                "smiling face with hearts",
+                "smile"
+            ]
+        },
+        {
+            "code": "1f60d",
+            "char": "😍",
+            "name": "smiling face with heart-eyes",
+            "keywords": [
+                "eyes",
+                "face",
+                "hearts",
+                "love",
+                "smile",
+                "smiling face with heart-eyes"
+            ]
+        },
+        {
+            "code": "1f929",
+            "char": "🤩",
+            "name": "star-struck",
+            "keywords": [
+                "eyes",
+                "face",
+                "grinning",
+                "star-struck",
+                "starry-eyed",
+                "smile"
+            ]
+        },
+        {
+            "code": "1f618",
+            "char": "😘",
+            "name": "face blowing a kiss",
+            "keywords": [
+                "face",
+                "heart",
+                "kiss",
+                "face blowing a kiss"
+            ]
+        },
+        {
+            "code": "1f617",
+            "char": "😗",
+            "name": "kissing face",
+            "keywords": [
+                "face",
+                "kissing face"
+            ]
+        },
+        {
+            "code": "263a",
+            "char": "☺",
+            "name": "smiling face",
+            "keywords": [
+                "face",
+                "outlined",
+                "relaxed",
+                "smile",
+                "smiling face"
+            ]
+        },
+        {
+            "code": "1f61a",
+            "char": "😚",
+            "name": "kissing face with closed eyes",
+            "keywords": [
+                "closed",
+                "eye",
+                "face",
+                "kissing face with closed eyes"
+            ]
+        },
+        {
+            "code": "1f619",
+            "char": "😙",
+            "name": "kissing face with smiling eyes",
+            "keywords": [
+                "eye",
+                "face",
+                "kissing face with smiling eyes",
+                "smile"
+            ]
+        },
+        {
+            "code": "1f972",
+            "char": "🥲",
+            "name": "smiling face with tear",
+            "keywords": [
+                "grateful",
+                "proud",
+                "relieved",
+                "smiling face with tear",
+                "smile",
+                "tear",
+                "touched"
+            ]
+        },
+        {
+            "code": "1f60b",
+            "char": "😋",
+            "name": "face savoring food",
+            "keywords": [
+                "delicious",
+                "face savoring food",
+                "savouring",
+                "smile",
+                "um",
+                "yum"
+            ]
+        },
+        {
+            "code": "1f61b",
+            "char": "😛",
+            "name": "face with tongue",
+            "keywords": [
+                "face with tongue",
+                "tongue"
+            ]
+        },
+        {
+            "code": "1f61c",
+            "char": "😜",
+            "name": "winking face with tongue",
+            "keywords": [
+                "eye",
+                "face",
+                "joke",
+                "tongue",
+                "winking face with tongue"
+            ]
+        },
+        {
+            "code": "1f92a",
+            "char": "🤪",
+            "name": "zany face",
+            "keywords": [
+                "eye",
+                "goofy",
+                "large",
+                "small",
+                "zany face"
+            ]
+        },
+        {
+            "code": "1f61d",
+            "char": "😝",
+            "name": "squinting face with tongue",
+            "keywords": [
+                "eye",
+                "face",
+                "horrible",
+                "taste",
+                "tongue",
+                "squinting face with tongue"
+            ]
+        },
+        {
+            "code": "1f911",
+            "char": "🤑",
+            "name": "money-mouth face",
+            "keywords": [
+                "face",
+                "money-mouth face",
+                "mouth"
+            ]
+        },
+        {
+            "code": "1f917",
+            "char": "🤗",
+            "name": "hugging face",
+            "keywords": [
+                "face",
+                "hugging face"
+            ]
+        },
+        {
+            "code": "1f92d",
+            "char": "🤭",
+            "name": "face with hand over mouth",
+            "keywords": [
+                "face with hand over mouth",
+                "whoops",
+                "shock",
+                "sudden realization",
+                "surprise"
+            ]
+        },
+        {
+            "code": "1f92b",
+            "char": "🤫",
+            "name": "shushing face",
+            "keywords": [
+                "quiet",
+                "shushing face"
+            ]
+        },
+        {
+            "code": "1f914",
+            "char": "🤔",
+            "name": "thinking face",
+            "keywords": [
+                "face",
+                "thinking face"
+            ]
+        },
+        {
+            "code": "1f910",
+            "char": "🤐",
+            "name": "zipper-mouth face",
+            "keywords": [
+                "face",
+                "mouth",
+                "zipper-mouth face"
+            ]
+        },
+        {
+            "code": "1f928",
+            "char": "🤨",
+            "name": "face with raised eyebrow",
+            "keywords": [
+                "distrust",
+                "face with raised eyebrow",
+                "skeptic",
+                "disapproval",
+                "disbelief",
+                "mild surprise",
+                "scepticism"
+            ]
+        },
+        {
+            "code": "1f610",
+            "char": "😐",
+            "name": "neutral face",
+            "keywords": [
+                "deadpan",
+                "face",
+                "neutral face",
+                "poker",
+                "meh"
+            ]
+        },
+        {
+            "code": "1f611",
+            "char": "😑",
+            "name": "expressionless face",
+            "keywords": [
+                "expressionless face",
+                "face",
+                "inexpressive",
+                "unexpressive",
+                "meh"
+            ]
+        },
+        {
+            "code": "1f636",
+            "char": "😶",
+            "name": "face without mouth",
+            "keywords": [
+                "face without mouth",
+                "mouth",
+                "quiet",
+                "silent"
+            ]
+        },
+        {
+            "code": "1f60f",
+            "char": "😏",
+            "name": "smirking face",
+            "keywords": [
+                "face",
+                "smirking face"
+            ]
+        },
+        {
+            "code": "1f612",
+            "char": "😒",
+            "name": "unamused face",
+            "keywords": [
+                "face",
+                "unamused face",
+                "unhappy"
+            ]
+        },
+        {
+            "code": "1f644",
+            "char": "🙄",
+            "name": "face with rolling eyes",
+            "keywords": [
+                "eyes",
+                "face with rolling eyes",
+                "rolling",
+                "eyeroll"
+            ]
+        },
+        {
+            "code": "1f62c",
+            "char": "😬",
+            "name": "grimacing face",
+            "keywords": [
+                "face",
+                "grimace face"
+            ]
+        },
+        {
+            "code": "1f925",
+            "char": "🤥",
+            "name": "lying face",
+            "keywords": [
+                "face",
+                "lie",
+                "pinocchio",
+                "lying face"
+            ]
+        },
+        {
+            "code": "1f60c",
+            "char": "😌",
+            "name": "relieved face",
+            "keywords": [
+                "face",
+                "relieved face"
+            ]
+        },
+        {
+            "code": "1f614",
+            "char": "😔",
+            "name": "pensive face",
+            "keywords": [
+                "dejected",
+                "face",
+                "pensive face",
+                "unhappy",
+                "sad"
+            ]
+        },
+        {
+            "code": "1f62a",
+            "char": "😪",
+            "name": "sleepy face",
+            "keywords": [
+                "face",
+                "sleepy face"
+            ]
+        },
+        {
+            "code": "1f924",
+            "char": "🤤",
+            "name": "drooling face",
+            "keywords": [
+                "drooling face",
+                "face"
+            ]
+        },
+        {
+            "code": "1f634",
+            "char": "😴",
+            "name": "sleeping face",
+            "keywords": [
+                "face",
+                "sleeping face",
+                "zzz"
+            ]
+        },
+        {
+            "code": "1f637",
+            "char": "😷",
+            "name": "face with medical mask",
+            "keywords": [
+                "cold",
+                "doctor",
+                "face with medical mask",
+                "mask",
+                "sick"
+            ]
+        },
+        {
+            "code": "1f912",
+            "char": "🤒",
+            "name": "face with thermometer",
+            "keywords": [
+                "face with thermometer",
+                "ill",
+                "sick",
+                "thermometer"
+            ]
+        },
+        {
+            "code": "1f915",
+            "char": "🤕",
+            "name": "face with head-bandage",
+            "keywords": [
+                "bandage",
+                "face with head-bandage",
+                "hurt",
+                "injury"
+            ]
+        },
+        {
+            "code": "1f922",
+            "char": "🤢",
+            "name": "nauseated face",
+            "keywords": [
+                "face",
+                "nauseated face",
+                "vomit"
+            ]
+        },
+        {
+            "code": "1f92e",
+            "char": "🤮",
+            "name": "face vomiting",
+            "keywords": [
+                "face vomiting",
+                "puke",
+                "sick",
+                "vomit"
+            ]
+        },
+        {
+            "code": "1f927",
+            "char": "🤧",
+            "name": "sneezing face",
+            "keywords": [
+                "face",
+                "gesundheit",
+                "sneeze",
+                "sneezing face"
+            ]
+        },
+        {
+            "code": "1f975",
+            "char": "🥵",
+            "name": "hot face",
+            "keywords": [
+                "feverish",
+                "heat stroke",
+                "hot face",
+                "red-faced",
+                "sweating"
+            ]
+        },
+        {
+            "code": "1f976",
+            "char": "🥶",
+            "name": "cold face",
+            "keywords": [
+                "blue-faced",
+                "cold face",
+                "freezing",
+                "frostbite",
+                "icicles"
+            ]
+        },
+        {
+            "code": "1f974",
+            "char": "🥴",
+            "name": "woozy face",
+            "keywords": [
+                "dizzy",
+                "intoxicated",
+                "tipsy",
+                "uneven eyes",
+                "wavy mouth",
+                "woozy face"
+            ]
+        },
+        {
+            "code": "1f635",
+            "char": "😵",
+            "name": "knocked-out face",
+            "keywords": [
+                "dizzy",
+                "face",
+                "dead",
+                "knocked-out face"
+            ]
+        },
+        {
+            "code": "1f92f",
+            "char": "🤯",
+            "name": "exploding head",
+            "keywords": [
+                "exploding head",
+                "mind blow",
+                "shocked"
+            ]
+        },
+        {
+            "code": "1f920",
+            "char": "🤠",
+            "name": "cowboy hat face",
+            "keywords": [
+                "cowboy hat face",
+                "cowgirl",
+                "face",
+                "hat"
+            ]
+        },
+        {
+            "code": "1f973",
+            "char": "🥳",
+            "name": "partying face",
+            "keywords": [
+                "celebration",
+                "hat",
+                "horn",
+                "partying face",
+                "face"
+            ]
+        },
+        {
+            "code": "1f978",
+            "char": "🥸",
+            "name": "disguised face",
+            "keywords": [
+                "disguised face",
+                "face",
+                "glasses",
+                "incognito",
+                "nose"
+            ]
+        },
+        {
+            "code": "1f60e",
+            "char": "😎",
+            "name": "smiling face with sunglasses",
+            "keywords": [
+                "bright",
+                "cool",
+                "eyewear",
+                "face",
+                "smile",
+                "sunglasses",
+                "smiling face with sunglasses"
+            ]
+        },
+        {
+            "code": "1f913",
+            "char": "🤓",
+            "name": "nerd face",
+            "keywords": [
+                "face",
+                "geek",
+                "nerd face"
+            ]
+        },
+        {
+            "code": "1f9d0",
+            "char": "🧐",
+            "name": "face with monocle",
+            "keywords": [
+                "face with monocle",
+                "stuffy",
+                "wealthy",
+                "monocle"
+            ]
+        },
+        {
+            "code": "1f615",
+            "char": "😕",
+            "name": "confused face",
+            "keywords": [
+                "confused face",
+                "face",
+                "meh"
+            ]
+        },
+        {
+            "code": "1f61f",
+            "char": "😟",
+            "name": "worried face",
+            "keywords": [
+                "face",
+                "worried face"
+            ]
+        },
+        {
+            "code": "1f641",
+            "char": "🙁",
+            "name": "slightly frowning face",
+            "keywords": [
+                "face",
+                "frowning",
+                "slightly frowning face"
+            ]
+        },
+        {
+            "code": "2639",
+            "char": "☹",
+            "name": "frowning face",
+            "keywords": [
+                "face",
+                "frowning face"
+            ]
+        },
+        {
+            "code": "1f62e",
+            "char": "😮",
+            "name": "face with open mouth",
+            "keywords": [
+                "face with open mouth",
+                "mouth",
+                "open",
+                "sympathy"
+            ]
+        },
+        {
+            "code": "1f62f",
+            "char": "😯",
+            "name": "hushed face",
+            "keywords": [
+                "face",
+                "hushed face",
+                "stunned",
+                "surprised"
+            ]
+        },
+        {
+            "code": "1f632",
+            "char": "😲",
+            "name": "astonished face",
+            "keywords": [
+                "astonished face",
+                "face",
+                "shocked",
+                "totally"
+            ]
+        },
+        {
+            "code": "1f633",
+            "char": "😳",
+            "name": "flushed face",
+            "keywords": [
+                "dazed",
+                "face",
+                "flushed face"
+            ]
+        },
+        {
+            "code": "1f97a",
+            "char": "🥺",
+            "name": "pleading face",
+            "keywords": [
+                "begging",
+                "mercy",
+                "pleading face",
+                "face",
+                "puppy eyes"
+            ]
+        },
+        {
+            "code": "1f626",
+            "char": "😦",
+            "name": "frowning face with open mouth",
+            "keywords": [
+                "face",
+                "frowning face with open mouth",
+                "mouth",
+                "open"
+            ]
+        },
+        {
+            "code": "1f627",
+            "char": "😧",
+            "name": "anguished face",
+            "keywords": [
+                "anguished face",
+                "face"
+            ]
+        },
+        {
+            "code": "1f628",
+            "char": "😨",
+            "name": "fearful face",
+            "keywords": [
+                "face",
+                "fearful face",
+                "scared"
+            ]
+        },
+        {
+            "code": "1f630",
+            "char": "😰",
+            "name": "anxious face with sweat",
+            "keywords": [
+                "blue",
+                "cold",
+                "face",
+                "rushed",
+                "sweat",
+                "anxious face with sweat"
+            ]
+        },
+        {
+            "code": "1f625",
+            "char": "😥",
+            "name": "sad but relieved face",
+            "keywords": [
+                "disappointed",
+                "face",
+                "relieved",
+                "whew",
+                "sad but relieved face"
+            ]
+        },
+        {
+            "code": "1f622",
+            "char": "😢",
+            "name": "crying face",
+            "keywords": [
+                "crying face",
+                "face",
+                "sad",
+                "tear"
+            ]
+        },
+        {
+            "code": "1f62d",
+            "char": "😭",
+            "name": "loudly crying face",
+            "keywords": [
+                "cry",
+                "face",
+                "sad",
+                "sob",
+                "tear",
+                "loudly crying face"
+            ]
+        },
+        {
+            "code": "1f631",
+            "char": "😱",
+            "name": "face screaming in fear",
+            "keywords": [
+                "face screaming in fear",
+                "fearful",
+                "munch",
+                "scared",
+                "scream"
+            ]
+        },
+        {
+            "code": "1f616",
+            "char": "😖",
+            "name": "confounded face",
+            "keywords": [
+                "confounded face",
+                "face"
+            ]
+        },
+        {
+            "code": "1f623",
+            "char": "😣",
+            "name": "persevering face",
+            "keywords": [
+                "face",
+                "persevere",
+                "persevering face"
+            ]
+        },
+        {
+            "code": "1f61e",
+            "char": "😞",
+            "name": "disappointed face",
+            "keywords": [
+                "disappointed face",
+                "face"
+            ]
+        },
+        {
+            "code": "1f613",
+            "char": "😓",
+            "name": "downcast face with sweat",
+            "keywords": [
+                "cold",
+                "face",
+                "sweat",
+                "downcast face with sweat"
+            ]
+        },
+        {
+            "code": "1f629",
+            "char": "😩",
+            "name": "weary face",
+            "keywords": [
+                "face",
+                "tired",
+                "weary face"
+            ]
+        },
+        {
+            "code": "1f62b",
+            "char": "😫",
+            "name": "tired face",
+            "keywords": [
+                "face",
+                "tired face"
+            ]
+        },
+        {
+            "code": "1f971",
+            "char": "🥱",
+            "name": "yawning face",
+            "keywords": [
+                "bored",
+                "tired",
+                "yawning face"
+            ]
+        },
+        {
+            "code": "1f624",
+            "char": "😤",
+            "name": "face with steam from nose",
+            "keywords": [
+                "face with steam from nose",
+                "triumph",
+                "won",
+                "angry"
+            ]
+        },
+        {
+            "code": "1f621",
+            "char": "😡",
+            "name": "pouting face",
+            "keywords": [
+                "angry",
+                "face",
+                "mad",
+                "pouting face",
+                "rage",
+                "red"
+            ]
+        },
+        {
+            "code": "1f620",
+            "char": "😠",
+            "name": "angry face",
+            "keywords": [
+                "angry face",
+                "face",
+                "mad"
+            ]
+        },
+        {
+            "code": "1f92c",
+            "char": "🤬",
+            "name": "face with symbols on mouth",
+            "keywords": [
+                "face with symbols on mouth",
+                "swearing",
+                "cursing",
+                "angry",
+                "mad"
+            ]
+        },
+        {
+            "code": "1f608",
+            "char": "😈",
+            "name": "smiling face with horns",
+            "keywords": [
+                "face",
+                "fairy tale",
+                "fantasy",
+                "horns",
+                "smile",
+                "smiling face with horns",
+                "demon",
+                "devil"
+            ]
+        },
+        {
+            "code": "1f47f",
+            "char": "👿",
+            "name": "angry face with horns",
+            "keywords": [
+                "demon",
+                "devil",
+                "face",
+                "fairy tale",
+                "fantasy",
+                "imp",
+                "angry face with horns",
+                "horns"
+            ]
+        },
+        {
+            "code": "1f480",
+            "char": "💀",
+            "name": "skull",
+            "keywords": [
+                "death",
+                "face",
+                "fairy tale",
+                "monster",
+                "skull"
+            ]
+        },
+        {
+            "code": "2620",
+            "char": "☠",
+            "name": "skull and crossbones",
+            "keywords": [
+                "crossbones",
+                "death",
+                "face",
+                "monster",
+                "skull and crossbones"
+            ]
+        },
+        {
+            "code": "1f4a9",
+            "char": "💩",
+            "name": "pile of poo",
+            "keywords": [
+                "dung",
+                "face",
+                "monster",
+                "poo",
+                "poop",
+                "pile of poo"
+            ]
+        },
+        {
+            "code": "1f921",
+            "char": "🤡",
+            "name": "clown face",
+            "keywords": [
+                "clown face",
+                "face"
+            ]
+        },
+        {
+            "code": "1f479",
+            "char": "👹",
+            "name": "ogre",
+            "keywords": [
+                "creature",
+                "face",
+                "fairy tale",
+                "fantasy",
+                "japanese",
+                "monster",
+                "ogre",
+                "troll"
+            ]
+        },
+        {
+            "code": "1f47a",
+            "char": "👺",
+            "name": "goblin",
+            "keywords": [
+                "creature",
+                "face",
+                "fairy tale",
+                "fantasy",
+                "goblin",
+                "japanese",
+                "monster"
+            ]
+        },
+        {
+            "code": "1f47b",
+            "char": "👻",
+            "name": "ghost",
+            "keywords": [
+                "creature",
+                "face",
+                "fairy tale",
+                "fantasy",
+                "ghost",
+                "monster"
+            ]
+        },
+        {
+            "code": "1f47d",
+            "char": "👽",
+            "name": "alien",
+            "keywords": [
+                "alien",
+                "creature",
+                "extraterrestrial",
+                "face",
+                "fantasy",
+                "ufo",
+                "space"
+            ]
+        },
+        {
+            "code": "1f47e",
+            "char": "👾",
+            "name": "alien monster",
+            "keywords": [
+                "alien monster",
+                "creature",
+                "extraterrestrial",
+                "face",
+                "monster",
+                "space",
+                "ufo"
+            ]
+        },
+        {
+            "code": "1f916",
+            "char": "🤖",
+            "name": "robot",
+            "keywords": [
+                "face",
+                "monster",
+                "robot"
+            ]
+        },
+        {
+            "code": "1f63a",
+            "char": "😺",
+            "name": "grinning cat",
+            "keywords": [
+                "cat",
+                "face",
+                "mouth",
+                "open",
+                "smile",
+                "grinning cat",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f638",
+            "char": "😸",
+            "name": "grinning cat with smiling eyes",
+            "keywords": [
+                "cat",
+                "eye",
+                "face",
+                "grinning car with smiling eyes",
+                "smile",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f639",
+            "char": "😹",
+            "name": "cat with tears of joy",
+            "keywords": [
+                "cat with tears of joy",
+                "face",
+                "joy",
+                "tear",
+                "lol",
+                "happy",
+                "laughing"
+            ]
+        },
+        {
+            "code": "1f63b",
+            "char": "😻",
+            "name": "smiling cat with heart-eyes",
+            "keywords": [
+                "cat",
+                "eye",
+                "face",
+                "heart",
+                "love",
+                "smile",
+                "smiling cat with heart-eyes",
+                "happy"
+            ]
+        },
+        {
+            "code": "1f63c",
+            "char": "😼",
+            "name": "cat with wry smile",
+            "keywords": [
+                "cat with wry smile",
+                "face",
+                "ironic",
+                "smile",
+                "wry"
+            ]
+        },
+        {
+            "code": "1f63d",
+            "char": "😽",
+            "name": "kissing cat",
+            "keywords": [
+                "cat",
+                "eye",
+                "face",
+                "kissing cat"
+            ]
+        },
+        {
+            "code": "1f640",
+            "char": "🙀",
+            "name": "weary cat",
+            "keywords": [
+                "cat",
+                "face",
+                "oh",
+                "surprised",
+                "weary cat"
+            ]
+        },
+        {
+            "code": "1f63f",
+            "char": "😿",
+            "name": "crying cat",
+            "keywords": [
+                "cat",
+                "crying cat",
+                "face",
+                "sad",
+                "tear",
+                "unhappy"
+            ]
+        },
+        {
+            "code": "1f63e",
+            "char": "😾",
+            "name": "pouting cat",
+            "keywords": [
+                "cat",
+                "face",
+                "pouting cat"
+            ]
+        },
+        {
+            "code": "1f648",
+            "char": "🙈",
+            "name": "see-no-evil monkey",
+            "keywords": [
+                "evil",
+                "face",
+                "forbidden",
+                "monkey",
+                "no",
+                "not",
+                "prohibited",
+                "see-no-evil monkey"
+            ]
+        },
+        {
+            "code": "1f649",
+            "char": "🙉",
+            "name": "hear-no-evil monkey",
+            "keywords": [
+                "evil",
+                "face",
+                "forbidden",
+                "hear-no-evil monkey",
+                "monkey",
+                "no",
+                "not",
+                "prohibited"
+            ]
+        },
+        {
+            "code": "1f64a",
+            "char": "🙊",
+            "name": "speak-no-evil monkey",
+            "keywords": [
+                "evil",
+                "face",
+                "forbidden",
+                "monkey",
+                "no",
+                "not",
+                "prohibited",
+                "speak-no-evil monkey"
+            ]
+        },
+        {
+            "code": "1f48b",
+            "char": "💋",
+            "name": "kiss mark",
+            "keywords": [
+                "kiss mark",
+                "lips",
+                "mark"
+            ]
+        },
+        {
+            "code": "1f48c",
+            "char": "💌",
+            "name": "love letter",
+            "keywords": [
+                "heart",
+                "letter",
+                "love letter",
+                "mail"
+            ]
+        },
+        {
+            "code": "1f498",
+            "char": "💘",
+            "name": "heart with arrow",
+            "keywords": [
+                "arrow",
+                "cupid",
+                "heart with arrow"
+            ]
+        },
+        {
+            "code": "1f49d",
+            "char": "💝",
+            "name": "heart with ribbon",
+            "keywords": [
+                "heart with ribbon",
+                "ribbon",
+                "valentine"
+            ]
+        },
+        {
+            "code": "1f496",
+            "char": "💖",
+            "name": "sparkling heart",
+            "keywords": [
+                "excited",
+                "heart",
+                "sparkle",
+                "sparkling heart"
+            ]
+        },
+        {
+            "code": "1f497",
+            "char": "💗",
+            "name": "growing heart",
+            "keywords": [
+                "excited",
+                "growing heart",
+                "heart",
+                "pulse",
+                "nervous"
+            ]
+        },
+        {
+            "code": "1f493",
+            "char": "💓",
+            "name": "beating heart",
+            "keywords": [
+                "beating heart",
+                "heart",
+                "heartbeat",
+                "pulsating"
+            ]
+        },
+        {
+            "code": "1f49e",
+            "char": "💞",
+            "name": "revolving hearts",
+            "keywords": [
+                "hearts",
+                "revolving hearts"
+            ]
+        },
+        {
+            "code": "1f495",
+            "char": "💕",
+            "name": "two hearts",
+            "keywords": [
+                "hearts",
+                "love",
+                "two hearts"
+            ]
+        },
+        {
+            "code": "1f49f",
+            "char": "💟",
+            "name": "heart decoration",
+            "keywords": [
+                "heart decoration",
+                "decoration"
+            ]
+        },
+        {
+            "code": "2763",
+            "char": "❣",
+            "name": "heart exclamation",
+            "keywords": [
+                "exclamation",
+                "heart exclamation",
+                "mark",
+                "punctuation"
+            ]
+        },
+        {
+            "code": "1f494",
+            "char": "💔",
+            "name": "broken heart",
+            "keywords": [
+                "break",
+                "broken heart",
+                "heart"
+            ]
+        },
+        {
+            "code": "2764",
+            "char": "❤",
+            "name": "red heart",
+            "keywords": [
+                "heart",
+                "red heart"
+            ]
+        },
+        {
+            "code": "1f9e1",
+            "char": "🧡",
+            "name": "orange heart",
+            "keywords": [
+                "orange heart",
+                "heart"
+            ]
+        },
+        {
+            "code": "1f49b",
+            "char": "💛",
+            "name": "yellow heart",
+            "keywords": [
+                "heart",
+                "yellow heart"
+            ]
+        },
+        {
+            "code": "1f49a",
+            "char": "💚",
+            "name": "green heart",
+            "keywords": [
+                "green heart",
+                "heart"
+            ]
+        },
+        {
+            "code": "1f499",
+            "char": "💙",
+            "name": "blue heart",
+            "keywords": [
+                "blue heart",
+                "heart"
+            ]
+        },
+        {
+            "code": "1f49c",
+            "char": "💜",
+            "name": "purple heart",
+            "keywords": [
+                "heart",
+                "purple heart"
+            ]
+        },
+        {
+            "code": "1f90e",
+            "char": "🤎",
+            "name": "brown heart",
+            "keywords": [
+                "brown heart",
+                "heart"
+            ]
+        },
+        {
+            "code": "1f5a4",
+            "char": "🖤",
+            "name": "black heart",
+            "keywords": [
+                "black heart",
+                "evil",
+                "heart",
+                "wicked"
+            ]
+        },
+        {
+            "code": "1f90d",
+            "char": "🤍",
+            "name": "white heart",
+            "keywords": [
+                "white heart",
+                "heart"
+            ]
+        },
+        {
+            "code": "1f4af",
+            "char": "💯",
+            "name": "hundred points",
+            "keywords": [
+                "100",
+                "full",
+                "hundred points",
+                "score"
+            ]
+        },
+        {
+            "code": "1f4a2",
+            "char": "💢",
+            "name": "anger symbol",
+            "keywords": [
+                "angry",
+                "comic",
+                "mad",
+                "anger symbol"
+            ]
+        },
+        {
+            "code": "1f4a5",
+            "char": "💥",
+            "name": "collision",
+            "keywords": [
+                "boom",
+                "collision",
+                "comic"
+            ]
+        },
+        {
+            "code": "1f4ab",
+            "char": "💫",
+            "name": "dizzy",
+            "keywords": [
+                "comic",
+                "dizzy",
+                "star"
+            ]
+        },
+        {
+            "code": "1f4a6",
+            "char": "💦",
+            "name": "sweat droplets",
+            "keywords": [
+                "comic",
+                "splashing",
+                "sweat droplets"
+            ]
+        },
+        {
+            "code": "1f4a8",
+            "char": "💨",
+            "name": "dashing away",
+            "keywords": [
+                "comic",
+                "dash",
+                "running",
+                "dashing away"
+            ]
+        },
+        {
+            "code": "1f573",
+            "char": "🕳",
+            "name": "hole",
+            "keywords": [
+                "hole"
+            ]
+        },
+        {
+            "code": "1f4a3",
+            "char": "💣",
+            "name": "bomb",
+            "keywords": [
+                "bomb",
+                "comic"
+            ]
+        },
+        {
+            "code": "1f4ac",
+            "char": "💬",
+            "name": "speech balloon",
+            "keywords": [
+                "balloon",
+                "bubble",
+                "comic",
+                "dialog",
+                "speech balloon"
+            ]
+        },
+        {
+            "code": "1f441-200d-1f5e8",
+            "char": "👁‍🗨",
+            "name": "eye in speech bubble",
+            "keywords": [
+                "bubble",
+                "eye in speech bubble",
+                "speech",
+                "witness"
+            ]
+        },
+        {
+            "code": "1f5e8",
+            "char": "🗨",
+            "name": "left speech bubble",
+            "keywords": [
+                "dialog",
+                "speech",
+                "left speech bubble"
+            ]
+        },
+        {
+            "code": "1f5ef",
+            "char": "🗯",
+            "name": "right anger bubble",
+            "keywords": [
+                "angry",
+                "balloon",
+                "bubble",
+                "mad",
+                "right anger bubble"
+            ]
+        },
+        {
+            "code": "1f4ad",
+            "char": "💭",
+            "name": "thought balloon",
+            "keywords": [
+                "balloon",
+                "bubble",
+                "comic",
+                "thought balloon"
+            ]
+        },
+        {
+            "code": "1f4a4",
+            "char": "💤",
+            "name": "zzz",
+            "keywords": [
+                "comic",
+                "sleep",
+                "zzz"
+            ]
+        }
+    ]
+}

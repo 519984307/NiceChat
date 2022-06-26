@@ -16,6 +16,11 @@ Item {
     height: 30
     width: 30
 
+    FontLoader {
+        id: awesome
+        source: "qrc:/font/iconfont.ttf"
+    }
+
     Rectangle{
         anchors.fill: parent
         color: mouseArea.containsMouse ? hoverColor : normalColor
@@ -25,12 +30,8 @@ Item {
         id:mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
         onClicked: clickEvent()
-    }
-
-    FontLoader {
-        id: awesome
-        source: "qrc:/font/iconfont.ttf"
     }
 
     Text {

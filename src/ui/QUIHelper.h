@@ -13,6 +13,7 @@
 #include <QImage>
 #include <QProcess>
 #include <QFile>
+#include <QTextDocument>
 #include "glog/logging.h"
 
 class QUIHelper : public QObject
@@ -48,6 +49,8 @@ public:
     Q_INVOKABLE QString sha512(const QString&);
     Q_INVOKABLE QString readFile(const QString &fileName);
     Q_INVOKABLE void setQuitOnLastWindowClosed(bool quit);
+
+    Q_INVOKABLE QString htmlToPlainText(const QString& html);
 
     Q_SIGNAL void checkUpdateResult(int status);
 

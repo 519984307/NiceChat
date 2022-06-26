@@ -66,6 +66,16 @@ QIM::QIM(QObject *parent)
             setUserInfo(QString::fromStdString(json));
         }else if(commandId == 0xFF){
             m_heart_count = 0;
+        }else if(commandId == 0x05){
+            im::proto::Friends friends;
+            friends.ParseFromString(buf.readBytes(frame.size()-1).data());
+            std::string json;
+            google::protobuf::util::MessageToJsonString(friends,&json);
+            setFriends(QString::fromStdString(json));
+        }else if(commandId == 0x01){
+            im::proto::Message message;
+            message.ParseFromString(buf.readBytes(frame.size()-1).data());
+            qDebug()<<QString::fromStdString(message.body());
         }
 
         //        if((unsigned char)frame[0] == 0x1){
@@ -133,4 +143,15 @@ void QIM::startHeartBeat(){
 void QIM::stopHeartBeat(){
     m_timer_heart->stop();
     m_timer_heart_count->stop();
+}
+
+void QIM::sendTextMessage(const QString& from,const QString& to,const QString& text){
+    im::proto::Message message;
+    message.set_body(text.toStdString());
+    message.set_from(from.toStdString());
+    message.set_to(to.toStdString());
+    sh::ByteBuf buf;
+    buf.writeChar(0x01);
+    buf.writeBytes(sh::ByteBuf(message.SerializeAsString()));
+    socket->sendBinaryMessage(QByteArray::fromStdString(buf.data()));
 }
