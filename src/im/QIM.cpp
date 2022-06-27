@@ -4,8 +4,10 @@ QIM::QIM(QObject *parent)
     : QObject{parent}
 {
     socket = new QWebSocket();
-    messageModel =new qx::QxModel<message>();
     m_timer_heart =new QTimer();
+
+    setMessageModel(new qx::QxModel<message>());
+
     connect(m_timer_heart,&QTimer::timeout,this,&QIM::heartBeat);
     m_timer_heart_count =new QTimer();
     connect(m_timer_heart_count,&QTimer::timeout,this,&QIM::heartBeatCount);
@@ -83,6 +85,7 @@ QIM::QIM(QObject *parent)
             im::proto::MessageList messageList;
             messageList.ParseFromString(buf.readBytes(frame.size()-1).data());
             m_databse.syncMessage(messageList);
+            m_messageModel->qxFetchAll();
         }
 
         //        if((unsigned char)frame[0] == 0x1){
@@ -117,7 +120,6 @@ QIM::~QIM()
     delete m_timer_heart;
     delete m_timer_heart_count;
     delete m_timer_reconnect;
-    delete messageModel;
 }
 
 void QIM::login(const QString& url,const QString& accid,const QString& token){
@@ -175,9 +177,8 @@ void QIM::sendSyncMessage(){
     sh::ByteBuf buf;
     buf.writeChar(0x06);
     socket->sendBinaryMessage(QByteArray::fromStdString(buf.data()));
-    messageModel->qxFetchAll();
 }
 
 void QIM::test(){
-    qDebug()<<"asd"<<messageModel->qxFetchAll();
+
 }

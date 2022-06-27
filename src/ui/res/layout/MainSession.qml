@@ -195,7 +195,7 @@ Item {
         ListView{
             id:listMessage
             width: parent.width
-            model: IM.getMessageModel()
+            model: IM.messageModel
             anchors{
                 top: panelDivider.bottom
                 bottom:panelBottomDivider.top

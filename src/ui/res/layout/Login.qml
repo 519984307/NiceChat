@@ -66,7 +66,7 @@ CusWindow {
             id:fieldUrl
             width: 180
             lableText: "URL"
-            text:"ws://192.168.2.40:9999/ws"
+            text:"ws://127.0.0.1:9999/ws"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top

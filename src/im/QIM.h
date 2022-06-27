@@ -21,10 +21,19 @@ class QIM : public QObject
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString userInfo READ userInfo WRITE setUserInfo NOTIFY userInfoChanged)
     Q_PROPERTY(QString friends READ friends WRITE setFriends NOTIFY friendsChanged)
+    Q_PROPERTY(qx::IxModel* messageModel READ messageModel WRITE setMessageModel NOTIFY messageModelChanged)
 public:
     explicit QIM(QObject *parent = nullptr);
     ~QIM();
 
+    Q_SIGNAL void messageModelChanged();
+    void setMessageModel(qx::IxModel* messageModel){
+        m_messageModel = messageModel;
+        Q_EMIT messageModelChanged();
+    }
+    [[nodiscard]] qx::IxModel* messageModel() const{
+        return m_messageModel;
+    }
 
     Q_SIGNAL void stateChanged();
     void setState(int state){
@@ -64,9 +73,6 @@ public:
     void heartBeatCount();
     void reconnect();
 
-    Q_INVOKABLE qx::IxModel* getMessageModel(){
-        return messageModel;
-    }
     Q_INVOKABLE void test();
     Q_INVOKABLE void startHeartBeat();
     Q_INVOKABLE void stopHeartBeat();
@@ -92,7 +98,7 @@ private:
     QString m_login_accid;
     QString m_login_token;
 
-    qx::IxModel* messageModel;
+    qx::IxModel* m_messageModel;
 
     int m_state = -1;
 };
