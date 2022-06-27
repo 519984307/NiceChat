@@ -328,15 +328,18 @@ Item {
                     rightMargin: 10
                 }
                 onClicked: {
-
                     var text  = messageInput.text
+                    if(text === ""){
+                        showToast("内容不能为空")
+                        return
+                    }
                     text = text.replace(
                                 /<img [^>]*src=['"]([^'"]+)[^>]*>/gi,
                                 function (match, capture) {
                                     return capture.replace("qrc:/emojiSvgs/", "[EMJ").replace(".svg", "]")
                                 })
-                    console.debug(UIHelper.htmlToPlainText(text))
-                    //                    IM.sendTextMessage(userInfo.accid,sessionModel[sessionListView.currentIndex].accid,messageInput.text)
+                    IM.sendTextMessage(userInfo.accid,sessionModel[sessionListView.currentIndex].accid,UIHelper.htmlToPlainText(text))
+                    messageInput.text= ""
                 }
             }
 

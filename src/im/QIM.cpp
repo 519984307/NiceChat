@@ -47,11 +47,13 @@ QIM::QIM(QObject *parent)
     connect(socket,&QWebSocket::binaryMessageReceived,this,[this](const QByteArray &frame){
         sh::ByteBuf buf(frame.toStdString());
         auto commandId = buf.readUnsignedChar();
+        qDebug()<<"--------------binaryMessageReceived-------------commandId:"<<commandId;
         if(commandId == 0x00){
             im::proto::Result result;
             result.ParseFromString(buf.readBytes(frame.size()-1).data());
             if(result.command_id() == 0x03){
                 if(result.success()){
+                    initDataBase(m_login_accid);
                     startHeartBeat();
                     Q_EMIT loginSuccess();
                 }else{
@@ -76,6 +78,10 @@ QIM::QIM(QObject *parent)
             im::proto::Message message;
             message.ParseFromString(buf.readBytes(frame.size()-1).data());
             qDebug()<<QString::fromStdString(message.body());
+        }else if(commandId == 0x07){
+            im::proto::MessageList messageList;
+            messageList.ParseFromString(buf.readBytes(frame.size()-1).data());
+            m_databse.syncMessage(messageList);
         }
 
         //        if((unsigned char)frame[0] == 0x1){
@@ -114,6 +120,8 @@ QIM::~QIM()
 
 void QIM::login(const QString& url,const QString& accid,const QString& token){
     m_ws = url+"?accid="+accid+"&token="+token;
+    m_login_accid = accid;
+    m_login_token = token;
     socket->open(m_ws);
 }
 
@@ -153,5 +161,16 @@ void QIM::sendTextMessage(const QString& from,const QString& to,const QString& t
     sh::ByteBuf buf;
     buf.writeChar(0x01);
     buf.writeBytes(sh::ByteBuf(message.SerializeAsString()));
+    socket->sendBinaryMessage(QByteArray::fromStdString(buf.data()));
+}
+
+void QIM::initDataBase(const QString &text){
+    m_databse.init(text.toUtf8().toBase64());
+    sendSyncMessage();
+}
+
+void QIM::sendSyncMessage(){
+    sh::ByteBuf buf;
+    buf.writeChar(0x06);
     socket->sendBinaryMessage(QByteArray::fromStdString(buf.data()));
 }

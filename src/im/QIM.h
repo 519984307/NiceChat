@@ -8,8 +8,10 @@
 #include <proto/user.pb.h>
 #include <proto/friends.pb.h>
 #include <proto/message.pb.h>
+#include <proto/messages.pb.h>
 #include <google/protobuf/util/json_util.h>
 #include <QtConcurrent>
+#include <database/IMDataBase.h>
 
 class QIM : public QObject
 {
@@ -64,6 +66,9 @@ public:
     Q_INVOKABLE void stopHeartBeat();
 
     Q_INVOKABLE void sendTextMessage(const QString& from,const QString& to,const QString& message);
+    Q_INVOKABLE void sendSyncMessage();
+private:
+    void initDataBase(const QString &text);
 
 private:
     QWebSocket *socket;
@@ -75,6 +80,11 @@ private:
     QTimer *m_timer_heart_count;
     QTimer *m_timer_reconnect;
     int m_heart_count = 0;
+
+    IMDataBase m_databse;
+
+    QString m_login_accid;
+    QString m_login_token;
 
     int m_state = -1;
 };
