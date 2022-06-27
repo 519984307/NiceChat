@@ -195,7 +195,7 @@ Item {
         ListView{
             id:listMessage
             width: parent.width
-            model: modelMessage
+            model: IM.getMessageModel()
             anchors{
                 top: panelDivider.bottom
                 bottom:panelBottomDivider.top
@@ -249,7 +249,7 @@ Item {
                     }
                     CusTextEdit{
                         id:itemMsgText
-                        text: getEmojiStr(model.text)
+                        text: getEmojiStr(model.body)
                         wrapMode: Text.WrapAnywhere
                         anchors.centerIn: parent
                         readOnly: true
@@ -278,6 +278,8 @@ Item {
                     id:btnEmoji
                     icon: "\ue7bb"
                     onClickEvent: {
+                        IM.test()
+                        console.debug("--==-=-=:"+listMessage.count)
                         emojiPicker.showDialog()
                     }
                     iconSize : 18

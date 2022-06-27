@@ -12,6 +12,8 @@
 #include <google/protobuf/util/json_util.h>
 #include <QtConcurrent>
 #include <database/IMDataBase.h>
+#include <database/MessageDo.h>
+#include <QxOrm_Impl.h>
 
 class QIM : public QObject
 {
@@ -62,6 +64,10 @@ public:
     void heartBeatCount();
     void reconnect();
 
+    Q_INVOKABLE qx::IxModel* getMessageModel(){
+        return messageModel;
+    }
+    Q_INVOKABLE void test();
     Q_INVOKABLE void startHeartBeat();
     Q_INVOKABLE void stopHeartBeat();
 
@@ -85,6 +91,8 @@ private:
 
     QString m_login_accid;
     QString m_login_token;
+
+    qx::IxModel* messageModel;
 
     int m_state = -1;
 };
