@@ -48,14 +48,14 @@ QIM::QIM(QObject *parent)
     });
 
     connect(socket,&QWebSocket::binaryMessageReceived,this,[this](const QByteArray &frame){
-        sh::ByteBuf buf(frame.toStdString());
         im::protocol::Packet packet;
-        packet.ParseFromString(buf.data());
+        packet.ParseFromString(frame.toStdString());
         auto type = packet.type();
         if(type == im::protocol::Login_rsp_){
             if(packet.login_rsp().result().success()){
                 startHeartBeat();
                 getFriends();
+                getProfile();
                 Q_EMIT loginSuccess();
             }else{
                 Q_EMIT loginFail();
@@ -65,14 +65,17 @@ QIM::QIM(QObject *parent)
                 m_heart_count = 0;
             }
         } else if(type == im::protocol::GetFriends_rsp_){
-//             qDebug()<<"--------------getfriends_rsp--------------------asd--------:"<<packet.getfriends_rsp().result().success();
-//            if(packet.getfriends_rsp().result().success()){
+            if(packet.getfriends_rsp().result().success()){
                 std::string json;
-                google::protobuf::util::MessageToJsonString(packet,&json);
-//                qDebug()<<packet.getfriends_rsp().friends_size();
-//                setFriends(QString::fromStdString(json));
-                qDebug()<<"--------------getfriends_rsp----------------------------:"<<QString::fromStdString(json);
-//            }
+                google::protobuf::util::MessageToJsonString(packet.getfriends_rsp(),&json);
+                setFriends(QString::fromStdString(json));
+            }
+        } else if(type == im::protocol::GetProfile_rsp_){
+            if(packet.getprofile_rsp().result().success()){
+                std::string json;
+                google::protobuf::util::MessageToJsonString(packet.getprofile_rsp().user(),&json);
+                setUserInfo(QString::fromStdString(json));
+            }
         }
 
 
@@ -188,11 +191,15 @@ void QIM::stopHeartBeat(){
 void QIM::sendTextMessage(const QString& from,const QString& to,const QString& text){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SendMsg_req_);
-    im::protocol::SendMsg_req message;
-    message.set_body(text.toStdString());
-    message.set_from(from.toStdString());
-    message.set_to(to.toStdString());
-    packet.set_allocated_sendmsg_req(&message);
+    im::protocol::SendMsg_req *msg = new im::protocol::SendMsg_req();
+    msg->set_uuid(QUuid::createUuid().toString().remove("{").remove("}").toStdString());
+    msg->set_body(text.toStdString());
+    msg->set_from(from.toStdString());
+    msg->set_to(to.toStdString());
+    msg->set_scene(0);
+    msg->set_type(0);
+    packet.set_allocated_sendmsg_req(msg);
+//    packet.unsafe_arena_set_allocated_sendmsg_req(&message);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 
@@ -210,6 +217,12 @@ void QIM::sendSyncMessage(){
 void QIM::getFriends(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::GetFriends_req_);
+    socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+}
+
+void QIM::getProfile(){
+    im::protocol::Packet packet;
+    packet.set_type(im::protocol::GetProfile_req_);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 

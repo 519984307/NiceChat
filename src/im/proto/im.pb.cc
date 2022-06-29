@@ -80,11 +80,11 @@ PROTOBUF_CONSTEXPR SendMsg_req::SendMsg_req(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_._has_bits_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.uuid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.from_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.to_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.body_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.ex_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.id_)*/uint64_t{0u}
   , /*decltype(_impl_.scene_)*/0u
   , /*decltype(_impl_.type_)*/0u
   , /*decltype(_impl_.time_)*/uint64_t{0u}} {}
@@ -137,6 +137,32 @@ struct GetFriends_rspDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetFriends_rspDefaultTypeInternal _GetFriends_rsp_default_instance_;
+PROTOBUF_CONSTEXPR GetProfile_req::GetProfile_req(
+    ::_pbi::ConstantInitialized) {}
+struct GetProfile_reqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetProfile_reqDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetProfile_reqDefaultTypeInternal() {}
+  union {
+    GetProfile_req _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetProfile_reqDefaultTypeInternal _GetProfile_req_default_instance_;
+PROTOBUF_CONSTEXPR GetProfile_rsp::GetProfile_rsp(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.result_)*/nullptr
+  , /*decltype(_impl_.user_)*/nullptr} {}
+struct GetProfile_rspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetProfile_rspDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetProfile_rspDefaultTypeInternal() {}
+  union {
+    GetProfile_rsp _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetProfile_rspDefaultTypeInternal _GetProfile_rsp_default_instance_;
 PROTOBUF_CONSTEXPR Result::Result(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_._has_bits_)*/{}
@@ -187,6 +213,8 @@ PROTOBUF_CONSTEXPR Packet::Packet(
   , /*decltype(_impl_.login_rsp_)*/nullptr
   , /*decltype(_impl_.getfriends_req_)*/nullptr
   , /*decltype(_impl_.getfriends_rsp_)*/nullptr
+  , /*decltype(_impl_.getprofile_req_)*/nullptr
+  , /*decltype(_impl_.getprofile_rsp_)*/nullptr
   , /*decltype(_impl_.type_)*/0} {}
 struct PacketDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PacketDefaultTypeInternal()
@@ -199,7 +227,7 @@ struct PacketDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PacketDefaultTypeInternal _Packet_default_instance_;
 }  // namespace protocol
 }  // namespace im
-static ::_pb::Metadata file_level_metadata_im_2eproto[11];
+static ::_pb::Metadata file_level_metadata_im_2eproto[13];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_im_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_im_2eproto = nullptr;
 
@@ -242,7 +270,7 @@ const uint32_t TableStruct_im_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(proto
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.uuid_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.from_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.scene_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.to_),
@@ -250,13 +278,13 @@ const uint32_t TableStruct_im_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(proto
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.body_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.ex_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_req, _impl_.time_),
-  4,
   0,
-  5,
   1,
-  6,
+  5,
   2,
+  6,
   3,
+  4,
   7,
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_rsp, _impl_._has_bits_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_rsp, _internal_metadata_),
@@ -278,10 +306,26 @@ const uint32_t TableStruct_im_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(proto
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::im::protocol::GetFriends_rsp, _impl_.friends_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::GetFriends_rsp, _impl_.result_),
-  ~0u,
+  PROTOBUF_FIELD_OFFSET(::im::protocol::GetFriends_rsp, _impl_.friends_),
   0,
+  ~0u,
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::im::protocol::GetProfile_req, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::im::protocol::GetProfile_rsp, _impl_._has_bits_),
+  PROTOBUF_FIELD_OFFSET(::im::protocol::GetProfile_rsp, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::im::protocol::GetProfile_rsp, _impl_.result_),
+  PROTOBUF_FIELD_OFFSET(::im::protocol::GetProfile_rsp, _impl_.user_),
+  0,
+  1,
   PROTOBUF_FIELD_OFFSET(::im::protocol::Result, _impl_._has_bits_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::Result, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -333,6 +377,8 @@ const uint32_t TableStruct_im_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(proto
   PROTOBUF_FIELD_OFFSET(::im::protocol::Packet, _impl_.login_rsp_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::Packet, _impl_.getfriends_req_),
   PROTOBUF_FIELD_OFFSET(::im::protocol::Packet, _impl_.getfriends_rsp_),
+  PROTOBUF_FIELD_OFFSET(::im::protocol::Packet, _impl_.getprofile_req_),
+  PROTOBUF_FIELD_OFFSET(::im::protocol::Packet, _impl_.getprofile_rsp_),
   ~0u,
   0,
   1,
@@ -342,6 +388,8 @@ const uint32_t TableStruct_im_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(proto
   5,
   6,
   7,
+  8,
+  9,
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::im::protocol::Heart_req)},
@@ -352,9 +400,11 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 54, 61, -1, sizeof(::im::protocol::SendMsg_rsp)},
   { 62, -1, -1, sizeof(::im::protocol::GetFriends_req)},
   { 68, 76, -1, sizeof(::im::protocol::GetFriends_rsp)},
-  { 78, 87, -1, sizeof(::im::protocol::Result)},
-  { 90, 105, -1, sizeof(::im::protocol::User)},
-  { 114, 129, -1, sizeof(::im::protocol::Packet)},
+  { 78, -1, -1, sizeof(::im::protocol::GetProfile_req)},
+  { 84, 92, -1, sizeof(::im::protocol::GetProfile_rsp)},
+  { 94, 103, -1, sizeof(::im::protocol::Result)},
+  { 106, 121, -1, sizeof(::im::protocol::User)},
+  { 130, 147, -1, sizeof(::im::protocol::Packet)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -366,6 +416,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::im::protocol::_SendMsg_rsp_default_instance_._instance,
   &::im::protocol::_GetFriends_req_default_instance_._instance,
   &::im::protocol::_GetFriends_rsp_default_instance_._instance,
+  &::im::protocol::_GetProfile_req_default_instance_._instance,
+  &::im::protocol::_GetProfile_rsp_default_instance_._instance,
   &::im::protocol::_Result_default_instance_._instance,
   &::im::protocol::_User_default_instance_._instance,
   &::im::protocol::_Packet_default_instance_._instance,
@@ -378,53 +430,61 @@ const char descriptor_table_protodef_im_2eproto[] PROTOBUF_SECTION_VARIABLE(prot
   "ccid\030\001 \001(\tH\000\210\001\001\022\022\n\005token\030\002 \001(\tH\001\210\001\001B\010\n\006_"
   "accidB\010\n\006_token\"@\n\tLogin_rsp\022(\n\006result\030\001"
   " \001(\0132\023.im.protocol.ResultH\000\210\001\001B\t\n\007_resul"
-  "t\"\343\001\n\013SendMsg_req\022\017\n\002id\030\001 \001(\004H\000\210\001\001\022\021\n\004fr"
-  "om\030\002 \001(\tH\001\210\001\001\022\022\n\005scene\030\003 \001(\rH\002\210\001\001\022\017\n\002to\030"
-  "\004 \001(\tH\003\210\001\001\022\021\n\004type\030\005 \001(\rH\004\210\001\001\022\021\n\004body\030\006 "
-  "\001(\tH\005\210\001\001\022\017\n\002ex\030\007 \001(\tH\006\210\001\001\022\021\n\004time\030\010 \001(\004H"
-  "\007\210\001\001B\005\n\003_idB\007\n\005_fromB\010\n\006_sceneB\005\n\003_toB\007\n"
-  "\005_typeB\007\n\005_bodyB\005\n\003_exB\007\n\005_time\"B\n\013SendM"
-  "sg_rsp\022(\n\006result\030\001 \001(\0132\023.im.protocol.Res"
-  "ultH\000\210\001\001B\t\n\007_result\"\020\n\016GetFriends_req\"i\n"
-  "\016GetFriends_rsp\022\"\n\007friends\030\001 \003(\0132\021.im.pr"
-  "otocol.User\022(\n\006result\030\002 \001(\0132\023.im.protoco"
-  "l.ResultH\000\210\001\001B\t\n\007_result\"t\n\006Result\022\024\n\007su"
-  "ccess\030\001 \001(\010H\000\210\001\001\022\026\n\terrorCode\030\002 \001(\rH\001\210\001\001"
-  "\022\025\n\010errorMsg\030\003 \001(\tH\002\210\001\001B\n\n\010_successB\014\n\n_"
-  "errorCodeB\013\n\t_errorMsg\"\216\002\n\004User\022\022\n\005accid"
-  "\030\001 \001(\tH\000\210\001\001\022\021\n\004name\030\002 \001(\tH\001\210\001\001\022\021\n\004icon\030\003"
-  " \001(\tH\002\210\001\001\022\021\n\004sign\030\004 \001(\tH\003\210\001\001\022\022\n\005birth\030\005 "
-  "\001(\tH\004\210\001\001\022\023\n\006mobile\030\006 \001(\tH\005\210\001\001\022\023\n\006gender\030"
-  "\007 \001(\rH\006\210\001\001\022\017\n\002ex\030\010 \001(\tH\007\210\001\001\022\023\n\006online\030\t "
-  "\001(\010H\010\210\001\001B\010\n\006_accidB\007\n\005_nameB\007\n\005_iconB\007\n\005"
-  "_signB\010\n\006_birthB\t\n\007_mobileB\t\n\007_genderB\005\n"
-  "\003_exB\t\n\007_online\"\307\004\n\006Packet\022#\n\004type\030\001 \001(\016"
-  "2\025.im.protocol.CMD_TYPE\022.\n\theart_req\030\002 \001"
-  "(\0132\026.im.protocol.Heart_reqH\000\210\001\001\022.\n\theart"
-  "_rsp\030\003 \001(\0132\026.im.protocol.Heart_rspH\001\210\001\001\022"
-  "2\n\013sendMsg_req\030\004 \001(\0132\030.im.protocol.SendM"
-  "sg_reqH\002\210\001\001\0222\n\013sendMsg_rsp\030\005 \001(\0132\030.im.pr"
-  "otocol.SendMsg_rspH\003\210\001\001\022.\n\tLogin_req\030\006 \001"
-  "(\0132\026.im.protocol.Login_reqH\004\210\001\001\022.\n\tLogin"
-  "_rsp\030\007 \001(\0132\026.im.protocol.Login_rspH\005\210\001\001\022"
-  "8\n\016GetFriends_req\030\010 \001(\0132\033.im.protocol.Ge"
-  "tFriends_reqH\006\210\001\001\0228\n\016GetFriends_rsp\030\t \001("
-  "\0132\033.im.protocol.GetFriends_rspH\007\210\001\001B\014\n\n_"
-  "heart_reqB\014\n\n_heart_rspB\016\n\014_sendMsg_reqB"
-  "\016\n\014_sendMsg_rspB\014\n\n_Login_reqB\014\n\n_Login_"
-  "rspB\021\n\017_GetFriends_reqB\021\n\017_GetFriends_rs"
-  "p*\230\001\n\010CMD_TYPE\022\016\n\nHeart_req_\020\000\022\016\n\nHeart_"
-  "rsp_\020\001\022\016\n\nLogin_req_\020\002\022\016\n\nLogin_rsp_\020\003\022\020"
-  "\n\014SendMsg_req_\020\004\022\020\n\014SendMsg_rsp_\020\005\022\023\n\017Ge"
-  "tFriends_req_\020\006\022\023\n\017GetFriends_rsp_\020\007B#\n\025"
-  "com.zhuzichu.protocolB\nIMProtocolb\006proto"
-  "3"
+  "t\"\347\001\n\013SendMsg_req\022\021\n\004uuid\030\001 \001(\tH\000\210\001\001\022\021\n\004"
+  "from\030\002 \001(\tH\001\210\001\001\022\022\n\005scene\030\003 \001(\rH\002\210\001\001\022\017\n\002t"
+  "o\030\004 \001(\tH\003\210\001\001\022\021\n\004type\030\005 \001(\rH\004\210\001\001\022\021\n\004body\030"
+  "\006 \001(\tH\005\210\001\001\022\017\n\002ex\030\007 \001(\tH\006\210\001\001\022\021\n\004time\030\010 \001("
+  "\004H\007\210\001\001B\007\n\005_uuidB\007\n\005_fromB\010\n\006_sceneB\005\n\003_t"
+  "oB\007\n\005_typeB\007\n\005_bodyB\005\n\003_exB\007\n\005_time\"B\n\013S"
+  "endMsg_rsp\022(\n\006result\030\001 \001(\0132\023.im.protocol"
+  ".ResultH\000\210\001\001B\t\n\007_result\"\020\n\016GetFriends_re"
+  "q\"i\n\016GetFriends_rsp\022(\n\006result\030\001 \001(\0132\023.im"
+  ".protocol.ResultH\000\210\001\001\022\"\n\007friends\030\002 \003(\0132\021"
+  ".im.protocol.UserB\t\n\007_result\"\020\n\016GetProfi"
+  "le_req\"t\n\016GetProfile_rsp\022(\n\006result\030\001 \001(\013"
+  "2\023.im.protocol.ResultH\000\210\001\001\022$\n\004user\030\002 \001(\013"
+  "2\021.im.protocol.UserH\001\210\001\001B\t\n\007_resultB\007\n\005_"
+  "user\"t\n\006Result\022\024\n\007success\030\001 \001(\010H\000\210\001\001\022\026\n\t"
+  "errorCode\030\002 \001(\rH\001\210\001\001\022\025\n\010errorMsg\030\003 \001(\tH\002"
+  "\210\001\001B\n\n\010_successB\014\n\n_errorCodeB\013\n\t_errorM"
+  "sg\"\216\002\n\004User\022\022\n\005accid\030\001 \001(\tH\000\210\001\001\022\021\n\004name\030"
+  "\002 \001(\tH\001\210\001\001\022\021\n\004icon\030\003 \001(\tH\002\210\001\001\022\021\n\004sign\030\004 "
+  "\001(\tH\003\210\001\001\022\022\n\005birth\030\005 \001(\tH\004\210\001\001\022\023\n\006mobile\030\006"
+  " \001(\tH\005\210\001\001\022\023\n\006gender\030\007 \001(\rH\006\210\001\001\022\017\n\002ex\030\010 \001"
+  "(\tH\007\210\001\001\022\023\n\006online\030\t \001(\010H\010\210\001\001B\010\n\006_accidB\007"
+  "\n\005_nameB\007\n\005_iconB\007\n\005_signB\010\n\006_birthB\t\n\007_"
+  "mobileB\t\n\007_genderB\005\n\003_exB\t\n\007_online\"\341\005\n\006"
+  "Packet\022#\n\004type\030\001 \001(\0162\025.im.protocol.CMD_T"
+  "YPE\022.\n\theart_req\030\002 \001(\0132\026.im.protocol.Hea"
+  "rt_reqH\000\210\001\001\022.\n\theart_rsp\030\003 \001(\0132\026.im.prot"
+  "ocol.Heart_rspH\001\210\001\001\0222\n\013sendMsg_req\030\004 \001(\013"
+  "2\030.im.protocol.SendMsg_reqH\002\210\001\001\0222\n\013sendM"
+  "sg_rsp\030\005 \001(\0132\030.im.protocol.SendMsg_rspH\003"
+  "\210\001\001\022.\n\tlogin_req\030\006 \001(\0132\026.im.protocol.Log"
+  "in_reqH\004\210\001\001\022.\n\tlogin_rsp\030\007 \001(\0132\026.im.prot"
+  "ocol.Login_rspH\005\210\001\001\0228\n\016getFriends_req\030\010 "
+  "\001(\0132\033.im.protocol.GetFriends_reqH\006\210\001\001\0228\n"
+  "\016getFriends_rsp\030\t \001(\0132\033.im.protocol.GetF"
+  "riends_rspH\007\210\001\001\0228\n\016getProfile_req\030\n \001(\0132"
+  "\033.im.protocol.GetProfile_reqH\010\210\001\001\0228\n\016get"
+  "Profile_rsp\030\013 \001(\0132\033.im.protocol.GetProfi"
+  "le_rspH\t\210\001\001B\014\n\n_heart_reqB\014\n\n_heart_rspB"
+  "\016\n\014_sendMsg_reqB\016\n\014_sendMsg_rspB\014\n\n_logi"
+  "n_reqB\014\n\n_login_rspB\021\n\017_getFriends_reqB\021"
+  "\n\017_getFriends_rspB\021\n\017_getProfile_reqB\021\n\017"
+  "_getProfile_rsp*\302\001\n\010CMD_TYPE\022\016\n\nHeart_re"
+  "q_\020\000\022\016\n\nHeart_rsp_\020\001\022\016\n\nLogin_req_\020\002\022\016\n\n"
+  "Login_rsp_\020\003\022\020\n\014SendMsg_req_\020\004\022\020\n\014SendMs"
+  "g_rsp_\020\005\022\023\n\017GetFriends_req_\020\006\022\023\n\017GetFrie"
+  "nds_rsp_\020\007\022\023\n\017GetProfile_req_\020\010\022\023\n\017GetPr"
+  "ofile_rsp_\020\tB#\n\025com.zhuzichu.protocolB\nI"
+  "MProtocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_im_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_im_2eproto = {
-    false, false, 1841, descriptor_table_protodef_im_2eproto,
+    false, false, 2177, descriptor_table_protodef_im_2eproto,
     "im.proto",
-    &descriptor_table_im_2eproto_once, nullptr, 0, 11,
+    &descriptor_table_im_2eproto_once, nullptr, 0, 13,
     schemas, file_default_instances, TableStruct_im_2eproto::offsets,
     file_level_metadata_im_2eproto, file_level_enum_descriptors_im_2eproto,
     file_level_service_descriptors_im_2eproto,
@@ -451,6 +511,8 @@ bool CMD_TYPE_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+    case 8:
+    case 9:
       return true;
     default:
       return false;
@@ -1192,26 +1254,26 @@ void Login_rsp::InternalSwap(Login_rsp* other) {
 class SendMsg_req::_Internal {
  public:
   using HasBits = decltype(std::declval<SendMsg_req>()._impl_._has_bits_);
-  static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
+  static void set_has_uuid(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
   }
   static void set_has_from(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
+    (*has_bits)[0] |= 2u;
   }
   static void set_has_scene(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
   }
   static void set_has_to(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_type(HasBits* has_bits) {
     (*has_bits)[0] |= 64u;
   }
   static void set_has_body(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
   static void set_has_ex(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_time(HasBits* has_bits) {
     (*has_bits)[0] |= 128u;
@@ -1230,16 +1292,24 @@ SendMsg_req::SendMsg_req(const SendMsg_req& from)
   new (&_impl_) Impl_{
       decltype(_impl_._has_bits_){from._impl_._has_bits_}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.uuid_){}
     , decltype(_impl_.from_){}
     , decltype(_impl_.to_){}
     , decltype(_impl_.body_){}
     , decltype(_impl_.ex_){}
-    , decltype(_impl_.id_){}
     , decltype(_impl_.scene_){}
     , decltype(_impl_.type_){}
     , decltype(_impl_.time_){}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.uuid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.uuid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (from._internal_has_uuid()) {
+    _this->_impl_.uuid_.Set(from._internal_uuid(), 
+      _this->GetArenaForAllocation());
+  }
   _impl_.from_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.from_.Set("", GetArenaForAllocation());
@@ -1272,9 +1342,9 @@ SendMsg_req::SendMsg_req(const SendMsg_req& from)
     _this->_impl_.ex_.Set(from._internal_ex(), 
       _this->GetArenaForAllocation());
   }
-  ::memcpy(&_impl_.id_, &from._impl_.id_,
+  ::memcpy(&_impl_.scene_, &from._impl_.scene_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.time_) -
-    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.time_));
+    reinterpret_cast<char*>(&_impl_.scene_)) + sizeof(_impl_.time_));
   // @@protoc_insertion_point(copy_constructor:im.protocol.SendMsg_req)
 }
 
@@ -1285,15 +1355,19 @@ inline void SendMsg_req::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.uuid_){}
     , decltype(_impl_.from_){}
     , decltype(_impl_.to_){}
     , decltype(_impl_.body_){}
     , decltype(_impl_.ex_){}
-    , decltype(_impl_.id_){uint64_t{0u}}
     , decltype(_impl_.scene_){0u}
     , decltype(_impl_.type_){0u}
     , decltype(_impl_.time_){uint64_t{0u}}
   };
+  _impl_.uuid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.uuid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.from_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.from_.Set("", GetArenaForAllocation());
@@ -1323,6 +1397,7 @@ SendMsg_req::~SendMsg_req() {
 
 inline void SendMsg_req::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.uuid_.Destroy();
   _impl_.from_.Destroy();
   _impl_.to_.Destroy();
   _impl_.body_.Destroy();
@@ -1340,24 +1415,27 @@ void SendMsg_req::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
-      _impl_.from_.ClearNonDefaultToEmpty();
+      _impl_.uuid_.ClearNonDefaultToEmpty();
     }
     if (cached_has_bits & 0x00000002u) {
-      _impl_.to_.ClearNonDefaultToEmpty();
+      _impl_.from_.ClearNonDefaultToEmpty();
     }
     if (cached_has_bits & 0x00000004u) {
-      _impl_.body_.ClearNonDefaultToEmpty();
+      _impl_.to_.ClearNonDefaultToEmpty();
     }
     if (cached_has_bits & 0x00000008u) {
+      _impl_.body_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000010u) {
       _impl_.ex_.ClearNonDefaultToEmpty();
     }
   }
-  if (cached_has_bits & 0x000000f0u) {
-    ::memset(&_impl_.id_, 0, static_cast<size_t>(
+  if (cached_has_bits & 0x000000e0u) {
+    ::memset(&_impl_.scene_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&_impl_.time_) -
-        reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.time_));
+        reinterpret_cast<char*>(&_impl_.scene_)) + sizeof(_impl_.time_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -1370,12 +1448,13 @@ const char* SendMsg_req::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // optional uint64 id = 1;
+      // optional string uuid = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _Internal::set_has_id(&has_bits);
-          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_uuid();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "im.protocol.SendMsg_req.uuid"));
         } else
           goto handle_unusual;
         continue;
@@ -1476,10 +1555,14 @@ uint8_t* SendMsg_req::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // optional uint64 id = 1;
-  if (_internal_has_id()) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_id(), target);
+  // optional string uuid = 1;
+  if (_internal_has_uuid()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_uuid().data(), static_cast<int>(this->_internal_uuid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "im.protocol.SendMsg_req.uuid");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_uuid(), target);
   }
 
   // optional string from = 2;
@@ -1558,37 +1641,39 @@ size_t SendMsg_req::ByteSizeLong() const {
 
   cached_has_bits = _impl_._has_bits_[0];
   if (cached_has_bits & 0x000000ffu) {
-    // optional string from = 2;
+    // optional string uuid = 1;
     if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_uuid());
+    }
+
+    // optional string from = 2;
+    if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_from());
     }
 
     // optional string to = 4;
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_to());
     }
 
     // optional string body = 6;
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_body());
     }
 
     // optional string ex = 7;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_ex());
-    }
-
-    // optional uint64 id = 1;
-    if (cached_has_bits & 0x00000010u) {
-      total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_id());
     }
 
     // optional uint32 scene = 3;
@@ -1628,19 +1713,19 @@ void SendMsg_req::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   cached_has_bits = from._impl_._has_bits_[0];
   if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
-      _this->_internal_set_from(from._internal_from());
+      _this->_internal_set_uuid(from._internal_uuid());
     }
     if (cached_has_bits & 0x00000002u) {
-      _this->_internal_set_to(from._internal_to());
+      _this->_internal_set_from(from._internal_from());
     }
     if (cached_has_bits & 0x00000004u) {
-      _this->_internal_set_body(from._internal_body());
+      _this->_internal_set_to(from._internal_to());
     }
     if (cached_has_bits & 0x00000008u) {
-      _this->_internal_set_ex(from._internal_ex());
+      _this->_internal_set_body(from._internal_body());
     }
     if (cached_has_bits & 0x00000010u) {
-      _this->_impl_.id_ = from._impl_.id_;
+      _this->_internal_set_ex(from._internal_ex());
     }
     if (cached_has_bits & 0x00000020u) {
       _this->_impl_.scene_ = from._impl_.scene_;
@@ -1674,6 +1759,10 @@ void SendMsg_req::InternalSwap(SendMsg_req* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.uuid_, lhs_arena,
+      &other->_impl_.uuid_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.from_, lhs_arena,
       &other->_impl_.from_, rhs_arena
   );
@@ -1692,9 +1781,9 @@ void SendMsg_req::InternalSwap(SendMsg_req* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(SendMsg_req, _impl_.time_)
       + sizeof(SendMsg_req::_impl_.time_)
-      - PROTOBUF_FIELD_OFFSET(SendMsg_req, _impl_.id_)>(
-          reinterpret_cast<char*>(&_impl_.id_),
-          reinterpret_cast<char*>(&other->_impl_.id_));
+      - PROTOBUF_FIELD_OFFSET(SendMsg_req, _impl_.scene_)>(
+          reinterpret_cast<char*>(&_impl_.scene_),
+          reinterpret_cast<char*>(&other->_impl_.scene_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SendMsg_req::GetMetadata() const {
@@ -2039,24 +2128,24 @@ const char* GetFriends_rsp::_InternalParse(const char* ptr, ::_pbi::ParseContext
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // repeated .im.protocol.User friends = 1;
+      // optional .im.protocol.Result result = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_result(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .im.protocol.User friends = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_friends(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      // optional .im.protocol.Result result = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_result(), ptr);
-          CHK_(ptr);
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -2090,19 +2179,19 @@ uint8_t* GetFriends_rsp::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated .im.protocol.User friends = 1;
+  // optional .im.protocol.Result result = 1;
+  if (_internal_has_result()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::result(this),
+        _Internal::result(this).GetCachedSize(), target, stream);
+  }
+
+  // repeated .im.protocol.User friends = 2;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_friends_size()); i < n; i++) {
     const auto& repfield = this->_internal_friends(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
-  }
-
-  // optional .im.protocol.Result result = 2;
-  if (_internal_has_result()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::result(this),
-        _Internal::result(this).GetCachedSize(), target, stream);
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2121,14 +2210,14 @@ size_t GetFriends_rsp::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .im.protocol.User friends = 1;
+  // repeated .im.protocol.User friends = 2;
   total_size += 1UL * this->_internal_friends_size();
   for (const auto& msg : this->_impl_.friends_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // optional .im.protocol.Result result = 2;
+  // optional .im.protocol.Result result = 1;
   cached_has_bits = _impl_._has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
@@ -2185,6 +2274,307 @@ void GetFriends_rsp::InternalSwap(GetFriends_rsp* other) {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_im_2eproto_getter, &descriptor_table_im_2eproto_once,
       file_level_metadata_im_2eproto[7]);
+}
+
+// ===================================================================
+
+class GetProfile_req::_Internal {
+ public:
+};
+
+GetProfile_req::GetProfile_req(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
+  // @@protoc_insertion_point(arena_constructor:im.protocol.GetProfile_req)
+}
+GetProfile_req::GetProfile_req(const GetProfile_req& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  GetProfile_req* const _this = this; (void)_this;
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:im.protocol.GetProfile_req)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetProfile_req::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetProfile_req::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetProfile_req::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_im_2eproto_getter, &descriptor_table_im_2eproto_once,
+      file_level_metadata_im_2eproto[8]);
+}
+
+// ===================================================================
+
+class GetProfile_rsp::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetProfile_rsp>()._impl_._has_bits_);
+  static const ::im::protocol::Result& result(const GetProfile_rsp* msg);
+  static void set_has_result(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static const ::im::protocol::User& user(const GetProfile_rsp* msg);
+  static void set_has_user(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+const ::im::protocol::Result&
+GetProfile_rsp::_Internal::result(const GetProfile_rsp* msg) {
+  return *msg->_impl_.result_;
+}
+const ::im::protocol::User&
+GetProfile_rsp::_Internal::user(const GetProfile_rsp* msg) {
+  return *msg->_impl_.user_;
+}
+GetProfile_rsp::GetProfile_rsp(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:im.protocol.GetProfile_rsp)
+}
+GetProfile_rsp::GetProfile_rsp(const GetProfile_rsp& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GetProfile_rsp* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.result_){nullptr}
+    , decltype(_impl_.user_){nullptr}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_result()) {
+    _this->_impl_.result_ = new ::im::protocol::Result(*from._impl_.result_);
+  }
+  if (from._internal_has_user()) {
+    _this->_impl_.user_ = new ::im::protocol::User(*from._impl_.user_);
+  }
+  // @@protoc_insertion_point(copy_constructor:im.protocol.GetProfile_rsp)
+}
+
+inline void GetProfile_rsp::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.result_){nullptr}
+    , decltype(_impl_.user_){nullptr}
+  };
+}
+
+GetProfile_rsp::~GetProfile_rsp() {
+  // @@protoc_insertion_point(destructor:im.protocol.GetProfile_rsp)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void GetProfile_rsp::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.result_;
+  if (this != internal_default_instance()) delete _impl_.user_;
+}
+
+void GetProfile_rsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void GetProfile_rsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:im.protocol.GetProfile_rsp)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      GOOGLE_DCHECK(_impl_.result_ != nullptr);
+      _impl_.result_->Clear();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      GOOGLE_DCHECK(_impl_.user_ != nullptr);
+      _impl_.user_->Clear();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GetProfile_rsp::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // optional .im.protocol.Result result = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_result(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional .im.protocol.User user = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_user(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _impl_._has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* GetProfile_rsp::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:im.protocol.GetProfile_rsp)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // optional .im.protocol.Result result = 1;
+  if (_internal_has_result()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::result(this),
+        _Internal::result(this).GetCachedSize(), target, stream);
+  }
+
+  // optional .im.protocol.User user = 2;
+  if (_internal_has_user()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::user(this),
+        _Internal::user(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:im.protocol.GetProfile_rsp)
+  return target;
+}
+
+size_t GetProfile_rsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:im.protocol.GetProfile_rsp)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // optional .im.protocol.Result result = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.result_);
+    }
+
+    // optional .im.protocol.User user = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.user_);
+    }
+
+  }
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetProfile_rsp::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GetProfile_rsp::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetProfile_rsp::GetClassData() const { return &_class_data_; }
+
+
+void GetProfile_rsp::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GetProfile_rsp*>(&to_msg);
+  auto& from = static_cast<const GetProfile_rsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:im.protocol.GetProfile_rsp)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _this->_internal_mutable_result()->::im::protocol::Result::MergeFrom(
+          from._internal_result());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _this->_internal_mutable_user()->::im::protocol::User::MergeFrom(
+          from._internal_user());
+    }
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetProfile_rsp::CopyFrom(const GetProfile_rsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:im.protocol.GetProfile_rsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetProfile_rsp::IsInitialized() const {
+  return true;
+}
+
+void GetProfile_rsp::InternalSwap(GetProfile_rsp* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GetProfile_rsp, _impl_.user_)
+      + sizeof(GetProfile_rsp::_impl_.user_)
+      - PROTOBUF_FIELD_OFFSET(GetProfile_rsp, _impl_.result_)>(
+          reinterpret_cast<char*>(&_impl_.result_),
+          reinterpret_cast<char*>(&other->_impl_.result_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetProfile_rsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_im_2eproto_getter, &descriptor_table_im_2eproto_once,
+      file_level_metadata_im_2eproto[9]);
 }
 
 // ===================================================================
@@ -2477,7 +2867,7 @@ void Result::InternalSwap(Result* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Result::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_im_2eproto_getter, &descriptor_table_im_2eproto_once,
-      file_level_metadata_im_2eproto[8]);
+      file_level_metadata_im_2eproto[10]);
 }
 
 // ===================================================================
@@ -3099,7 +3489,7 @@ void User::InternalSwap(User* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata User::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_im_2eproto_getter, &descriptor_table_im_2eproto_once,
-      file_level_metadata_im_2eproto[9]);
+      file_level_metadata_im_2eproto[11]);
 }
 
 // ===================================================================
@@ -3139,6 +3529,14 @@ class Packet::_Internal {
   static void set_has_getfriends_rsp(HasBits* has_bits) {
     (*has_bits)[0] |= 128u;
   }
+  static const ::im::protocol::GetProfile_req& getprofile_req(const Packet* msg);
+  static void set_has_getprofile_req(HasBits* has_bits) {
+    (*has_bits)[0] |= 256u;
+  }
+  static const ::im::protocol::GetProfile_rsp& getprofile_rsp(const Packet* msg);
+  static void set_has_getprofile_rsp(HasBits* has_bits) {
+    (*has_bits)[0] |= 512u;
+  }
 };
 
 const ::im::protocol::Heart_req&
@@ -3173,6 +3571,14 @@ const ::im::protocol::GetFriends_rsp&
 Packet::_Internal::getfriends_rsp(const Packet* msg) {
   return *msg->_impl_.getfriends_rsp_;
 }
+const ::im::protocol::GetProfile_req&
+Packet::_Internal::getprofile_req(const Packet* msg) {
+  return *msg->_impl_.getprofile_req_;
+}
+const ::im::protocol::GetProfile_rsp&
+Packet::_Internal::getprofile_rsp(const Packet* msg) {
+  return *msg->_impl_.getprofile_rsp_;
+}
 Packet::Packet(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -3193,6 +3599,8 @@ Packet::Packet(const Packet& from)
     , decltype(_impl_.login_rsp_){nullptr}
     , decltype(_impl_.getfriends_req_){nullptr}
     , decltype(_impl_.getfriends_rsp_){nullptr}
+    , decltype(_impl_.getprofile_req_){nullptr}
+    , decltype(_impl_.getprofile_rsp_){nullptr}
     , decltype(_impl_.type_){}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -3220,6 +3628,12 @@ Packet::Packet(const Packet& from)
   if (from._internal_has_getfriends_rsp()) {
     _this->_impl_.getfriends_rsp_ = new ::im::protocol::GetFriends_rsp(*from._impl_.getfriends_rsp_);
   }
+  if (from._internal_has_getprofile_req()) {
+    _this->_impl_.getprofile_req_ = new ::im::protocol::GetProfile_req(*from._impl_.getprofile_req_);
+  }
+  if (from._internal_has_getprofile_rsp()) {
+    _this->_impl_.getprofile_rsp_ = new ::im::protocol::GetProfile_rsp(*from._impl_.getprofile_rsp_);
+  }
   _this->_impl_.type_ = from._impl_.type_;
   // @@protoc_insertion_point(copy_constructor:im.protocol.Packet)
 }
@@ -3239,6 +3653,8 @@ inline void Packet::SharedCtor(
     , decltype(_impl_.login_rsp_){nullptr}
     , decltype(_impl_.getfriends_req_){nullptr}
     , decltype(_impl_.getfriends_rsp_){nullptr}
+    , decltype(_impl_.getprofile_req_){nullptr}
+    , decltype(_impl_.getprofile_rsp_){nullptr}
     , decltype(_impl_.type_){0}
   };
 }
@@ -3262,6 +3678,8 @@ inline void Packet::SharedDtor() {
   if (this != internal_default_instance()) delete _impl_.login_rsp_;
   if (this != internal_default_instance()) delete _impl_.getfriends_req_;
   if (this != internal_default_instance()) delete _impl_.getfriends_rsp_;
+  if (this != internal_default_instance()) delete _impl_.getprofile_req_;
+  if (this != internal_default_instance()) delete _impl_.getprofile_rsp_;
 }
 
 void Packet::SetCachedSize(int size) const {
@@ -3307,6 +3725,16 @@ void Packet::Clear() {
     if (cached_has_bits & 0x00000080u) {
       GOOGLE_DCHECK(_impl_.getfriends_rsp_ != nullptr);
       _impl_.getfriends_rsp_->Clear();
+    }
+  }
+  if (cached_has_bits & 0x00000300u) {
+    if (cached_has_bits & 0x00000100u) {
+      GOOGLE_DCHECK(_impl_.getprofile_req_ != nullptr);
+      _impl_.getprofile_req_->Clear();
+    }
+    if (cached_has_bits & 0x00000200u) {
+      GOOGLE_DCHECK(_impl_.getprofile_rsp_ != nullptr);
+      _impl_.getprofile_rsp_->Clear();
     }
   }
   _impl_.type_ = 0;
@@ -3362,7 +3790,7 @@ const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // optional .im.protocol.Login_req Login_req = 6;
+      // optional .im.protocol.Login_req login_req = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
           ptr = ctx->ParseMessage(_internal_mutable_login_req(), ptr);
@@ -3370,7 +3798,7 @@ const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // optional .im.protocol.Login_rsp Login_rsp = 7;
+      // optional .im.protocol.Login_rsp login_rsp = 7;
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
           ptr = ctx->ParseMessage(_internal_mutable_login_rsp(), ptr);
@@ -3378,7 +3806,7 @@ const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // optional .im.protocol.GetFriends_req GetFriends_req = 8;
+      // optional .im.protocol.GetFriends_req getFriends_req = 8;
       case 8:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
           ptr = ctx->ParseMessage(_internal_mutable_getfriends_req(), ptr);
@@ -3386,10 +3814,26 @@ const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // optional .im.protocol.GetFriends_rsp GetFriends_rsp = 9;
+      // optional .im.protocol.GetFriends_rsp getFriends_rsp = 9;
       case 9:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
           ptr = ctx->ParseMessage(_internal_mutable_getfriends_rsp(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional .im.protocol.GetProfile_req getProfile_req = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
+          ptr = ctx->ParseMessage(_internal_mutable_getprofile_req(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional .im.protocol.GetProfile_rsp getProfile_rsp = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 90)) {
+          ptr = ctx->ParseMessage(_internal_mutable_getprofile_rsp(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3459,32 +3903,46 @@ uint8_t* Packet::_InternalSerialize(
         _Internal::sendmsg_rsp(this).GetCachedSize(), target, stream);
   }
 
-  // optional .im.protocol.Login_req Login_req = 6;
+  // optional .im.protocol.Login_req login_req = 6;
   if (_internal_has_login_req()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(6, _Internal::login_req(this),
         _Internal::login_req(this).GetCachedSize(), target, stream);
   }
 
-  // optional .im.protocol.Login_rsp Login_rsp = 7;
+  // optional .im.protocol.Login_rsp login_rsp = 7;
   if (_internal_has_login_rsp()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(7, _Internal::login_rsp(this),
         _Internal::login_rsp(this).GetCachedSize(), target, stream);
   }
 
-  // optional .im.protocol.GetFriends_req GetFriends_req = 8;
+  // optional .im.protocol.GetFriends_req getFriends_req = 8;
   if (_internal_has_getfriends_req()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(8, _Internal::getfriends_req(this),
         _Internal::getfriends_req(this).GetCachedSize(), target, stream);
   }
 
-  // optional .im.protocol.GetFriends_rsp GetFriends_rsp = 9;
+  // optional .im.protocol.GetFriends_rsp getFriends_rsp = 9;
   if (_internal_has_getfriends_rsp()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(9, _Internal::getfriends_rsp(this),
         _Internal::getfriends_rsp(this).GetCachedSize(), target, stream);
+  }
+
+  // optional .im.protocol.GetProfile_req getProfile_req = 10;
+  if (_internal_has_getprofile_req()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(10, _Internal::getprofile_req(this),
+        _Internal::getprofile_req(this).GetCachedSize(), target, stream);
+  }
+
+  // optional .im.protocol.GetProfile_rsp getProfile_rsp = 11;
+  if (_internal_has_getprofile_rsp()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(11, _Internal::getprofile_rsp(this),
+        _Internal::getprofile_rsp(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3533,32 +3991,48 @@ size_t Packet::ByteSizeLong() const {
           *_impl_.sendmsg_rsp_);
     }
 
-    // optional .im.protocol.Login_req Login_req = 6;
+    // optional .im.protocol.Login_req login_req = 6;
     if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *_impl_.login_req_);
     }
 
-    // optional .im.protocol.Login_rsp Login_rsp = 7;
+    // optional .im.protocol.Login_rsp login_rsp = 7;
     if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *_impl_.login_rsp_);
     }
 
-    // optional .im.protocol.GetFriends_req GetFriends_req = 8;
+    // optional .im.protocol.GetFriends_req getFriends_req = 8;
     if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *_impl_.getfriends_req_);
     }
 
-    // optional .im.protocol.GetFriends_rsp GetFriends_rsp = 9;
+    // optional .im.protocol.GetFriends_rsp getFriends_rsp = 9;
     if (cached_has_bits & 0x00000080u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *_impl_.getfriends_rsp_);
+    }
+
+  }
+  if (cached_has_bits & 0x00000300u) {
+    // optional .im.protocol.GetProfile_req getProfile_req = 10;
+    if (cached_has_bits & 0x00000100u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.getprofile_req_);
+    }
+
+    // optional .im.protocol.GetProfile_rsp getProfile_rsp = 11;
+    if (cached_has_bits & 0x00000200u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.getprofile_rsp_);
     }
 
   }
@@ -3621,6 +4095,16 @@ void Packet::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
           from._internal_getfriends_rsp());
     }
   }
+  if (cached_has_bits & 0x00000300u) {
+    if (cached_has_bits & 0x00000100u) {
+      _this->_internal_mutable_getprofile_req()->::im::protocol::GetProfile_req::MergeFrom(
+          from._internal_getprofile_req());
+    }
+    if (cached_has_bits & 0x00000200u) {
+      _this->_internal_mutable_getprofile_rsp()->::im::protocol::GetProfile_rsp::MergeFrom(
+          from._internal_getprofile_rsp());
+    }
+  }
   if (from._internal_type() != 0) {
     _this->_internal_set_type(from._internal_type());
   }
@@ -3653,7 +4137,7 @@ void Packet::InternalSwap(Packet* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Packet::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_im_2eproto_getter, &descriptor_table_im_2eproto_once,
-      file_level_metadata_im_2eproto[10]);
+      file_level_metadata_im_2eproto[12]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -3691,6 +4175,14 @@ Arena::CreateMaybeMessage< ::im::protocol::GetFriends_req >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::im::protocol::GetFriends_rsp*
 Arena::CreateMaybeMessage< ::im::protocol::GetFriends_rsp >(Arena* arena) {
   return Arena::CreateMessageInternal< ::im::protocol::GetFriends_rsp >(arena);
+}
+template<> PROTOBUF_NOINLINE ::im::protocol::GetProfile_req*
+Arena::CreateMaybeMessage< ::im::protocol::GetProfile_req >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::im::protocol::GetProfile_req >(arena);
+}
+template<> PROTOBUF_NOINLINE ::im::protocol::GetProfile_rsp*
+Arena::CreateMaybeMessage< ::im::protocol::GetProfile_rsp >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::im::protocol::GetProfile_rsp >(arena);
 }
 template<> PROTOBUF_NOINLINE ::im::protocol::Result*
 Arena::CreateMaybeMessage< ::im::protocol::Result >(Arena* arena) {

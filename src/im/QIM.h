@@ -10,6 +10,7 @@
 #include <database/MessageDo.h>
 #include <QxOrm_Impl.h>
 #include <proto/im.pb.h>
+#include <QUuid>
 
 class QIM : public QObject
 {
@@ -77,6 +78,7 @@ public:
     Q_INVOKABLE void sendSyncMessage();
 
     Q_INVOKABLE void getFriends();
+    Q_INVOKABLE void getProfile();
 private:
     void initDataBase(const QString &text);
 

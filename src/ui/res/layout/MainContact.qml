@@ -9,7 +9,7 @@ import "../view"
 
 Item {
 
-    property var friends : JSON.parse(IM.friends).users
+    property var friends : JSON.parse(IM.friends).friends
 
     property var user: friends[friendListView.currentIndex]
 
