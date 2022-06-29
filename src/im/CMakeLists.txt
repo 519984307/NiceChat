@@ -12,6 +12,7 @@
     ./proto/team.pb.h
     ./proto/user.pb.h
     ./proto/user.pb.h
+    ./proto/im.pb.h
     ./proto/friends.pb.h
     ./database/IMDataBase.h
     ./database/MessageDo.h
@@ -28,6 +29,7 @@ set(IM_SRS
     ./proto/session.pb.cc
     ./proto/team.pb.cc
     ./proto/user.pb.cc
+    ./proto/im.pb.cc
     ./proto/friends.pb.cc
     ./database/IMDataBase.cpp
     ./database/MessageDo.cpp

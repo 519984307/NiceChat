@@ -4,16 +4,12 @@
 #include <QObject>
 #include <QWebSocket>
 #include <ByteBuf.h>
-#include <proto/result.pb.h>
-#include <proto/user.pb.h>
-#include <proto/friends.pb.h>
-#include <proto/message.pb.h>
-#include <proto/messages.pb.h>
 #include <google/protobuf/util/json_util.h>
 #include <QtConcurrent>
 #include <database/IMDataBase.h>
 #include <database/MessageDo.h>
 #include <QxOrm_Impl.h>
+#include <proto/im.pb.h>
 
 class QIM : public QObject
 {
@@ -79,6 +75,8 @@ public:
 
     Q_INVOKABLE void sendTextMessage(const QString& from,const QString& to,const QString& message);
     Q_INVOKABLE void sendSyncMessage();
+
+    Q_INVOKABLE void getFriends();
 private:
     void initDataBase(const QString &text);
 
