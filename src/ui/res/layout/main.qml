@@ -64,7 +64,7 @@ CusWindow {
             }
             ListElement{
                 name:"联系人"
-                icon:"\ue7fe"
+                icon:"\ue9d2"
                 fontSize:24
                 url:"qrc:/layout/MainContact.qml"
             }

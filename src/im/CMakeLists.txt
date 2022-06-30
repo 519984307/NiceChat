@@ -4,16 +4,7 @@
     precompiled.h
     export.h
     IMGlobalStatic.h
-    ./proto/result.pb.h
-    ./proto/message.pb.h
-    ./proto/messages.pb.h
-    ./proto/online.pb.h
-    ./proto/session.pb.h
-    ./proto/team.pb.h
-    ./proto/user.pb.h
-    ./proto/user.pb.h
     ./proto/im.pb.h
-    ./proto/friends.pb.h
     ./database/IMDataBase.h
     ./database/MessageDo.h
 )
@@ -22,15 +13,7 @@ set(IM_SRS
     ByteBuf.cpp
     QIM.cpp
     IMGlobalStatic.cpp
-    ./proto/result.pb.cc
-    ./proto/message.pb.cc
-    ./proto/messages.pb.cc
-    ./proto/online.pb.cc
-    ./proto/session.pb.cc
-    ./proto/team.pb.cc
-    ./proto/user.pb.cc
     ./proto/im.pb.cc
-    ./proto/friends.pb.cc
     ./database/IMDataBase.cpp
     ./database/MessageDo.cpp
 )

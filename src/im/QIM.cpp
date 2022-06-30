@@ -56,6 +56,7 @@ QIM::QIM(QObject *parent)
                 startHeartBeat();
                 getFriends();
                 getProfile();
+                initDataBase(m_login_accid);
                 Q_EMIT loginSuccess();
             }else{
                 Q_EMIT loginFail();
@@ -76,61 +77,15 @@ QIM::QIM(QObject *parent)
                 google::protobuf::util::MessageToJsonString(packet.getprofile_rsp().user(),&json);
                 setUserInfo(QString::fromStdString(json));
             }
+        } else if(type == im::protocol::SyncMsg_rsp_){
+            if(packet.syncmsg_rsp().result().success()){
+                std::string json;
+                google::protobuf::util::MessageToJsonString(packet.syncmsg_rsp(),&json);
+                qDebug()<<QString::fromStdString(json);
+                m_databse.syncMessage(packet.syncmsg_rsp().messages());
+                m_messageModel->qxFetchAll();
+            }
         }
-
-
-        //        auto commandId = buf.readUnsignedChar();
-        //        qDebug()<<"--------------binaryMessageReceived-------------commandId:"<<commandId;
-        //        if(commandId == 0x00){
-        //            im::proto::Result result;
-        //            result.ParseFromString(buf.readBytes(frame.size()-1).data());
-        //            if(result.command_id() == 0x03){
-        //                if(result.success()){
-        //                    initDataBase(m_login_accid);
-        //                    startHeartBeat();
-        //                    Q_EMIT loginSuccess();
-        //                }else{
-        //                    Q_EMIT loginFail();
-        //                }
-        //            }
-        //        }else if(commandId == 0x04){
-        //            im::proto::User user;
-        //            user.ParseFromString(buf.readBytes(frame.size()-1).data());
-        //            std::string json;
-        //            google::protobuf::util::MessageToJsonString(user,&json);
-        //            setUserInfo(QString::fromStdString(json));
-        //        }else if(commandId == 0xFF){
-        //            m_heart_count = 0;
-        //        }else if(commandId == 0x05){
-        //            im::proto::Friends friends;
-        //            friends.ParseFromString(buf.readBytes(frame.size()-1).data());
-        //            std::string json;
-        //            google::protobuf::util::MessageToJsonString(friends,&json);
-        //            setFriends(QString::fromStdString(json));
-        //        }else if(commandId == 0x01){
-        //            im::proto::Message message;
-        //            message.ParseFromString(buf.readBytes(frame.size()-1).data());
-        //            qDebug()<<QString::fromStdString(message.body());
-        //        }else if(commandId == 0x07){
-        //            im::proto::MessageList messageList;
-        //            messageList.ParseFromString(buf.readBytes(frame.size()-1).data());
-        //            m_databse.syncMessage(messageList);
-        //            m_messageModel->qxFetchAll();
-        //        }
-
-        //        if((unsigned char)frame[0] == 0x1){
-        //            QByteArray data = frame.sliced(1,frame.size()-1);
-        //            im::proto::Message message;
-        //            message.ParseFromString(data.toStdString());
-        //            Q_EMIT textMessageReceived(QString::fromStdString(message.body()));
-        //        }else if((unsigned char)frame[0] == 0x2){
-        //            QByteArray data = frame.sliced(1,frame.size()-1);
-        //            im::proto::Online online;
-        //            online.ParseFromString(data.toStdString());
-        //            std::string json;
-        //            google::protobuf::util::MessageToJsonString(online,&json);
-        //            Q_EMIT lineStatusChanged(QString::fromStdString(json));
-        //        }
     });
 
     connect(socket, QOverload<QAbstractSocket::SocketError>::of(&QWebSocket::error),this,
@@ -191,15 +146,17 @@ void QIM::stopHeartBeat(){
 void QIM::sendTextMessage(const QString& from,const QString& to,const QString& text){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SendMsg_req_);
-    im::protocol::SendMsg_req *msg = new im::protocol::SendMsg_req();
+    im::protocol::SendMsg_req *msg_req = new im::protocol::SendMsg_req();
+    im::protocol::Message *msg = new im::protocol::Message();
     msg->set_uuid(QUuid::createUuid().toString().remove("{").remove("}").toStdString());
     msg->set_body(text.toStdString());
     msg->set_from(from.toStdString());
     msg->set_to(to.toStdString());
     msg->set_scene(0);
     msg->set_type(0);
-    packet.set_allocated_sendmsg_req(msg);
-//    packet.unsafe_arena_set_allocated_sendmsg_req(&message);
+    msg_req->set_allocated_message(msg);
+    packet.set_allocated_sendmsg_req(msg_req);
+    m_databse.insertMsg(msg);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 
@@ -209,9 +166,12 @@ void QIM::initDataBase(const QString &text){
 }
 
 void QIM::sendSyncMessage(){
-    sh::ByteBuf buf;
-    buf.writeChar(0x06);
-    socket->sendBinaryMessage(QByteArray::fromStdString(buf.data()));
+    im::protocol::Packet packet;
+    packet.set_type(im::protocol::SyncMsg_req_);
+    im::protocol::SyncMsg_req *req = new im::protocol::SyncMsg_req();
+    req->set_lastmsgtime(m_databse.getMsgLastTime());
+    packet.set_allocated_syncmsg_req(req);
+    socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 
 void QIM::getFriends(){

@@ -363,7 +363,7 @@ Item {
                 anchors.centerIn: parent
                 font.family: awesome.name
                 font.pixelSize: 25
-                text:"\ue64c"
+                text:"\ue6e6"
             }
 
         }
