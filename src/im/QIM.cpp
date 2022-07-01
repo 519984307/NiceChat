@@ -7,6 +7,7 @@ QIM::QIM(QObject *parent)
     m_timer_heart =new QTimer();
 
     setMessageModel(new qx::QxModel<message>());
+    setSessionModel(new qx::QxModel<session>());
 
     connect(m_timer_heart,&QTimer::timeout,this,&QIM::heartBeat);
     m_timer_heart_count =new QTimer();
@@ -84,6 +85,7 @@ QIM::QIM(QObject *parent)
                 qDebug()<<QString::fromStdString(json);
                 m_databse.syncMessage(packet.syncmsg_rsp().messages());
                 m_messageModel->qxFetchAll();
+                m_sessionModel->qxFetchAll();
             }
         }
     });
@@ -152,6 +154,7 @@ void QIM::sendTextMessage(const QString& from,const QString& to,const QString& t
     msg->set_body(text.toStdString());
     msg->set_from(from.toStdString());
     msg->set_to(to.toStdString());
+    msg->set_sessionid(to.toStdString());
     msg->set_scene(0);
     msg->set_type(0);
     msg_req->set_allocated_message(msg);
@@ -184,6 +187,16 @@ void QIM::getProfile(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::GetProfile_req_);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+}
+
+void QIM::saveSession(const QString& accid){
+    m_databse.saveSession(accid);
+    m_sessionModel->qxFetchAll();
+}
+
+void QIM::updateMessageModel(const QString& accid){
+    qx_query query(QString::fromStdString("where from_accid='%1' or to_accod='%1'").arg(accid));
+    m_messageModel->qxFetchByQuery(query);
 }
 
 void QIM::test(){

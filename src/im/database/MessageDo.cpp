@@ -13,5 +13,6 @@ namespace qx {
         t.data(& message::m_type, "type");
         t.data(& message::m_ex, "ex");
         t.data(& message::m_time, "time");
+        t.data(& message::m_session_id, "session_id");
     }
 }

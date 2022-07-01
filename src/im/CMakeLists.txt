@@ -7,6 +7,7 @@
     ./proto/im.pb.h
     ./database/IMDataBase.h
     ./database/MessageDo.h
+    ./database/SessionDo.h
 )
 
 set(IM_SRS
@@ -16,6 +17,7 @@ set(IM_SRS
     ./proto/im.pb.cc
     ./database/IMDataBase.cpp
     ./database/MessageDo.cpp
+    ./database/SessionDo.cpp
 )
 
 add_library(IM STATIC ${IM_SRS})

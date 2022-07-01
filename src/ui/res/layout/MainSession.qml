@@ -10,9 +10,9 @@ import "../storage"
 
 Item {
 
-    property var sessionModel : []
-
     property var userInfo : JSON.parse(IM.userInfo)
+
+    property var curAccid : IM.sessionModel.getModelValue(sessionListView.currentIndex,"id")
 
     Rectangle{
         anchors.fill: sessionListView
@@ -29,7 +29,7 @@ Item {
             right: centerDivder.left
         }
         boundsBehavior: Flickable.StopAtBounds
-        model: sessionModel
+        model: IM.sessionModel
         delegate: Rectangle{
             color: {
                 if(ListView.isCurrentItem){
@@ -42,8 +42,8 @@ Item {
 
             CusAvatar{
                 id:itemAvatar
-                avatarName: modelData.name.charAt(0)
-                avatar: modelData.icon
+                avatarName: model.id.charAt(0)
+                avatar: model.id
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: parent.left
@@ -52,7 +52,7 @@ Item {
             }
 
             Text {
-                text: modelData.name
+                text: model.id
                 color: Theme.colorFontPrimary
                 anchors{
                     verticalCenter: parent.verticalCenter
@@ -66,6 +66,7 @@ Item {
                 hoverEnabled: true
                 onClicked: {
                     sessionListView.currentIndex = index
+                    IM.updateMessageModel(curAccid)
                 }
             }
         }
@@ -340,7 +341,7 @@ Item {
                                 function (match, capture) {
                                     return capture.replace("qrc:/emojiSvgs/", "[EMJ").replace(".svg", "]")
                                 })
-                    IM.sendTextMessage(userInfo.accid,sessionModel[sessionListView.currentIndex].accid,UIHelper.htmlToPlainText(text))
+                    IM.sendTextMessage(userInfo.accid,curAccid,UIHelper.htmlToPlainText(text))
                     messageInput.text= ""
                 }
             }
@@ -351,13 +352,12 @@ Item {
             id:panelEmpty
             color: Theme.colorBackground1
             anchors.fill: parent
-            visible: Global.noValue(sessionModel[sessionListView.currentIndex])
+            visible: Global.noValue(curAccid)
 
             FontLoader {
                 id: awesome
                 source: "qrc:/font/iconfont.ttf"
             }
-
 
             Text{
                 anchors.centerIn: parent
@@ -401,15 +401,7 @@ Item {
 
 
     function addSession(user){
-        for(var i=0;i<sessionModel.length;i++){
-            var item = sessionModel[i]
-            if(item.accid === user.accid){
-                sessionListView.currentIndex = i
-                return
-            }
-        }
-        sessionModel.push(user)
-        sessionListView.model = sessionModel
+        IM.saveSession(user.accid)
     }
 
 }

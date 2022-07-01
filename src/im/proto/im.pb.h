@@ -2320,6 +2320,7 @@ class Message final :
     kToFieldNumber = 4,
     kBodyFieldNumber = 6,
     kExFieldNumber = 7,
+    kSessionIdFieldNumber = 9,
     kSceneFieldNumber = 3,
     kTypeFieldNumber = 5,
     kTimeFieldNumber = 8,
@@ -2414,6 +2415,24 @@ class Message final :
   std::string* _internal_mutable_ex();
   public:
 
+  // optional string sessionId = 9;
+  bool has_sessionid() const;
+  private:
+  bool _internal_has_sessionid() const;
+  public:
+  void clear_sessionid();
+  const std::string& sessionid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_sessionid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_sessionid();
+  PROTOBUF_NODISCARD std::string* release_sessionid();
+  void set_allocated_sessionid(std::string* sessionid);
+  private:
+  const std::string& _internal_sessionid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_sessionid(const std::string& value);
+  std::string* _internal_mutable_sessionid();
+  public:
+
   // optional uint32 scene = 3;
   bool has_scene() const;
   private:
@@ -2468,6 +2487,7 @@ class Message final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr to_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr body_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ex_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sessionid_;
     uint32_t scene_;
     uint32_t type_;
     uint64_t time_;
@@ -4461,7 +4481,7 @@ inline void Message::set_allocated_from(std::string* from) {
 
 // optional uint32 scene = 3;
 inline bool Message::_internal_has_scene() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool Message::has_scene() const {
@@ -4469,7 +4489,7 @@ inline bool Message::has_scene() const {
 }
 inline void Message::clear_scene() {
   _impl_.scene_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000020u;
+  _impl_._has_bits_[0] &= ~0x00000040u;
 }
 inline uint32_t Message::_internal_scene() const {
   return _impl_.scene_;
@@ -4479,7 +4499,7 @@ inline uint32_t Message::scene() const {
   return _internal_scene();
 }
 inline void Message::_internal_set_scene(uint32_t value) {
-  _impl_._has_bits_[0] |= 0x00000020u;
+  _impl_._has_bits_[0] |= 0x00000040u;
   _impl_.scene_ = value;
 }
 inline void Message::set_scene(uint32_t value) {
@@ -4557,7 +4577,7 @@ inline void Message::set_allocated_to(std::string* to) {
 
 // optional uint32 type = 5;
 inline bool Message::_internal_has_type() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool Message::has_type() const {
@@ -4565,7 +4585,7 @@ inline bool Message::has_type() const {
 }
 inline void Message::clear_type() {
   _impl_.type_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000040u;
+  _impl_._has_bits_[0] &= ~0x00000080u;
 }
 inline uint32_t Message::_internal_type() const {
   return _impl_.type_;
@@ -4575,7 +4595,7 @@ inline uint32_t Message::type() const {
   return _internal_type();
 }
 inline void Message::_internal_set_type(uint32_t value) {
-  _impl_._has_bits_[0] |= 0x00000040u;
+  _impl_._has_bits_[0] |= 0x00000080u;
   _impl_.type_ = value;
 }
 inline void Message::set_type(uint32_t value) {
@@ -4721,7 +4741,7 @@ inline void Message::set_allocated_ex(std::string* ex) {
 
 // optional uint64 time = 8;
 inline bool Message::_internal_has_time() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool Message::has_time() const {
@@ -4729,7 +4749,7 @@ inline bool Message::has_time() const {
 }
 inline void Message::clear_time() {
   _impl_.time_ = uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000080u;
+  _impl_._has_bits_[0] &= ~0x00000100u;
 }
 inline uint64_t Message::_internal_time() const {
   return _impl_.time_;
@@ -4739,12 +4759,80 @@ inline uint64_t Message::time() const {
   return _internal_time();
 }
 inline void Message::_internal_set_time(uint64_t value) {
-  _impl_._has_bits_[0] |= 0x00000080u;
+  _impl_._has_bits_[0] |= 0x00000100u;
   _impl_.time_ = value;
 }
 inline void Message::set_time(uint64_t value) {
   _internal_set_time(value);
   // @@protoc_insertion_point(field_set:im.protocol.Message.time)
+}
+
+// optional string sessionId = 9;
+inline bool Message::_internal_has_sessionid() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
+  return value;
+}
+inline bool Message::has_sessionid() const {
+  return _internal_has_sessionid();
+}
+inline void Message::clear_sessionid() {
+  _impl_.sessionid_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000020u;
+}
+inline const std::string& Message::sessionid() const {
+  // @@protoc_insertion_point(field_get:im.protocol.Message.sessionId)
+  return _internal_sessionid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Message::set_sessionid(ArgT0&& arg0, ArgT... args) {
+ _impl_._has_bits_[0] |= 0x00000020u;
+ _impl_.sessionid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:im.protocol.Message.sessionId)
+}
+inline std::string* Message::mutable_sessionid() {
+  std::string* _s = _internal_mutable_sessionid();
+  // @@protoc_insertion_point(field_mutable:im.protocol.Message.sessionId)
+  return _s;
+}
+inline const std::string& Message::_internal_sessionid() const {
+  return _impl_.sessionid_.Get();
+}
+inline void Message::_internal_set_sessionid(const std::string& value) {
+  _impl_._has_bits_[0] |= 0x00000020u;
+  _impl_.sessionid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Message::_internal_mutable_sessionid() {
+  _impl_._has_bits_[0] |= 0x00000020u;
+  return _impl_.sessionid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Message::release_sessionid() {
+  // @@protoc_insertion_point(field_release:im.protocol.Message.sessionId)
+  if (!_internal_has_sessionid()) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000020u;
+  auto* p = _impl_.sessionid_.Release();
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.sessionid_.IsDefault()) {
+    _impl_.sessionid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  return p;
+}
+inline void Message::set_allocated_sessionid(std::string* sessionid) {
+  if (sessionid != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000020u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000020u;
+  }
+  _impl_.sessionid_.SetAllocated(sessionid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.sessionid_.IsDefault()) {
+    _impl_.sessionid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:im.protocol.Message.sessionId)
 }
 
 // -------------------------------------------------------------------

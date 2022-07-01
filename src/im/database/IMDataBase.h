@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "./precompiled.h"
 #include "./MessageDo.h"
+#include "./SessionDo.h"
 #include "./proto/im.pb.h"
 
 
@@ -22,6 +23,10 @@ public:
     void syncMessage(const ptrf &messages);
 
     void insertMsg(im::protocol::Message *msg);
+
+    void saveSession(message_ptr obj);
+
+    void saveSession(const QString& accid);
 
     uint64_t getMsgLastTime();
 };

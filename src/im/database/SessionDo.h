@@ -1,18 +1,18 @@
-#ifndef MESSAGEDO_H
-#define MESSAGEDO_H
+#ifndef SESSIONDO_H
+#define SESSIONDO_H
 
 #include "./../precompiled.h"
 
-class QX_BLOG_DLL_EXPORT message
+class QX_BLOG_DLL_EXPORT session
 {
 public:
 
-    message() : m_id("0"),m_sence(0),m_type(0),m_time("0") { ; }
-    virtual ~message() { ; }
+    session() : m_id("0"),m_sence(0),m_type(0),m_time("0") { ; }
+    virtual ~session() { ; }
 
     QString m_id;
-    QString getmessage_id() const{return m_id;};
-    void setmessage_id(const QString & val){m_id=val;};
+    QString getsession_id() const{return m_id;};
+    void setsession_id(const QString & val){m_id=val;};
 
     QString m_body;
     QString getbody() const{return m_body;};
@@ -42,16 +42,12 @@ public:
     QString gettime() const{return m_time;};
     void settime(const QString & val){m_time=val;};
 
-    QString m_session_id;
-    QString getsession_id() const{return m_session_id;};
-    void setsession_id(const QString & val){m_session_id=val;};
 };
 
-QX_REGISTER_PRIMARY_KEY(message, QString)
-QX_REGISTER_HPP_QX_BLOG(message, qx::trait::no_base_class_defined, 0)
+QX_REGISTER_PRIMARY_KEY(session, QString)
+QX_REGISTER_HPP_QX_BLOG(session, qx::trait::no_base_class_defined, 0)
 
-typedef std::shared_ptr<message> message_ptr;
-typedef qx::QxCollection<QString, message_ptr> list_message;
+typedef std::shared_ptr<session> session_ptr;
+typedef qx::QxCollection<QString, session_ptr> list_session;
 
-
-#endif // MESSAGEDO_H
+#endif // SESSIONDO_H
