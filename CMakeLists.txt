@@ -19,6 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DQ_IS_DEBUG)
+    add_definitions(-DNUT_SHARED_POINTER)
 endif()
 
 add_definitions(-DGLOG_NO_ABBREVIATED_SEVERITIES)
