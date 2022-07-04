@@ -5,6 +5,8 @@
     export.h
     IMGlobalStatic.h
     ./proto/im.pb.h
+    ./database/IMDataBase.h
+    ./database/Message.h
 )
 
 set(IM_SRS
@@ -12,6 +14,8 @@ set(IM_SRS
     QIM.cpp
     IMGlobalStatic.cpp
     ./proto/im.pb.cc
+    ./database/IMDataBase.cpp
+    ./database/Message.cpp
 )
 
 add_library(IM STATIC ${IM_SRS})

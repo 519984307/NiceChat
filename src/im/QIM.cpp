@@ -1,12 +1,17 @@
 ﻿#include "QIM.h"
 
+#include <QtNut/sqlitegenerator.h>
+#include <QtNut/sqlservergenerator.h>
+
 QIM::QIM(QObject *parent)
     : QObject{parent}
 {
+
+    REGISTER(Message);
+    REGISTER(IMDataBase);
+
     socket = new QWebSocket();
     m_timer_heart =new QTimer();
-
-
     connect(m_timer_heart,&QTimer::timeout,this,&QIM::heartBeat);
     m_timer_heart_count =new QTimer();
     connect(m_timer_heart_count,&QTimer::timeout,this,&QIM::heartBeatCount);
@@ -153,12 +158,47 @@ void QIM::sendTextMessage(const QString& from,const QString& to,const QString& t
     msg->set_scene(0);
     msg->set_type(0);
     msg_req->set_allocated_message(msg);
+
+    //    auto message = create<Message>();
+    //    message->setUuid(QString::fromStdString(msg->uuid()));
+    //    message->setFromAccid(QString::fromStdString(msg->from()));
+    //    message->setToAccid(QString::fromStdString(msg->to()));
+    //    message->setTime(QString::number(msg->time()));
+    //    message->setBody(QString::fromStdString(msg->body()));
+    //    message->setScene(msg->scene());
+    //    message->setType(msg->type());
+    //    m_db.message()->append(message);
+    //    m_db.saveChanges();
+
     packet.set_allocated_sendmsg_req(msg_req);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 
 void QIM::initDataBase(const QString &text){
     sendSyncMessage();
+    QString name = text.toUtf8().toBase64();
+    m_db.setDriver(DRIVER);
+    m_db.setHostName(HOST);
+    m_db.setDatabaseName(DATABASE(name));
+    m_db.setUserName(USERNAME);
+    m_db.setPassword(PASSWORD);
+
+    m_db.open();
+
+    auto query = m_db.message()->query();
+    query->remove();
+
+    auto message = Nut::create<Message>();
+    message->setUuid("5e6b53c9-f1a4-411e-9f77-1ff4398db958");
+    message->setFromAccid("admin");
+    message->setToAccid("shaheshang");
+    message->setTime("1656514235131");
+    message->setBody("撒地方阿迪斯");
+    message->setScene(0);
+    message->setType(0);
+    m_db.message()->append(message);
+    int row = m_db.saveChanges();
+    qDebug()<<"aaaaaaaaaaaaaaaaaa:"<<row;
 }
 
 void QIM::sendSyncMessage(){
