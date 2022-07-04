@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtGraphicalEffects 1.0
 import UI 1.0
+import Controller 1.0
 import "../global/global.js" as Global
 import "../view"
 import "../component"
@@ -17,6 +18,10 @@ Item {
     Rectangle{
         anchors.fill: sessionListView
         color:Theme.colorBackground2
+    }
+
+    MessageController{
+        id:messageController
     }
 
     ListView{
@@ -217,6 +222,9 @@ Item {
                 }
             }
             delegate: Rectangle{
+
+                property bool isMine: userInfo.accid === model.from_accid
+
                 width: listMessage.width
                 height: childrenRect.height
                 color:"#00000000"
@@ -227,9 +235,11 @@ Item {
                     height: 34
                     avatarName: "朱"
                     anchors{
-                        right: parent.right
+                        right: isMine ? parent.right : undefined
+                        rightMargin: isMine ? 20 : undefined
+                        left: isMine ? undefined : parent.left
+                        leftMargin: isMine ? undefined : 20
                         top:parent.top
-                        rightMargin: 20
                     }
                     onClickAvatar: {
                         console.debug(itemMsgText.implicitWidth)
@@ -239,14 +249,17 @@ Item {
                 }
 
                 Rectangle{
-                    color:"#FF95EC69"
+                    color: isMine ? "#FF95EC69" : "#FFFFFF"
                     width: itemMsgText.width+10
                     height: itemMsgText.height+10
                     radius: 3
                     anchors{
                         top: itemMsgAvatar.top
-                        right: itemMsgAvatar.left
-                        rightMargin: 10
+                        right: isMine ? itemMsgAvatar.left : undefined
+                        rightMargin: isMine ? 10 : undefined
+                        left: isMine ? undefined : itemMsgAvatar.right
+                        leftMargin: isMine ? undefined : 10
+
                     }
                     CusTextEdit{
                         id:itemMsgText

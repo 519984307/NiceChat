@@ -7,6 +7,8 @@
         LoginController.cpp
         EmojiModel.cpp
         TextDocument.cpp
+        SessionController.cpp
+        MessageController.cpp
         )
 
 set(UILibrary_HEADERS
@@ -17,6 +19,8 @@ set(UILibrary_HEADERS
         LoginController.h
         EmojiModel.h
         TextDocument.h
+        SessionController.h
+        MessageController.h
         )
 
 set(UILibrary_RCC

@@ -11,6 +11,7 @@
 #include <QIcon>
 #include <framelessquickhelper.h>
 #include "LoginController.h"
+#include "MessageController.h"
 #include <IMGlobalStatic.h>
 #include <QQuickWindow>
 #include "EmojiModel.h"

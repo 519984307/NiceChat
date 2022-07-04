@@ -28,6 +28,7 @@ MainWindow::MainWindow(char *argv[]) {
     qmlRegisterType<TextDocument>("UI", 1, 0, "TextDocument");
 
     qmlRegisterType<LoginController>("Controller", 1, 0, "LoginController");
+    qmlRegisterType<MessageController>("Controller", 1, 0, "MessageController");
 
 }
 

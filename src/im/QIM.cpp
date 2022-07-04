@@ -6,8 +6,6 @@ QIM::QIM(QObject *parent)
     socket = new QWebSocket();
     m_timer_heart =new QTimer();
 
-    setMessageModel(new qx::QxModel<message>());
-    setSessionModel(new qx::QxModel<session>());
 
     connect(m_timer_heart,&QTimer::timeout,this,&QIM::heartBeat);
     m_timer_heart_count =new QTimer();
@@ -83,9 +81,6 @@ QIM::QIM(QObject *parent)
                 std::string json;
                 google::protobuf::util::MessageToJsonString(packet.syncmsg_rsp(),&json);
                 qDebug()<<QString::fromStdString(json);
-                m_databse.syncMessage(packet.syncmsg_rsp().messages());
-                m_messageModel->qxFetchAll();
-                m_sessionModel->qxFetchAll();
             }
         }
     });
@@ -159,12 +154,10 @@ void QIM::sendTextMessage(const QString& from,const QString& to,const QString& t
     msg->set_type(0);
     msg_req->set_allocated_message(msg);
     packet.set_allocated_sendmsg_req(msg_req);
-    m_databse.insertMsg(msg);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 
 void QIM::initDataBase(const QString &text){
-    m_databse.init(text.toUtf8().toBase64());
     sendSyncMessage();
 }
 
@@ -172,7 +165,7 @@ void QIM::sendSyncMessage(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SyncMsg_req_);
     im::protocol::SyncMsg_req *req = new im::protocol::SyncMsg_req();
-    req->set_lastmsgtime(m_databse.getMsgLastTime());
+    req->set_lastmsgtime(0);
     packet.set_allocated_syncmsg_req(req);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
@@ -190,13 +183,11 @@ void QIM::getProfile(){
 }
 
 void QIM::saveSession(const QString& accid){
-    m_databse.saveSession(accid);
-    m_sessionModel->qxFetchAll();
+
 }
 
 void QIM::updateMessageModel(const QString& accid){
-    qx_query query(QString::fromStdString("where from_accid='%1' or to_accod='%1'").arg(accid));
-    m_messageModel->qxFetchByQuery(query);
+
 }
 
 void QIM::test(){

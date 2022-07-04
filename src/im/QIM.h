@@ -6,9 +6,6 @@
 #include <ByteBuf.h>
 #include <google/protobuf/util/json_util.h>
 #include <QtConcurrent>
-#include <database/IMDataBase.h>
-#include <database/MessageDo.h>
-#include <QxOrm_Impl.h>
 #include <proto/im.pb.h>
 #include <QUuid>
 
@@ -18,29 +15,9 @@ class QIM : public QObject
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString userInfo READ userInfo WRITE setUserInfo NOTIFY userInfoChanged)
     Q_PROPERTY(QString friends READ friends WRITE setFriends NOTIFY friendsChanged)
-    Q_PROPERTY(qx::IxModel* messageModel READ messageModel WRITE setMessageModel NOTIFY messageModelChanged)
-    Q_PROPERTY(qx::IxModel* sessionModel READ sessionModel WRITE setSessionModel NOTIFY sessionModelChanged)
 public:
     explicit QIM(QObject *parent = nullptr);
     ~QIM();
-
-    Q_SIGNAL void sessionModelChanged();
-    void setSessionModel(qx::IxModel* sessionModel){
-        m_sessionModel = sessionModel;
-        Q_EMIT sessionModelChanged();
-    }
-    [[nodiscard]] qx::IxModel* sessionModel() const{
-        return m_sessionModel;
-    }
-
-    Q_SIGNAL void messageModelChanged();
-    void setMessageModel(qx::IxModel* messageModel){
-        m_messageModel = messageModel;
-        Q_EMIT messageModelChanged();
-    }
-    [[nodiscard]] qx::IxModel* messageModel() const{
-        return m_messageModel;
-    }
 
     Q_SIGNAL void stateChanged();
     void setState(int state){
@@ -107,13 +84,8 @@ private:
     QTimer *m_timer_reconnect;
     int m_heart_count = 0;
 
-    IMDataBase m_databse;
-
     QString m_login_accid;
     QString m_login_token;
-
-    qx::IxModel* m_messageModel;
-    qx::IxModel* m_sessionModel;
 
     int m_state = -1;
 };

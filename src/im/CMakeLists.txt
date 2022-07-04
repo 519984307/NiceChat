@@ -5,9 +5,6 @@
     export.h
     IMGlobalStatic.h
     ./proto/im.pb.h
-    ./database/IMDataBase.h
-    ./database/MessageDo.h
-    ./database/SessionDo.h
 )
 
 set(IM_SRS
@@ -15,9 +12,6 @@ set(IM_SRS
     QIM.cpp
     IMGlobalStatic.cpp
     ./proto/im.pb.cc
-    ./database/IMDataBase.cpp
-    ./database/MessageDo.cpp
-    ./database/SessionDo.cpp
 )
 
 add_library(IM STATIC ${IM_SRS})
@@ -32,17 +26,16 @@ target_link_libraries(IM
     Qt${QT_VERSION_MAJOR}::WebSockets
     Qt${QT_VERSION_MAJOR}::Concurrent
     Qt${QT_VERSION_MAJOR}::Sql
+    Qt${QT_VERSION_MAJOR}::Nut
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(${CMAKE_PROJECT_NAME}
         ${THIRD_DIR_PATH}/protobuf/lib/win64/debug/libprotobufd.lib
-        ${THIRD_DIR_PATH}/orm/lib/win64/debug/QxOrmd.lib
     )
 endif()
 
 target_include_directories(
     IM SYSTEM PUBLIC
     ${THIRD_DIR_PATH}/protobuf/include
-    ${THIRD_DIR_PATH}/orm/include
 )
