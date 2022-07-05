@@ -4,6 +4,6 @@
 #include "QIM.h"
 
 Q_GLOBAL_STATIC(QIM, qim)
-#define IM im()
+#define IM qim()
 
 #endif // IMGLOBALSTATIC_H

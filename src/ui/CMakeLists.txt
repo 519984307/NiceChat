@@ -9,6 +9,7 @@
         TextDocument.cpp
         SessionController.cpp
         MessageController.cpp
+        MessageListModel.cpp
         )
 
 set(UILibrary_HEADERS
@@ -21,6 +22,7 @@ set(UILibrary_HEADERS
         TextDocument.h
         SessionController.h
         MessageController.h
+        MessageListModel.h
         )
 
 set(UILibrary_RCC

@@ -1,12 +1,20 @@
 ﻿#include "QIM.h"
 
 #include <QtNut/sqlitegenerator.h>
-#include <QtNut/sqlservergenerator.h>
+
+Q_GLOBAL_STATIC(QIM, qim)
+
+QIM* QIM::instance()
+{
+    return qim();
+}
 
 QIM::QIM(QObject *parent)
     : QObject{parent}
 {
 
+//    REGISTER(Message);
+    qDebug()<<"asdasdasdasdasdasdasd";
     socket = new QWebSocket();
     m_timer_heart =new QTimer();
     connect(m_timer_heart,&QTimer::timeout,this,&QIM::heartBeat);
@@ -83,7 +91,7 @@ QIM::QIM(QObject *parent)
                 std::string json;
                 google::protobuf::util::MessageToJsonString(packet.syncmsg_rsp(),&json);
                 qDebug()<<QString::fromStdString(json);
-                m_db.syncMessage(packet.syncmsg_rsp().messages());
+                IMDataBase::syncMessage(packet.syncmsg_rsp().messages());
             }
         }
     });
@@ -146,8 +154,8 @@ void QIM::stopHeartBeat(){
 void QIM::sendTextMessage(const QString& from,const QString& to,const QString& text){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SendMsg_req_);
-    im::protocol::SendMsg_req *msg_req = new im::protocol::SendMsg_req();
-    im::protocol::Message *msg = new im::protocol::Message();
+    auto *msg_req = new im::protocol::SendMsg_req();
+    auto *msg = new im::protocol::Message();
     msg->set_uuid(QUuid::createUuid().toString().remove("{").remove("}").toStdString());
     msg->set_body(text.toStdString());
     msg->set_from(from.toStdString());
@@ -157,20 +165,26 @@ void QIM::sendTextMessage(const QString& from,const QString& to,const QString& t
     msg->set_type(0);
     msg_req->set_allocated_message(msg);
     packet.set_allocated_sendmsg_req(msg_req);
+    const QSqlError &error = IMDataBase::insertMsg(*msg);
+    if(error.type() == QSqlError::NoError){
+        const Message &message = m_db.getMsgByUuid(QString::fromStdString(msg->uuid()));
+        Q_EMIT receiveMessage(message);
+    }
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+
 }
 
 void QIM::initDataBase(const QString &text){
     QString name = text.toUtf8().toBase64();
-    m_db.init(name);
+    IMDataBase::initDb(name);
     sendSyncMessage();
 }
 
 void QIM::sendSyncMessage(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SyncMsg_req_);
-    im::protocol::SyncMsg_req *req = new im::protocol::SyncMsg_req();
-    qDebug()<<"-------time---:"<< m_db.getMsgLastTime();
+    auto *req = new im::protocol::SyncMsg_req();
+    qDebug()<<"-------time---:"<< IMDataBase::getMsgLastTime();
     req->set_lastmsgtime(0);
     packet.set_allocated_syncmsg_req(req);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
@@ -188,14 +202,14 @@ void QIM::getProfile(){
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 }
 
-void QIM::saveSession(const QString& accid){
-
-}
-
 void QIM::updateMessageModel(const QString& accid){
 
 }
 
 void QIM::test(){
 
+}
+
+QList<Message> QIM::getMessageListById(const QString &accid) {
+    return m_db.getMessageListById(accid);
 }

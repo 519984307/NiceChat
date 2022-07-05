@@ -20,8 +20,8 @@ MainWindow::MainWindow(char *argv[]) {
     p_logHelper->initGoogleLog(argv);
     m_engine.rootContext()->setContextProperty("LogHelper",p_logHelper);
 
-    QIM *p_im = qim();
-    m_engine.rootContext()->setContextProperty("IM",p_im);
+
+    m_engine.rootContext()->setContextProperty("IM",QIM::instance());
 
     qmlRegisterType<FramelessQuickHelper>("UI", 1, 0, "FramelessHelper");
     qmlRegisterType<EmojiModel>("UI", 1, 0, "EmojiModel");

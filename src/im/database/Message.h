@@ -1,14 +1,18 @@
-#ifndef MESSAGE_H
+﻿#ifndef MESSAGE_H
 #define MESSAGE_H
 
 #include "precompiled.h"
 
-class QX_IM_DLL_EXPORT message {
+class QX_IM_DLL_EXPORT Message {
 public:
 
-    message() : m_id("0"), m_scene(0), m_type(0), m_time("0") { ; }
+    Message() : m_id("0"), m_scene(0), m_type(0), m_time("0") { ; }
 
-    virtual ~message() = default;
+    Message(const Message &) = default;
+
+    Message &operator=(const Message &) = default;
+
+    ~Message() = default;
 
     QString m_id;
 
@@ -65,11 +69,10 @@ public:
     void setSessionId(const QString &val) { m_session_id = val; };
 };
 
-QX_REGISTER_PRIMARY_KEY(message, QString)
-QX_REGISTER_HPP_QX_IM (message, qx::trait::no_base_class_defined, 0)
+QX_REGISTER_PRIMARY_KEY(Message, QString)
+QX_REGISTER_HPP_QX_IM (Message, qx::trait::no_base_class_defined, 0)
 
-typedef std::shared_ptr<message> message_ptr;
+typedef std::shared_ptr<Message> message_ptr;
 typedef qx::QxCollection<QString, message_ptr> list_message;
-
 
 #endif // MESSAGE_H

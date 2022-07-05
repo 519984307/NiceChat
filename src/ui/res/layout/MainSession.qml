@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtGraphicalEffects 1.0
 import UI 1.0
+import Controller 1.0
 import "../global/global.js" as Global
 import "../view"
 import "../component"
@@ -17,6 +18,17 @@ Item {
     Rectangle{
         anchors.fill: sessionListView
         color:Theme.colorBackground2
+    }
+
+    MessageController{
+        id:messageController
+    }
+
+    Connections{
+        target: IM
+        function onReceiveMessage(msg){
+            console.debug(msg)
+        }
     }
 
     ListView{
@@ -68,6 +80,9 @@ Item {
                     sessionListView.currentIndex = index
                 }
             }
+        }
+        onCurrentIndexChanged: {
+            messageController.loadMessageData(sessionModel[sessionListView.currentIndex].accid)
         }
     }
 
@@ -195,7 +210,7 @@ Item {
         ListView{
             id:listMessage
             width: parent.width
-            model: IM.messageModel
+            model: messageController.messageModel
             anchors{
                 top: panelDivider.bottom
                 bottom:panelBottomDivider.top
@@ -279,7 +294,7 @@ Item {
                     icon: "\ue7bb"
                     onClickEvent: {
                         IM.test()
-                        console.debug("--==-=-=:"+listMessage.count)
+                        console.debug("--==-=-=:"+messageController.messageModel.count())
                         emojiPicker.showDialog()
                     }
                     iconSize : 18

@@ -4,7 +4,6 @@
 #include <QFont>
 #include <QHotkey>
 
-
 int main(int argc, char *argv[])
 {
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
@@ -21,6 +20,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationDomain("https://github.com/zhuzichu520/NiceChat");
 
     QGuiApplication app(argc, argv);
+
     QHotkey hotkey(QKeySequence("Ctrl+Alt+Q"), true, &app);
     QObject::connect(&hotkey, &QHotkey::activated, qApp, [&](){
         qApp->quit();

@@ -1,18 +1,18 @@
-#include "Message.h"
+﻿#include "Message.h"
 
-QX_REGISTER_CPP_QX_IM(message)
+QX_REGISTER_CPP_QX_IM(Message)
 
 namespace qx {
     template<>
-    void register_class(QxClass<message> &t) {
-        t.id(&message::m_id, "id");
-        t.data(&message::m_body, "body");
-        t.data(&message::m_from_accid, "from_accid");
-        t.data(&message::m_to_accid, "to_accid");
-        t.data(&message::m_scene, "scene");
-        t.data(&message::m_type, "type");
-        t.data(&message::m_ex, "ex");
-        t.data(&message::m_time, "time");
-        t.data(&message::m_session_id, "session_id");
+    void register_class(QxClass<Message> &t) {
+        t.id(&Message::m_id, "id");
+        t.data(&Message::m_body, "body");
+        t.data(&Message::m_from_accid, "from_accid");
+        t.data(&Message::m_to_accid, "to_accid");
+        t.data(&Message::m_scene, "scene");
+        t.data(&Message::m_type, "type");
+        t.data(&Message::m_ex, "ex");
+        t.data(&Message::m_time, "time");
+        t.data(&Message::m_session_id, "session_id");
     }
 }

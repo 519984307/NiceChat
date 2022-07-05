@@ -11,6 +11,8 @@
 #include "./database/IMDataBase.h"
 #include "./database/Message.h"
 
+#define REGISTER(x) qDebug() << (#x) << "type id:" << qMetaTypeId<x*>()
+
 class QIM : public QObject
 {
     Q_OBJECT
@@ -20,6 +22,8 @@ class QIM : public QObject
 public:
     explicit QIM(QObject *parent = nullptr);
     ~QIM();
+
+    static QIM* instance();
 
     Q_SIGNAL void stateChanged();
     void setState(int state){
@@ -55,9 +59,13 @@ public:
     Q_SIGNAL void loginFail();
     Q_SIGNAL void loginSuccess();
 
+    Q_SIGNAL void receiveMessage(const Message &message);
+
     void heartBeat();
     void heartBeatCount();
     void reconnect();
+
+    QList<Message> getMessageListById(const QString& accid);
 
     Q_INVOKABLE void test();
     Q_INVOKABLE void startHeartBeat();
@@ -69,7 +77,6 @@ public:
     Q_INVOKABLE void getFriends();
     Q_INVOKABLE void getProfile();
 
-    Q_INVOKABLE void saveSession(const QString& accid);
     Q_INVOKABLE void updateMessageModel(const QString& accid);
 
 private:
