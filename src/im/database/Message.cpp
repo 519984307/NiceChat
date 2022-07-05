@@ -1,15 +1,18 @@
-﻿#include "Message.h"
+#include "Message.h"
 
-Message::Message(QObject *parent) : Table(parent),
-    m_id(0),
-    m_uuid(""),
-    m_from_accid(""),
-    m_to_accid(""),
-    m_body(""),
-    m_ex(""),
-    m_time(""),
-    m_scene(0),
-    m_type(0)
-{
+QX_REGISTER_CPP_QX_IM(message)
 
+namespace qx {
+    template<>
+    void register_class(QxClass<message> &t) {
+        t.id(&message::m_id, "id");
+        t.data(&message::m_body, "body");
+        t.data(&message::m_from_accid, "from_accid");
+        t.data(&message::m_to_accid, "to_accid");
+        t.data(&message::m_scene, "scene");
+        t.data(&message::m_type, "type");
+        t.data(&message::m_ex, "ex");
+        t.data(&message::m_time, "time");
+        t.data(&message::m_session_id, "session_id");
+    }
 }

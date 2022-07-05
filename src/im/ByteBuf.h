@@ -1,4 +1,4 @@
-#ifndef SH_BYTE_BUF_H
+﻿#ifndef SH_BYTE_BUF_H
 #define SH_BYTE_BUF_H
 
 #include <string>

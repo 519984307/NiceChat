@@ -19,13 +19,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DQ_IS_DEBUG)
-    add_definitions(-DNUT_SHARED_POINTER)
 endif()
 
 add_definitions(-DGLOG_NO_ABBREVIATED_SEVERITIES)
+add_definitions(-DPROTOBUF_USE_DLLS)
+add_definitions(-D_BUILDING_QX_IM)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 Concurrent Sql WebSockets Nut REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 WebSockets Sql Concurrent Nut REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 Concurrent Sql WebSockets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 WebSockets Sql Concurrent REQUIRED)
 
 get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)

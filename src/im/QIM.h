@@ -10,15 +10,6 @@
 #include <QUuid>
 #include "./database/IMDataBase.h"
 #include "./database/Message.h"
-#include <query.h>
-
-#define REGISTER(x) qDebug() << (#x) << "type id:" << qMetaTypeId<x*>()
-#define DRIVER QStringLiteral("QSQLITE")
-#define DATABASE(x) QStringLiteral("%1.sqlite").arg(x)
-#define HOST QString()
-#define USERNAME QString()
-#define PASSWORD QString()
-
 
 class QIM : public QObject
 {

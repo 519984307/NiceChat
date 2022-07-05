@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtGraphicalEffects 1.0
 import UI 1.0
-import Controller 1.0
 import "../global/global.js" as Global
 import "../view"
 import "../component"
@@ -11,17 +10,13 @@ import "../storage"
 
 Item {
 
-    property var userInfo : JSON.parse(IM.userInfo)
+    property var sessionModel : []
 
-    property var curAccid : IM.sessionModel.getModelValue(sessionListView.currentIndex,"id")
+    property var userInfo : JSON.parse(IM.userInfo)
 
     Rectangle{
         anchors.fill: sessionListView
         color:Theme.colorBackground2
-    }
-
-    MessageController{
-        id:messageController
     }
 
     ListView{
@@ -34,7 +29,7 @@ Item {
             right: centerDivder.left
         }
         boundsBehavior: Flickable.StopAtBounds
-        model: IM.sessionModel
+        model: sessionModel
         delegate: Rectangle{
             color: {
                 if(ListView.isCurrentItem){
@@ -47,8 +42,8 @@ Item {
 
             CusAvatar{
                 id:itemAvatar
-                avatarName: model.id.charAt(0)
-                avatar: model.id
+                avatarName: modelData.name.charAt(0)
+                avatar: modelData.icon
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: parent.left
@@ -57,7 +52,7 @@ Item {
             }
 
             Text {
-                text: model.id
+                text: modelData.name
                 color: Theme.colorFontPrimary
                 anchors{
                     verticalCenter: parent.verticalCenter
@@ -71,7 +66,6 @@ Item {
                 hoverEnabled: true
                 onClicked: {
                     sessionListView.currentIndex = index
-                    IM.updateMessageModel(curAccid)
                 }
             }
         }
@@ -222,9 +216,6 @@ Item {
                 }
             }
             delegate: Rectangle{
-
-                property bool isMine: userInfo.accid === model.from_accid
-
                 width: listMessage.width
                 height: childrenRect.height
                 color:"#00000000"
@@ -235,11 +226,9 @@ Item {
                     height: 34
                     avatarName: "朱"
                     anchors{
-                        right: isMine ? parent.right : undefined
-                        rightMargin: isMine ? 20 : undefined
-                        left: isMine ? undefined : parent.left
-                        leftMargin: isMine ? undefined : 20
+                        right: parent.right
                         top:parent.top
+                        rightMargin: 20
                     }
                     onClickAvatar: {
                         console.debug(itemMsgText.implicitWidth)
@@ -249,17 +238,14 @@ Item {
                 }
 
                 Rectangle{
-                    color: isMine ? "#FF95EC69" : "#FFFFFF"
+                    color:"#FF95EC69"
                     width: itemMsgText.width+10
                     height: itemMsgText.height+10
                     radius: 3
                     anchors{
                         top: itemMsgAvatar.top
-                        right: isMine ? itemMsgAvatar.left : undefined
-                        rightMargin: isMine ? 10 : undefined
-                        left: isMine ? undefined : itemMsgAvatar.right
-                        leftMargin: isMine ? undefined : 10
-
+                        right: itemMsgAvatar.left
+                        rightMargin: 10
                     }
                     CusTextEdit{
                         id:itemMsgText
@@ -354,7 +340,7 @@ Item {
                                 function (match, capture) {
                                     return capture.replace("qrc:/emojiSvgs/", "[EMJ").replace(".svg", "]")
                                 })
-                    IM.sendTextMessage(userInfo.accid,curAccid,UIHelper.htmlToPlainText(text))
+                    IM.sendTextMessage(userInfo.accid,sessionModel[sessionListView.currentIndex].accid,UIHelper.htmlToPlainText(text))
                     messageInput.text= ""
                 }
             }
@@ -365,12 +351,13 @@ Item {
             id:panelEmpty
             color: Theme.colorBackground1
             anchors.fill: parent
-            visible: Global.noValue(curAccid)
+            visible: Global.noValue(sessionModel[sessionListView.currentIndex])
 
             FontLoader {
                 id: awesome
                 source: "qrc:/font/iconfont.ttf"
             }
+
 
             Text{
                 anchors.centerIn: parent
@@ -414,7 +401,15 @@ Item {
 
 
     function addSession(user){
-        IM.saveSession(user.accid)
+        for(var i=0;i<sessionModel.length;i++){
+            var item = sessionModel[i]
+            if(item.accid === user.accid){
+                sessionListView.currentIndex = i
+                return
+            }
+        }
+        sessionModel.push(user)
+        sessionListView.model = sessionModel
     }
 
 }

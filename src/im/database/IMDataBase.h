@@ -1,24 +1,29 @@
-﻿#ifndef IMDataBase_H
-#define IMDataBase_H
+﻿#ifndef IMDATABASE_H
+#define IMDATABASE_H
 
 #include <QObject>
-#include <database.h>
+#include <QDebug>
+#include "./precompiled.h"
+#include "./Message.h"
+#include "./proto/im.pb.h"
 
 
-class Message;
-class IMDataBase :  public Nut::Database
+typedef ::google::protobuf::RepeatedPtrField<im::protocol::Message> ptrf;
+
+class IMDataBase : public QObject
 {
     Q_OBJECT
+public:
+    explicit IMDataBase(QObject *parent = nullptr);
+    ~IMDataBase();
 
-    NUT_DB_VERSION(1)
+    void init(const QString& base64);
 
-    NUT_DECLARE_TABLE(Message, message)
+    void syncMessage(const ptrf &messages);
 
-    public:
-        IMDataBase();
+    void insertMsg(im::protocol::Message *msg);
 
+    uint64_t getMsgLastTime();
 };
 
-Q_DECLARE_METATYPE(IMDataBase*)
-
-#endif // IMDataBase_H
+#endif // SAMPLEDATABASE_H
