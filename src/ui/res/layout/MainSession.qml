@@ -11,8 +11,6 @@ import "../storage"
 
 Item {
 
-    property var sessionModel : []
-
     property var userInfo : JSON.parse(IM.userInfo)
 
     FontLoader {
@@ -29,6 +27,10 @@ Item {
         id:messageController
     }
 
+    SessionController{
+        id:sessionController
+    }
+
     ListView{
         id:sessionListView
         property color hoverItemColor : Qt.darker(Theme.colorBackground2,1.1)
@@ -39,7 +41,7 @@ Item {
             right: centerDivder.left
         }
         boundsBehavior: Flickable.StopAtBounds
-        model: sessionModel
+        model: sessionController.sessionModel
         delegate: Rectangle{
             color: {
                 if(ListView.isCurrentItem){
@@ -52,7 +54,7 @@ Item {
 
             CusAvatar{
                 id:itemAvatar
-                avatarName: modelData.name.charAt(0)
+                avatarName: model.id.charAt(0)
                 avatar: modelData.icon
                 anchors{
                     verticalCenter: parent.verticalCenter
@@ -61,15 +63,53 @@ Item {
                 }
             }
 
-            Text {
-                text: modelData.name
-                color: Theme.colorFontPrimary
+            Rectangle{
+                height: 16
+                width: 16
+                radius: 8
+                color:"#FF3B30"
                 anchors{
-                    verticalCenter: parent.verticalCenter
+                    right: itemAvatar.right
+                    rightMargin: -4
+                    topMargin: -4
+                    top: itemAvatar.top
+                }
+
+                Text {
+                    text: qsTr("99")
+                    font.pixelSize: 11
+                    color: "#FFFFFF"
+                    anchors.centerIn: parent
+                }
+
+            }
+
+            Text {
+                text: model.id
+                color: Theme.colorFontPrimary
+                font.pixelSize: 14
+                anchors{
+                    top:parent.top
+                    topMargin: 9
                     left: itemAvatar.right
                     leftMargin: 12
                 }
             }
+
+            Text {
+                text: getEmojiStr(model.body)
+                color: Theme.colorFontTertiary
+                elide: Text.ElideRight
+                anchors{
+                    bottom:parent.bottom
+                    bottomMargin: 9
+                    left: itemAvatar.right
+                    right: parent.right
+                    rightMargin: 12
+                    leftMargin: 12
+                }
+            }
+
             MouseArea{
                 id:itemMouse
                 anchors.fill: parent
@@ -80,7 +120,8 @@ Item {
             }
         }
         onCurrentIndexChanged: {
-            messageController.loadMessageData(sessionModel[sessionListView.currentIndex].accid)
+            sessionController.setCurrent(sessionListView.currentIndex)
+            messageController.loadMessageData(sessionController.current.id)
         }
     }
 
@@ -112,7 +153,7 @@ Item {
             }
 
             Text{
-                text:sessionModel[sessionListView.currentIndex].name
+                text:sessionController.current.id
                 font.pixelSize: 16
                 color:Theme.colorFontPrimary
                 anchors{
@@ -218,9 +259,6 @@ Item {
             spacing : 10
             footer:Item{height: 10}
             header:Item{height: 10}
-            onCountChanged:{
-                contentY = Number.MAX_VALUE
-            }
             ScrollBar.vertical: ScrollBar {
                 minimumSize: 0.2
                 anchors{
@@ -228,12 +266,20 @@ Item {
                     rightMargin: 5
                 }
             }
+
+            Connections{
+                target: messageController.messageModel
+                function onViewToBottom(){
+                    listMessage.positionViewAtEnd()
+                }
+            }
+
             delegate: Rectangle{
                 width: listMessage.width
                 height: childrenRect.height
                 color:"#00000000"
 
-                property bool isMine: userInfo.accid === model.fromAccid
+                property bool isMine: IM.loginAccid === model.fromAccid
 
                 CusAvatar{
                     id:itemMsgAvatar
@@ -402,7 +448,7 @@ Item {
                                 function (match, capture) {
                                     return capture.replace("qrc:/emojiSvgs/", "[EMJ").replace(".svg", "]")
                                 })
-                    IM.sendTextMessage(userInfo.accid,sessionModel[sessionListView.currentIndex].accid,UIHelper.htmlToPlainText(text))
+                    IM.sendTextMessage(userInfo.accid,sessionController.current.id,UIHelper.htmlToPlainText(text))
                     messageInput.text= ""
                 }
             }
@@ -413,7 +459,7 @@ Item {
             id:panelEmpty
             color: Theme.colorBackground1
             anchors.fill: parent
-            visible: Global.noValue(sessionModel[sessionListView.currentIndex])
+            visible: Global.noValue(sessionController.current.id)
 
             Text{
                 anchors.centerIn: parent
@@ -457,15 +503,15 @@ Item {
 
 
     function addSession(user){
-        for(var i=0;i<sessionModel.length;i++){
-            var item = sessionModel[i]
-            if(item.accid === user.accid){
-                sessionListView.currentIndex = i
-                return
-            }
-        }
-        sessionModel.push(user)
-        sessionListView.model = sessionModel
+//        for(var i=0;i<sessionModel.length;i++){
+//            var item = sessionModel[i]
+//            if(item.accid === user.accid){
+//                sessionListView.currentIndex = i
+//                return
+//            }
+//        }
+//        sessionModel.push(user)
+//        sessionListView.model = sessionModel
     }
 
 }

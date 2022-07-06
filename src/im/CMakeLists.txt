@@ -1,21 +1,21 @@
 ﻿set(IM_HEADERS
         ByteBuf.h
         QIM.h
-        IMGlobalStatic.h
         proto/im.pb.h
         database/IMDataBase.h
         database/Message.h
         database/export.h
         database/precompiled.h
+        database/Session.h
         )
 
 set(IM_SRS
         ByteBuf.cpp
         QIM.cpp
-        IMGlobalStatic.cpp
         proto/im.pb.cc
         database/IMDataBase.cpp
         database/Message.cpp
+        database/Session.cpp
         )
 
 add_library(IM STATIC ${IM_SRS})

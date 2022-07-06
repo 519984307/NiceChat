@@ -14,6 +14,6 @@ MessageController::~MessageController(){
 }
 
 void MessageController::loadMessageData(const QString &accid){
-    const QList<Message> &list = IM->getMessageListById(accid);
+    const QList<Message> &list = QIM::instance()->getMessageListById(accid);
     m_messageModel.setNewData(list);
 }

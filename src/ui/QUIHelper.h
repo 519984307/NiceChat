@@ -22,6 +22,9 @@ class QUIHelper : public QObject
 public:
     explicit QUIHelper(QObject *parent = nullptr);
     ~QUIHelper();
+
+    static QUIHelper* instance();
+
     void setCode();
     Q_INVOKABLE QString appVersion(){
         return QGuiApplication::applicationVersion();

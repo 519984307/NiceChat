@@ -1,18 +1,18 @@
-﻿#ifndef MESSAGE_H
-#define MESSAGE_H
+﻿#ifndef SESSION_H
+#define SESSION_H
 
 #include "precompiled.h"
 
-class QX_IM_DLL_EXPORT Message {
+class QX_IM_DLL_EXPORT Session {
 public:
 
-    Message() : m_id("0"), m_scene(0), m_type(0), m_time("0"),m_status(0) { ; }
+    Session() : m_id("0"), m_scene(0), m_type(0), m_time("0"),m_status(0) { ; }
 
-    Message(const Message &) = default;
+    Session(const Session &) = default;
 
-    Message &operator=(const Message &) = default;
+    Session &operator=(const Session &) = default;
 
-    ~Message() = default;
+    ~Session() = default;
 
     QString m_id;
 
@@ -25,18 +25,6 @@ public:
     [[nodiscard]] QString getBody() const { return m_body; };
 
     void setBody(const QString &val) { m_body = val; };
-
-    QString m_from_accid;
-
-    [[nodiscard]] QString getFromAccid() const { return m_from_accid; };
-
-    void setFromAccid(const QString &val) { m_from_accid = val; };
-
-    QString m_to_accid;
-
-    [[nodiscard]] QString getToAccid() const { return m_to_accid; };
-
-    void setToAccid(const QString &val) { m_to_accid = val; };
 
     int m_scene;
 
@@ -68,14 +56,9 @@ public:
 
     void setStatus(const int &val) { m_status = val; };
 
-    QString m_session_id;
-
-    [[nodiscard]] QString getSessionId() const { return m_session_id; };
-
-    void setSessionId(const QString &val) { m_session_id = val; };
 };
 
-QX_REGISTER_PRIMARY_KEY(Message, QString)
-QX_REGISTER_HPP_QX_IM (Message, qx::trait::no_base_class_defined, 0)
+QX_REGISTER_PRIMARY_KEY(Session, QString)
+QX_REGISTER_HPP_QX_IM (Session, qx::trait::no_base_class_defined, 0)
 
-#endif // MESSAGE_H
+#endif // SESSION_H

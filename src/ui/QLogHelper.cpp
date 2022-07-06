@@ -1,5 +1,12 @@
 ﻿#include "QLogHelper.h"
 
+Q_GLOBAL_STATIC(QLogHelper, logHelper)
+
+QLogHelper* QLogHelper::instance()
+{
+    return logHelper();
+}
+
 QLogHelper::QLogHelper(QObject *parent)
     : QObject{parent}
 {

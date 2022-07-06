@@ -17,7 +17,9 @@
 class QIM : public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
+    Q_PROPERTY(QString loginAccid READ loginAccid WRITE setLoginAccid NOTIFY loginAccidChanged)
     Q_PROPERTY(QString userInfo READ userInfo WRITE setUserInfo NOTIFY userInfoChanged)
     Q_PROPERTY(QString friends READ friends WRITE setFriends NOTIFY friendsChanged)
 public:
@@ -25,6 +27,16 @@ public:
     ~QIM();
 
     static QIM* instance();
+
+    Q_SIGNAL void loginAccidChanged();
+    void setLoginAccid(QString const& accid){
+        m_login_accid = accid;
+        Q_EMIT loginAccidChanged();
+    }
+    [[nodiscard]] QString loginAccid() const{
+        return m_login_accid;
+    }
+
 
     Q_SIGNAL void stateChanged();
     void setState(int state){
@@ -65,8 +77,10 @@ public:
     void heartBeat();
     void heartBeatCount();
     void reconnect();
+    void resendMsg();
 
     QList<Message> getMessageListById(const QString& accid);
+    QList<Session> getSessionList();
 
     Q_INVOKABLE void test();
     Q_INVOKABLE void startHeartBeat();
@@ -92,6 +106,8 @@ private:
     QTimer *m_timer_heart;
     QTimer *m_timer_heart_count;
     QTimer *m_timer_reconnect;
+    QTimer *m_timer_resend_msg;
+
     int m_heart_count = 0;
 
     QString m_login_accid;

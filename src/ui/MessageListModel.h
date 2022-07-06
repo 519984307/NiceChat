@@ -40,6 +40,8 @@ public:
 
     Q_INVOKABLE int count();
 
+    Q_SIGNAL void viewToBottom();
+
 private:
     QList<Message> m_messages;
 };

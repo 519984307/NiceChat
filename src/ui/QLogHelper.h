@@ -15,6 +15,9 @@ class QLogHelper : public QObject
 public:
     explicit QLogHelper(QObject *parent = nullptr);
     ~QLogHelper();
+
+    static QLogHelper* instance();
+
     void initGoogleLog(char* argv[]);
 };
 

@@ -10,6 +10,7 @@
         SessionController.cpp
         MessageController.cpp
         MessageListModel.cpp
+        SessionListModel.cpp
         )
 
 set(UILibrary_HEADERS
@@ -23,6 +24,7 @@ set(UILibrary_HEADERS
         SessionController.h
         MessageController.h
         MessageListModel.h
+        SessionListModel.h
         )
 
 set(UILibrary_RCC

@@ -19,7 +19,7 @@ QVariant MessageListModel::data(const QModelIndex &index, int role) const {
         return {};
     const Message &message = m_messages[index.row()];
     if (role == Uuid)
-        return message.getMessageId();
+        return message.getId();
     else if (role == Body)
         return message.getBody();
     else if (role == FromAccid)
@@ -61,6 +61,7 @@ void MessageListModel::addData(const QList<Message> &list) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount() + list.count() - 1);
         m_messages.append(list);
         endInsertRows();
+        Q_EMIT viewToBottom();
     }
 }
 
@@ -74,6 +75,7 @@ void MessageListModel::setNewData(const QList<Message> &list) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount() + list.count() - 1);
         m_messages.append(list);
         endInsertRows();
+        Q_EMIT viewToBottom();
     }
 }
 
@@ -81,16 +83,17 @@ void MessageListModel::addOrUpdateData(const Message &message){
     for (int i = 0; i < m_messages.size(); ++i)
     {
         auto &item = const_cast<Message &>(m_messages.at(i));
-        if (item.getMessageId() == message.getMessageId()){
+        if (item.getId() == message.getId()){
             item.setTime(message.getTime());
             item.setStatus(message.getStatus());
-            dataChanged(this->index(i),this->index(i));
+            Q_EMIT dataChanged(this->index(i),this->index(i));
             return;
         }
     }
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_messages.append(message);
     endInsertRows();
+    Q_EMIT viewToBottom();
 }
 
 int MessageListModel::count(){

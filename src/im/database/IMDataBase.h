@@ -6,8 +6,7 @@
 #include "./precompiled.h"
 #include "./Message.h"
 #include "./proto/im.pb.h"
-
-typedef ::google::protobuf::RepeatedPtrField<im::protocol::Message> ptrf;
+#include "./Session.h"
 
 class IMDataBase : public QObject {
 Q_OBJECT
@@ -18,19 +17,27 @@ public:
 
     static void initDb(const QString &base64);
 
-    static void syncMessage(const ptrf &messages);
+    static void initMessageStatus();
+
+    static void syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Message>& messages);
 
     static QSqlError insertMsg(const im::protocol::Message &it);
 
     static uint64_t getMsgLastTime();
 
-    static std::shared_ptr<Message> proto2message(const im::protocol::Message &it);
+    static Message proto2message(const im::protocol::Message &it);
 
     static QSqlError saveOrUpdateMsg(const im::protocol::Message &it);
+
+    static QSqlError saveOrUpdateMsg(const Message &it);
+
+    static Session message2Session(const Message &it);
 
     Message getMsgByUuid(const QString &basicString);
 
     QList<Message> getMessageListById(const QString &accid);
+
+    QList<Session> getSessionList();
 };
 
 #endif // IMDATABASE_H

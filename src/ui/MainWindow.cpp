@@ -12,11 +12,11 @@ MainWindow::MainWindow(char *argv[]) {
     QGuiApplication::setWindowIcon(QIcon(":/image/ic_logo.png"));
     QQuickStyle::setStyle("Default");
 
-    QUIHelper *p_uiHelper = uiHelper();
+    QUIHelper *p_uiHelper = QUIHelper::instance();
     p_uiHelper->setCode();
     m_engine.rootContext()->setContextProperty("UIHelper",p_uiHelper);
 
-    QLogHelper *p_logHelper = logHelper();
+    QLogHelper *p_logHelper = QLogHelper::instance();
     p_logHelper->initGoogleLog(argv);
     m_engine.rootContext()->setContextProperty("LogHelper",p_logHelper);
 
@@ -29,6 +29,7 @@ MainWindow::MainWindow(char *argv[]) {
 
     qmlRegisterType<LoginController>("Controller", 1, 0, "LoginController");
     qmlRegisterType<MessageController>("Controller", 1, 0, "MessageController");
+    qmlRegisterType<SessionController>("Controller", 1, 0, "SessionController");
 
 }
 

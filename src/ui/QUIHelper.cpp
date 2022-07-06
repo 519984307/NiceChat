@@ -1,5 +1,12 @@
 ﻿#include "QUIHelper.h"
 
+Q_GLOBAL_STATIC(QUIHelper, uiHelper)
+
+QUIHelper* QUIHelper::instance()
+{
+    return uiHelper();
+}
+
 QUIHelper::QUIHelper(QObject *parent)
     : QObject{parent}
 {

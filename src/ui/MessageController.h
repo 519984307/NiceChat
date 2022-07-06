@@ -4,7 +4,7 @@
 #include <QObject>
 #include <GlobalStatic.h>
 #include "MessageListModel.h"
-#include <IMGlobalStatic.h>
+#include "QIM.h"
 
 class MessageController : public QObject
 {
