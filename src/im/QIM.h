@@ -8,6 +8,7 @@
 #include <QtConcurrent>
 #include <proto/im.pb.h>
 #include <QUuid>
+#include <QList>
 #include "./database/IMDataBase.h"
 #include "./database/Message.h"
 
@@ -81,7 +82,7 @@ public:
 
 private:
     void initDataBase(const QString &text);
-
+    void handleMessageBuf(const Message &message);
 private:
     QWebSocket *socket;
     QString m_userInfo = "";
@@ -95,6 +96,8 @@ private:
 
     QString m_login_accid;
     QString m_login_token;
+
+    QList<Message> m_msg_buf;
 
     IMDataBase m_db;
 

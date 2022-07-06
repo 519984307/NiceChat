@@ -13,7 +13,7 @@ QIM::QIM(QObject *parent)
     : QObject{parent}
 {
 
-//    REGISTER(Message);
+    //    REGISTER(Message);
     qDebug()<<"asdasdasdasdasdasdasd";
     socket = new QWebSocket();
     m_timer_heart =new QTimer();
@@ -93,6 +93,16 @@ QIM::QIM(QObject *parent)
                 qDebug()<<QString::fromStdString(json);
                 IMDataBase::syncMessage(packet.syncmsg_rsp().messages());
             }
+        } else if(type == im::protocol::SendMsg_rsp_){
+            if(packet.sendmsg_rsp().result().success()){
+                const im::protocol::Message &msg = packet.sendmsg_rsp().message();
+                const QSqlError &error = IMDataBase::saveOrUpdateMsg(msg);
+                if(error.type() == QSqlError::NoError){
+                    const Message &message = m_db.getMsgByUuid(QString::fromStdString(msg.uuid()));
+                    handleMessageBuf(message);
+                    Q_EMIT receiveMessage(message);
+                }
+            }
         }
     });
 
@@ -101,6 +111,17 @@ QIM::QIM(QObject *parent)
         Q_EMIT errorMessage(QMetaEnum::fromType<QAbstractSocket::SocketError>().valueToKey(error));
     });
 
+}
+
+void QIM::handleMessageBuf(const Message &message){
+    for (int i = 0; i < m_msg_buf.size(); ++i)
+    {
+        auto &item = const_cast<Message &>(m_msg_buf.at(i));
+        if (item.getMessageId() == message.getMessageId()){
+            m_msg_buf.removeAt(i);
+            return;
+        }
+    }
 }
 
 QIM::~QIM()
@@ -168,10 +189,12 @@ void QIM::sendTextMessage(const QString& from,const QString& to,const QString& t
     const QSqlError &error = IMDataBase::insertMsg(*msg);
     if(error.type() == QSqlError::NoError){
         const Message &message = m_db.getMsgByUuid(QString::fromStdString(msg->uuid()));
+        m_msg_buf.append(message);
         Q_EMIT receiveMessage(message);
     }
-    socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
 
+    qDebug()<<"socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString())):"<<socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+    qDebug()<<"socket->flush():"<<socket->flush();
 }
 
 void QIM::initDataBase(const QString &text){
@@ -184,22 +207,24 @@ void QIM::sendSyncMessage(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SyncMsg_req_);
     auto *req = new im::protocol::SyncMsg_req();
-    qDebug()<<"-------time---:"<< IMDataBase::getMsgLastTime();
-    req->set_lastmsgtime(0);
+    req->set_lastmsgtime(IMDataBase::getMsgLastTime());
     packet.set_allocated_syncmsg_req(req);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+    socket->flush();
 }
 
 void QIM::getFriends(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::GetFriends_req_);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+    socket->flush();
 }
 
 void QIM::getProfile(){
     im::protocol::Packet packet;
     packet.set_type(im::protocol::GetProfile_req_);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+    socket->flush();
 }
 
 void QIM::updateMessageModel(const QString& accid){
@@ -207,7 +232,7 @@ void QIM::updateMessageModel(const QString& accid){
 }
 
 void QIM::test(){
-
+    qDebug()<<"m_msg_buf.count()-----------------"<<m_msg_buf.count();
 }
 
 QList<Message> QIM::getMessageListById(const QString &accid) {

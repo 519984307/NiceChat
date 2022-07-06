@@ -34,6 +34,8 @@ QVariant MessageListModel::data(const QModelIndex &index, int role) const {
         return message.getEx();
     else if (role == Time)
         return message.getTime();
+    else if (role == Status)
+        return message.getStatus();
     else if (role == SessionId)
         return message.getSessionId();
     return {};
@@ -49,6 +51,7 @@ QHash<int, QByteArray> MessageListModel::roleNames() const {
     roles[Type] = "type";
     roles[Ex] = "ex";
     roles[Time] = "time";
+    roles[Status] = "status";
     roles[SessionId] = "sessionId";
     return roles;
 }
@@ -61,7 +64,7 @@ void MessageListModel::addData(const QList<Message> &list) {
     }
 }
 
-void MessageListModel::setData(const QList<Message> &list) {
+void MessageListModel::setNewData(const QList<Message> &list) {
     if(rowCount()>0){
         beginRemoveRows(QModelIndex(),0,rowCount()-1);
         m_messages.clear();
@@ -72,6 +75,22 @@ void MessageListModel::setData(const QList<Message> &list) {
         m_messages.append(list);
         endInsertRows();
     }
+}
+
+void MessageListModel::addOrUpdateData(const Message &message){
+    for (int i = 0; i < m_messages.size(); ++i)
+    {
+        auto &item = const_cast<Message &>(m_messages.at(i));
+        if (item.getMessageId() == message.getMessageId()){
+            item.setTime(message.getTime());
+            item.setStatus(message.getStatus());
+            dataChanged(this->index(i),this->index(i));
+            return;
+        }
+    }
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    m_messages.append(message);
+    endInsertRows();
 }
 
 int MessageListModel::count(){

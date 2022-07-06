@@ -4,9 +4,7 @@ MessageController::MessageController(QObject *parent)
     : QObject{parent}
 {
     connect(QIM::instance(),&QIM::receiveMessage,this,[this](const Message &message){
-        QList<Message> list;
-        list.append(message);
-        m_messageModel.addData(list);
+        m_messageModel.addOrUpdateData(message);
     });
 }
 
@@ -17,5 +15,5 @@ MessageController::~MessageController(){
 
 void MessageController::loadMessageData(const QString &accid){
     const QList<Message> &list = IM->getMessageListById(accid);
-    m_messageModel.setData(list);
+    m_messageModel.setNewData(list);
 }

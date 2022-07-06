@@ -15,6 +15,11 @@ Item {
 
     property var userInfo : JSON.parse(IM.userInfo)
 
+    FontLoader {
+        id: awesome
+        source: "qrc:/font/iconfont.ttf"
+    }
+
     Rectangle{
         anchors.fill: sessionListView
         color:Theme.colorBackground2
@@ -22,13 +27,6 @@ Item {
 
     MessageController{
         id:messageController
-    }
-
-    Connections{
-        target: IM
-        function onReceiveMessage(msg){
-            console.debug(msg)
-        }
     }
 
     ListView{
@@ -235,15 +233,20 @@ Item {
                 height: childrenRect.height
                 color:"#00000000"
 
+                property bool isMine: userInfo.accid === model.fromAccid
+
                 CusAvatar{
                     id:itemMsgAvatar
                     width: 34
                     height: 34
                     avatarName: "朱"
                     anchors{
-                        right: parent.right
+                        right: isMine ? parent.right : undefined
+                        rightMargin: isMine ? 20 : undefined
+                        left: isMine ? undefined : parent.left
+                        leftMargin: isMine ? undefined : 20
+
                         top:parent.top
-                        rightMargin: 20
                     }
                     onClickAvatar: {
                         console.debug(itemMsgText.implicitWidth)
@@ -253,14 +256,18 @@ Item {
                 }
 
                 Rectangle{
-                    color:"#FF95EC69"
+                    id:content
+                    color: isMine ? "#FF95EC69" : "#FFFFFF"
                     width: itemMsgText.width+10
                     height: itemMsgText.height+10
                     radius: 3
                     anchors{
                         top: itemMsgAvatar.top
-                        right: itemMsgAvatar.left
-                        rightMargin: 10
+                        right: isMine ? itemMsgAvatar.left : undefined
+                        rightMargin: isMine ? 10 : undefined
+                        left: isMine ? undefined : itemMsgAvatar.right
+                        leftMargin: isMine ? undefined : 10
+
                     }
                     CusTextEdit{
                         id:itemMsgText
@@ -272,6 +279,46 @@ Item {
                         selectByMouse: true
                         width: Math.min(listMessage.width-200,600,itemMsgText.implicitWidth)
                     }
+                }
+
+                Item{
+                    width: 25
+                    height: 25
+                    visible: model.status !== 0
+                    anchors{
+                        right:isMine?content.left : undefined
+                        rightMargin:isMine?1 : undefined
+                        left:isMine?undefined:content.right
+                        leftMargin: isMine?undefined:1
+                        verticalCenter: content.verticalCenter
+                    }
+
+                    Text{
+                        anchors.centerIn: parent
+                        font.family: awesome.name
+                        font.pixelSize: 20
+                        text:"\ue756"
+                        antialiasing: true
+                        color:"#999999"
+                        visible: model.status === 1
+                        RotationAnimation on rotation {
+                            from: 0
+                            to: 360
+                            duration: 1500
+                            loops: Animation.Infinite
+                        }
+                    }
+
+                    Text{
+                        anchors.centerIn: parent
+                        font.family: awesome.name
+                        font.pixelSize: 20
+                        color:"#CC5353"
+                        antialiasing: true
+                        text:"\ue727"
+                        visible: model.status === 2
+                    }
+
                 }
             }
         }
@@ -367,12 +414,6 @@ Item {
             color: Theme.colorBackground1
             anchors.fill: parent
             visible: Global.noValue(sessionModel[sessionListView.currentIndex])
-
-            FontLoader {
-                id: awesome
-                source: "qrc:/font/iconfont.ttf"
-            }
-
 
             Text{
                 anchors.centerIn: parent

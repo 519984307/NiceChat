@@ -26,6 +26,8 @@ public:
 
     static std::shared_ptr<Message> proto2message(const im::protocol::Message &it);
 
+    static QSqlError saveOrUpdateMsg(const im::protocol::Message &it);
+
     Message getMsgByUuid(const QString &basicString);
 
     QList<Message> getMessageListById(const QString &accid);

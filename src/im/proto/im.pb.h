@@ -1047,6 +1047,7 @@ class SendMsg_rsp final :
 
   enum : int {
     kResultFieldNumber = 1,
+    kMessageFieldNumber = 2,
   };
   // optional .im.protocol.Result result = 1;
   bool has_result() const;
@@ -1066,6 +1067,24 @@ class SendMsg_rsp final :
       ::im::protocol::Result* result);
   ::im::protocol::Result* unsafe_arena_release_result();
 
+  // optional .im.protocol.Message message = 2;
+  bool has_message() const;
+  private:
+  bool _internal_has_message() const;
+  public:
+  void clear_message();
+  const ::im::protocol::Message& message() const;
+  PROTOBUF_NODISCARD ::im::protocol::Message* release_message();
+  ::im::protocol::Message* mutable_message();
+  void set_allocated_message(::im::protocol::Message* message);
+  private:
+  const ::im::protocol::Message& _internal_message() const;
+  ::im::protocol::Message* _internal_mutable_message();
+  public:
+  void unsafe_arena_set_allocated_message(
+      ::im::protocol::Message* message);
+  ::im::protocol::Message* unsafe_arena_release_message();
+
   // @@protoc_insertion_point(class_scope:im.protocol.SendMsg_rsp)
  private:
   class _Internal;
@@ -1077,6 +1096,7 @@ class SendMsg_rsp final :
     ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     ::im::protocol::Result* result_;
+    ::im::protocol::Message* message_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_im_2eproto;
@@ -3717,6 +3737,96 @@ inline void SendMsg_rsp::set_allocated_result(::im::protocol::Result* result) {
   }
   _impl_.result_ = result;
   // @@protoc_insertion_point(field_set_allocated:im.protocol.SendMsg_rsp.result)
+}
+
+// optional .im.protocol.Message message = 2;
+inline bool SendMsg_rsp::_internal_has_message() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.message_ != nullptr);
+  return value;
+}
+inline bool SendMsg_rsp::has_message() const {
+  return _internal_has_message();
+}
+inline void SendMsg_rsp::clear_message() {
+  if (_impl_.message_ != nullptr) _impl_.message_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline const ::im::protocol::Message& SendMsg_rsp::_internal_message() const {
+  const ::im::protocol::Message* p = _impl_.message_;
+  return p != nullptr ? *p : reinterpret_cast<const ::im::protocol::Message&>(
+      ::im::protocol::_Message_default_instance_);
+}
+inline const ::im::protocol::Message& SendMsg_rsp::message() const {
+  // @@protoc_insertion_point(field_get:im.protocol.SendMsg_rsp.message)
+  return _internal_message();
+}
+inline void SendMsg_rsp::unsafe_arena_set_allocated_message(
+    ::im::protocol::Message* message) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.message_);
+  }
+  _impl_.message_ = message;
+  if (message) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:im.protocol.SendMsg_rsp.message)
+}
+inline ::im::protocol::Message* SendMsg_rsp::release_message() {
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::im::protocol::Message* temp = _impl_.message_;
+  _impl_.message_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::im::protocol::Message* SendMsg_rsp::unsafe_arena_release_message() {
+  // @@protoc_insertion_point(field_release:im.protocol.SendMsg_rsp.message)
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::im::protocol::Message* temp = _impl_.message_;
+  _impl_.message_ = nullptr;
+  return temp;
+}
+inline ::im::protocol::Message* SendMsg_rsp::_internal_mutable_message() {
+  _impl_._has_bits_[0] |= 0x00000002u;
+  if (_impl_.message_ == nullptr) {
+    auto* p = CreateMaybeMessage<::im::protocol::Message>(GetArenaForAllocation());
+    _impl_.message_ = p;
+  }
+  return _impl_.message_;
+}
+inline ::im::protocol::Message* SendMsg_rsp::mutable_message() {
+  ::im::protocol::Message* _msg = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:im.protocol.SendMsg_rsp.message)
+  return _msg;
+}
+inline void SendMsg_rsp::set_allocated_message(::im::protocol::Message* message) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.message_;
+  }
+  if (message) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(message);
+    if (message_arena != submessage_arena) {
+      message = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, message, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  _impl_.message_ = message;
+  // @@protoc_insertion_point(field_set_allocated:im.protocol.SendMsg_rsp.message)
 }
 
 // -------------------------------------------------------------------

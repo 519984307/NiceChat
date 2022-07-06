@@ -19,6 +19,7 @@ public:
         Type,
         Ex,
         Time,
+        Status,
         SessionId
     };
 
@@ -33,7 +34,9 @@ public:
 
     void addData(const QList<Message> &list);
 
-    void setData(const QList<Message> &list);
+    void setNewData(const QList<Message> &list);
+
+    void addOrUpdateData(const Message &message);
 
     Q_INVOKABLE int count();
 

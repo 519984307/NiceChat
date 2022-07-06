@@ -93,7 +93,8 @@ PROTOBUF_CONSTEXPR SendMsg_rsp::SendMsg_rsp(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_._has_bits_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
-  , /*decltype(_impl_.result_)*/nullptr} {}
+  , /*decltype(_impl_.result_)*/nullptr
+  , /*decltype(_impl_.message_)*/nullptr} {}
 struct SendMsg_rspDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SendMsg_rspDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -323,7 +324,9 @@ const uint32_t TableStruct_im_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(proto
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_rsp, _impl_.result_),
+  PROTOBUF_FIELD_OFFSET(::im::protocol::SendMsg_rsp, _impl_.message_),
   0,
+  1,
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::im::protocol::GetFriends_req, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -473,17 +476,17 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 14, 22, -1, sizeof(::im::protocol::Login_req)},
   { 24, 31, -1, sizeof(::im::protocol::Login_rsp)},
   { 32, -1, -1, sizeof(::im::protocol::SendMsg_req)},
-  { 39, 46, -1, sizeof(::im::protocol::SendMsg_rsp)},
-  { 47, -1, -1, sizeof(::im::protocol::GetFriends_req)},
-  { 53, 61, -1, sizeof(::im::protocol::GetFriends_rsp)},
-  { 63, -1, -1, sizeof(::im::protocol::GetProfile_req)},
-  { 69, 77, -1, sizeof(::im::protocol::GetProfile_rsp)},
-  { 79, 86, -1, sizeof(::im::protocol::SyncMsg_req)},
-  { 87, 95, -1, sizeof(::im::protocol::SyncMsg_rsp)},
-  { 97, 106, -1, sizeof(::im::protocol::Result)},
-  { 109, 124, -1, sizeof(::im::protocol::Message)},
-  { 133, 148, -1, sizeof(::im::protocol::User)},
-  { 157, 176, -1, sizeof(::im::protocol::Packet)},
+  { 39, 47, -1, sizeof(::im::protocol::SendMsg_rsp)},
+  { 49, -1, -1, sizeof(::im::protocol::GetFriends_req)},
+  { 55, 63, -1, sizeof(::im::protocol::GetFriends_rsp)},
+  { 65, -1, -1, sizeof(::im::protocol::GetProfile_req)},
+  { 71, 79, -1, sizeof(::im::protocol::GetProfile_rsp)},
+  { 81, 88, -1, sizeof(::im::protocol::SyncMsg_req)},
+  { 89, 97, -1, sizeof(::im::protocol::SyncMsg_rsp)},
+  { 99, 108, -1, sizeof(::im::protocol::Result)},
+  { 111, 126, -1, sizeof(::im::protocol::Message)},
+  { 135, 150, -1, sizeof(::im::protocol::User)},
+  { 159, 178, -1, sizeof(::im::protocol::Packet)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -513,69 +516,70 @@ const char descriptor_table_protodef_im_2eproto[] PROTOBUF_SECTION_VARIABLE(prot
   "accidB\010\n\006_token\"@\n\tLogin_rsp\022(\n\006result\030\001"
   " \001(\0132\023.im.protocol.ResultH\000\210\001\001B\t\n\007_resul"
   "t\"4\n\013SendMsg_req\022%\n\007message\030\001 \001(\0132\024.im.p"
-  "rotocol.Message\"B\n\013SendMsg_rsp\022(\n\006result"
-  "\030\001 \001(\0132\023.im.protocol.ResultH\000\210\001\001B\t\n\007_res"
-  "ult\"\020\n\016GetFriends_req\"i\n\016GetFriends_rsp\022"
-  "(\n\006result\030\001 \001(\0132\023.im.protocol.ResultH\000\210\001"
-  "\001\022\"\n\007friends\030\002 \003(\0132\021.im.protocol.UserB\t\n"
-  "\007_result\"\020\n\016GetProfile_req\"t\n\016GetProfile"
-  "_rsp\022(\n\006result\030\001 \001(\0132\023.im.protocol.Resul"
-  "tH\000\210\001\001\022$\n\004user\030\002 \001(\0132\021.im.protocol.UserH"
-  "\001\210\001\001B\t\n\007_resultB\007\n\005_user\"7\n\013SyncMsg_req\022"
-  "\030\n\013lastMsgTime\030\001 \001(\003H\000\210\001\001B\016\n\014_lastMsgTim"
-  "e\"j\n\013SyncMsg_rsp\022(\n\006result\030\001 \001(\0132\023.im.pr"
-  "otocol.ResultH\000\210\001\001\022&\n\010messages\030\002 \003(\0132\024.i"
-  "m.protocol.MessageB\t\n\007_result\"t\n\006Result\022"
-  "\024\n\007success\030\001 \001(\010H\000\210\001\001\022\026\n\terrorCode\030\002 \001(\r"
-  "H\001\210\001\001\022\025\n\010errorMsg\030\003 \001(\tH\002\210\001\001B\n\n\010_success"
-  "B\014\n\n_errorCodeB\013\n\t_errorMsg\"\211\002\n\007Message\022"
-  "\021\n\004uuid\030\001 \001(\tH\000\210\001\001\022\021\n\004from\030\002 \001(\tH\001\210\001\001\022\022\n"
-  "\005scene\030\003 \001(\rH\002\210\001\001\022\017\n\002to\030\004 \001(\tH\003\210\001\001\022\021\n\004ty"
-  "pe\030\005 \001(\rH\004\210\001\001\022\021\n\004body\030\006 \001(\tH\005\210\001\001\022\017\n\002ex\030\007"
-  " \001(\tH\006\210\001\001\022\021\n\004time\030\010 \001(\004H\007\210\001\001\022\026\n\tsessionI"
-  "d\030\t \001(\tH\010\210\001\001B\007\n\005_uuidB\007\n\005_fromB\010\n\006_scene"
-  "B\005\n\003_toB\007\n\005_typeB\007\n\005_bodyB\005\n\003_exB\007\n\005_tim"
-  "eB\014\n\n_sessionId\"\216\002\n\004User\022\022\n\005accid\030\001 \001(\tH"
-  "\000\210\001\001\022\021\n\004name\030\002 \001(\tH\001\210\001\001\022\021\n\004icon\030\003 \001(\tH\002\210"
-  "\001\001\022\021\n\004sign\030\004 \001(\tH\003\210\001\001\022\022\n\005birth\030\005 \001(\tH\004\210\001"
-  "\001\022\023\n\006mobile\030\006 \001(\tH\005\210\001\001\022\023\n\006gender\030\007 \001(\rH\006"
-  "\210\001\001\022\017\n\002ex\030\010 \001(\tH\007\210\001\001\022\023\n\006online\030\t \001(\010H\010\210\001"
-  "\001B\010\n\006_accidB\007\n\005_nameB\007\n\005_iconB\007\n\005_signB\010"
-  "\n\006_birthB\t\n\007_mobileB\t\n\007_genderB\005\n\003_exB\t\n"
-  "\007_online\"\351\006\n\006Packet\022#\n\004type\030\001 \001(\0162\025.im.p"
-  "rotocol.CMD_TYPE\022.\n\theart_req\030\002 \001(\0132\026.im"
-  ".protocol.Heart_reqH\000\210\001\001\022.\n\theart_rsp\030\003 "
-  "\001(\0132\026.im.protocol.Heart_rspH\001\210\001\001\0222\n\013send"
-  "Msg_req\030\004 \001(\0132\030.im.protocol.SendMsg_reqH"
-  "\002\210\001\001\0222\n\013sendMsg_rsp\030\005 \001(\0132\030.im.protocol."
-  "SendMsg_rspH\003\210\001\001\022.\n\tlogin_req\030\006 \001(\0132\026.im"
-  ".protocol.Login_reqH\004\210\001\001\022.\n\tlogin_rsp\030\007 "
-  "\001(\0132\026.im.protocol.Login_rspH\005\210\001\001\0228\n\016getF"
-  "riends_req\030\010 \001(\0132\033.im.protocol.GetFriend"
-  "s_reqH\006\210\001\001\0228\n\016getFriends_rsp\030\t \001(\0132\033.im."
-  "protocol.GetFriends_rspH\007\210\001\001\0228\n\016getProfi"
-  "le_req\030\n \001(\0132\033.im.protocol.GetProfile_re"
-  "qH\010\210\001\001\0228\n\016getProfile_rsp\030\013 \001(\0132\033.im.prot"
-  "ocol.GetProfile_rspH\t\210\001\001\0222\n\013syncMsg_req\030"
-  "\014 \001(\0132\030.im.protocol.SyncMsg_reqH\n\210\001\001\0222\n\013"
-  "syncMsg_rsp\030\r \001(\0132\030.im.protocol.SyncMsg_"
-  "rspH\013\210\001\001B\014\n\n_heart_reqB\014\n\n_heart_rspB\016\n\014"
-  "_sendMsg_reqB\016\n\014_sendMsg_rspB\014\n\n_login_r"
-  "eqB\014\n\n_login_rspB\021\n\017_getFriends_reqB\021\n\017_"
-  "getFriends_rspB\021\n\017_getProfile_reqB\021\n\017_ge"
-  "tProfile_rspB\016\n\014_syncMsg_reqB\016\n\014_syncMsg"
-  "_rsp*\346\001\n\010CMD_TYPE\022\016\n\nHeart_req_\020\000\022\016\n\nHea"
-  "rt_rsp_\020\001\022\016\n\nLogin_req_\020\002\022\016\n\nLogin_rsp_\020"
-  "\003\022\020\n\014SendMsg_req_\020\004\022\020\n\014SendMsg_rsp_\020\005\022\023\n"
-  "\017GetFriends_req_\020\006\022\023\n\017GetFriends_rsp_\020\007\022"
-  "\023\n\017GetProfile_req_\020\010\022\023\n\017GetProfile_rsp_\020"
-  "\t\022\020\n\014SyncMsg_req_\020\n\022\020\n\014SyncMsg_rsp_\020\013B#\n"
-  "\025com.zhuzichu.protocolB\nIMProtocolb\006prot"
-  "o3"
+  "rotocol.Message\"z\n\013SendMsg_rsp\022(\n\006result"
+  "\030\001 \001(\0132\023.im.protocol.ResultH\000\210\001\001\022*\n\007mess"
+  "age\030\002 \001(\0132\024.im.protocol.MessageH\001\210\001\001B\t\n\007"
+  "_resultB\n\n\010_message\"\020\n\016GetFriends_req\"i\n"
+  "\016GetFriends_rsp\022(\n\006result\030\001 \001(\0132\023.im.pro"
+  "tocol.ResultH\000\210\001\001\022\"\n\007friends\030\002 \003(\0132\021.im."
+  "protocol.UserB\t\n\007_result\"\020\n\016GetProfile_r"
+  "eq\"t\n\016GetProfile_rsp\022(\n\006result\030\001 \001(\0132\023.i"
+  "m.protocol.ResultH\000\210\001\001\022$\n\004user\030\002 \001(\0132\021.i"
+  "m.protocol.UserH\001\210\001\001B\t\n\007_resultB\007\n\005_user"
+  "\"7\n\013SyncMsg_req\022\030\n\013lastMsgTime\030\001 \001(\003H\000\210\001"
+  "\001B\016\n\014_lastMsgTime\"j\n\013SyncMsg_rsp\022(\n\006resu"
+  "lt\030\001 \001(\0132\023.im.protocol.ResultH\000\210\001\001\022&\n\010me"
+  "ssages\030\002 \003(\0132\024.im.protocol.MessageB\t\n\007_r"
+  "esult\"t\n\006Result\022\024\n\007success\030\001 \001(\010H\000\210\001\001\022\026\n"
+  "\terrorCode\030\002 \001(\rH\001\210\001\001\022\025\n\010errorMsg\030\003 \001(\tH"
+  "\002\210\001\001B\n\n\010_successB\014\n\n_errorCodeB\013\n\t_error"
+  "Msg\"\211\002\n\007Message\022\021\n\004uuid\030\001 \001(\tH\000\210\001\001\022\021\n\004fr"
+  "om\030\002 \001(\tH\001\210\001\001\022\022\n\005scene\030\003 \001(\rH\002\210\001\001\022\017\n\002to\030"
+  "\004 \001(\tH\003\210\001\001\022\021\n\004type\030\005 \001(\rH\004\210\001\001\022\021\n\004body\030\006 "
+  "\001(\tH\005\210\001\001\022\017\n\002ex\030\007 \001(\tH\006\210\001\001\022\021\n\004time\030\010 \001(\004H"
+  "\007\210\001\001\022\026\n\tsessionId\030\t \001(\tH\010\210\001\001B\007\n\005_uuidB\007\n"
+  "\005_fromB\010\n\006_sceneB\005\n\003_toB\007\n\005_typeB\007\n\005_bod"
+  "yB\005\n\003_exB\007\n\005_timeB\014\n\n_sessionId\"\216\002\n\004User"
+  "\022\022\n\005accid\030\001 \001(\tH\000\210\001\001\022\021\n\004name\030\002 \001(\tH\001\210\001\001\022"
+  "\021\n\004icon\030\003 \001(\tH\002\210\001\001\022\021\n\004sign\030\004 \001(\tH\003\210\001\001\022\022\n"
+  "\005birth\030\005 \001(\tH\004\210\001\001\022\023\n\006mobile\030\006 \001(\tH\005\210\001\001\022\023"
+  "\n\006gender\030\007 \001(\rH\006\210\001\001\022\017\n\002ex\030\010 \001(\tH\007\210\001\001\022\023\n\006"
+  "online\030\t \001(\010H\010\210\001\001B\010\n\006_accidB\007\n\005_nameB\007\n\005"
+  "_iconB\007\n\005_signB\010\n\006_birthB\t\n\007_mobileB\t\n\007_"
+  "genderB\005\n\003_exB\t\n\007_online\"\351\006\n\006Packet\022#\n\004t"
+  "ype\030\001 \001(\0162\025.im.protocol.CMD_TYPE\022.\n\thear"
+  "t_req\030\002 \001(\0132\026.im.protocol.Heart_reqH\000\210\001\001"
+  "\022.\n\theart_rsp\030\003 \001(\0132\026.im.protocol.Heart_"
+  "rspH\001\210\001\001\0222\n\013sendMsg_req\030\004 \001(\0132\030.im.proto"
+  "col.SendMsg_reqH\002\210\001\001\0222\n\013sendMsg_rsp\030\005 \001("
+  "\0132\030.im.protocol.SendMsg_rspH\003\210\001\001\022.\n\tlogi"
+  "n_req\030\006 \001(\0132\026.im.protocol.Login_reqH\004\210\001\001"
+  "\022.\n\tlogin_rsp\030\007 \001(\0132\026.im.protocol.Login_"
+  "rspH\005\210\001\001\0228\n\016getFriends_req\030\010 \001(\0132\033.im.pr"
+  "otocol.GetFriends_reqH\006\210\001\001\0228\n\016getFriends"
+  "_rsp\030\t \001(\0132\033.im.protocol.GetFriends_rspH"
+  "\007\210\001\001\0228\n\016getProfile_req\030\n \001(\0132\033.im.protoc"
+  "ol.GetProfile_reqH\010\210\001\001\0228\n\016getProfile_rsp"
+  "\030\013 \001(\0132\033.im.protocol.GetProfile_rspH\t\210\001\001"
+  "\0222\n\013syncMsg_req\030\014 \001(\0132\030.im.protocol.Sync"
+  "Msg_reqH\n\210\001\001\0222\n\013syncMsg_rsp\030\r \001(\0132\030.im.p"
+  "rotocol.SyncMsg_rspH\013\210\001\001B\014\n\n_heart_reqB\014"
+  "\n\n_heart_rspB\016\n\014_sendMsg_reqB\016\n\014_sendMsg"
+  "_rspB\014\n\n_login_reqB\014\n\n_login_rspB\021\n\017_get"
+  "Friends_reqB\021\n\017_getFriends_rspB\021\n\017_getPr"
+  "ofile_reqB\021\n\017_getProfile_rspB\016\n\014_syncMsg"
+  "_reqB\016\n\014_syncMsg_rsp*\346\001\n\010CMD_TYPE\022\016\n\nHea"
+  "rt_req_\020\000\022\016\n\nHeart_rsp_\020\001\022\016\n\nLogin_req_\020"
+  "\002\022\016\n\nLogin_rsp_\020\003\022\020\n\014SendMsg_req_\020\004\022\020\n\014S"
+  "endMsg_rsp_\020\005\022\023\n\017GetFriends_req_\020\006\022\023\n\017Ge"
+  "tFriends_rsp_\020\007\022\023\n\017GetProfile_req_\020\010\022\023\n\017"
+  "GetProfile_rsp_\020\t\022\020\n\014SyncMsg_req_\020\n\022\020\n\014S"
+  "yncMsg_rsp_\020\013B#\n\025com.zhuzichu.protocolB\n"
+  "IMProtocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_im_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_im_2eproto = {
-    false, false, 2602, descriptor_table_protodef_im_2eproto,
+    false, false, 2658, descriptor_table_protodef_im_2eproto,
     "im.proto",
     &descriptor_table_im_2eproto_once, nullptr, 0, 16,
     schemas, file_default_instances, TableStruct_im_2eproto::offsets,
@@ -1546,11 +1550,19 @@ class SendMsg_rsp::_Internal {
   static void set_has_result(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
+  static const ::im::protocol::Message& message(const SendMsg_rsp* msg);
+  static void set_has_message(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
 };
 
 const ::im::protocol::Result&
 SendMsg_rsp::_Internal::result(const SendMsg_rsp* msg) {
   return *msg->_impl_.result_;
+}
+const ::im::protocol::Message&
+SendMsg_rsp::_Internal::message(const SendMsg_rsp* msg) {
+  return *msg->_impl_.message_;
 }
 SendMsg_rsp::SendMsg_rsp(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -1564,11 +1576,15 @@ SendMsg_rsp::SendMsg_rsp(const SendMsg_rsp& from)
   new (&_impl_) Impl_{
       decltype(_impl_._has_bits_){from._impl_._has_bits_}
     , /*decltype(_impl_._cached_size_)*/{}
-    , decltype(_impl_.result_){nullptr}};
+    , decltype(_impl_.result_){nullptr}
+    , decltype(_impl_.message_){nullptr}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_result()) {
     _this->_impl_.result_ = new ::im::protocol::Result(*from._impl_.result_);
+  }
+  if (from._internal_has_message()) {
+    _this->_impl_.message_ = new ::im::protocol::Message(*from._impl_.message_);
   }
   // @@protoc_insertion_point(copy_constructor:im.protocol.SendMsg_rsp)
 }
@@ -1581,6 +1597,7 @@ inline void SendMsg_rsp::SharedCtor(
       decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , decltype(_impl_.result_){nullptr}
+    , decltype(_impl_.message_){nullptr}
   };
 }
 
@@ -1596,6 +1613,7 @@ SendMsg_rsp::~SendMsg_rsp() {
 inline void SendMsg_rsp::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.result_;
+  if (this != internal_default_instance()) delete _impl_.message_;
 }
 
 void SendMsg_rsp::SetCachedSize(int size) const {
@@ -1609,9 +1627,15 @@ void SendMsg_rsp::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    GOOGLE_DCHECK(_impl_.result_ != nullptr);
-    _impl_.result_->Clear();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      GOOGLE_DCHECK(_impl_.result_ != nullptr);
+      _impl_.result_->Clear();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      GOOGLE_DCHECK(_impl_.message_ != nullptr);
+      _impl_.message_->Clear();
+    }
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -1628,6 +1652,14 @@ const char* SendMsg_rsp::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_result(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional .im.protocol.Message message = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_message(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1669,6 +1701,13 @@ uint8_t* SendMsg_rsp::_InternalSerialize(
         _Internal::result(this).GetCachedSize(), target, stream);
   }
 
+  // optional .im.protocol.Message message = 2;
+  if (_internal_has_message()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::message(this),
+        _Internal::message(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1685,14 +1724,23 @@ size_t SendMsg_rsp::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional .im.protocol.Result result = 1;
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.result_);
-  }
+  if (cached_has_bits & 0x00000003u) {
+    // optional .im.protocol.Result result = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.result_);
+    }
 
+    // optional .im.protocol.Message message = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.message_);
+    }
+
+  }
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -1711,9 +1759,16 @@ void SendMsg_rsp::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_result()) {
-    _this->_internal_mutable_result()->::im::protocol::Result::MergeFrom(
-        from._internal_result());
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _this->_internal_mutable_result()->::im::protocol::Result::MergeFrom(
+          from._internal_result());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _this->_internal_mutable_message()->::im::protocol::Message::MergeFrom(
+          from._internal_message());
+    }
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1733,7 +1788,12 @@ void SendMsg_rsp::InternalSwap(SendMsg_rsp* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.result_, other->_impl_.result_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SendMsg_rsp, _impl_.message_)
+      + sizeof(SendMsg_rsp::_impl_.message_)
+      - PROTOBUF_FIELD_OFFSET(SendMsg_rsp, _impl_.result_)>(
+          reinterpret_cast<char*>(&_impl_.result_),
+          reinterpret_cast<char*>(&other->_impl_.result_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SendMsg_rsp::GetMetadata() const {

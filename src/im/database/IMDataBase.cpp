@@ -34,8 +34,15 @@ void IMDataBase::syncMessage(const ptrf &messages) {
 QSqlError IMDataBase::insertMsg(const im::protocol::Message &it) {
     list_message messageX;
     const std::shared_ptr<Message> &obj = proto2message(it);
+    obj->setStatus(1);
     messageX.insert(obj->m_id, obj);
     return qx::dao::insert(messageX);
+}
+
+QSqlError IMDataBase::saveOrUpdateMsg(const im::protocol::Message &it){
+    const std::shared_ptr<Message> &obj = proto2message(it);
+    obj->setStatus(0);
+    return qx::dao::save(obj);
 }
 
 uint64_t IMDataBase::getMsgLastTime() {

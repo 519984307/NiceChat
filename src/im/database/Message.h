@@ -6,7 +6,7 @@
 class QX_IM_DLL_EXPORT Message {
 public:
 
-    Message() : m_id("0"), m_scene(0), m_type(0), m_time("0") { ; }
+    Message() : m_id("0"), m_scene(0), m_type(0), m_time("0"),m_status(0) { ; }
 
     Message(const Message &) = default;
 
@@ -61,6 +61,12 @@ public:
     [[nodiscard]] QString getTime() const { return m_time; };
 
     void setTime(const QString &val) { m_time = val; };
+
+    int m_status;
+
+    [[nodiscard]] int getStatus() const { return m_status; };
+
+    void setStatus(const int &val) { m_status = val; };
 
     QString m_session_id;
 
