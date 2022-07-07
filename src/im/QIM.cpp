@@ -146,6 +146,18 @@ void QIM::syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Mes
 
 void QIM::updateSessionByMessage(const Message& message){
     Session session = Convert::message2Session(message);
+    Session it = IMDataBase::getSessionById(message.getSessionId());
+    if(it.m_id == message.getSessionId()){
+        //db中有该会话
+        session.setUnread(it.getUnread());
+        session.setEx(it.getEx());
+    }
+    if(message.m_from_accid != m_login_accid){
+        //我接收到别人发的消息
+        if(!message.getReadAccids().contains(m_login_accid)){
+            session.setUnread(session.getUnread()+1);
+        }
+    }
     const QSqlError &error = IMDataBase::saveOrUpdateSession(session);
     if (error.type() == QSqlError::NoError) {
         Q_EMIT updateSession(session);
