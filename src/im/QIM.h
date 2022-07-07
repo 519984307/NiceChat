@@ -10,7 +10,7 @@
 #include <QUuid>
 #include <QList>
 #include "./database/IMDataBase.h"
-#include "./database/Message.h"
+#include "Convert.h"
 
 #define REGISTER(x) qDebug() << (#x) << "type id:" << qMetaTypeId<x*>()
 
@@ -73,11 +73,15 @@ public:
     Q_SIGNAL void loginSuccess();
 
     Q_SIGNAL void receiveMessage(const Message &message);
+    Q_SIGNAL void updateSession(const Session &session);
+    Q_SIGNAL void syncMessageCompleted();
 
     void heartBeat();
     void heartBeatCount();
     void reconnect();
     void resendMsg();
+    void updateSessionByMessage(const Message& message);
+    void syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Message> &messages);
 
     QList<Message> getMessageListById(const QString& accid);
     QList<Session> getSessionList();
@@ -88,9 +92,12 @@ public:
 
     Q_INVOKABLE void sendTextMessage(const QString& from,const QString& to,const QString& message);
     Q_INVOKABLE void sendSyncMessage();
+    Q_INVOKABLE void sendReadMessageByUuids(const QString& uuids);
 
     Q_INVOKABLE void getFriends();
     Q_INVOKABLE void getProfile();
+
+    Q_INVOKABLE void clearUnreadCount(const QString& sessionId);
 
     Q_INVOKABLE void updateMessageModel(const QString& accid);
 

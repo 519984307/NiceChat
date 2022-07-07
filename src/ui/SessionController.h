@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "SessionListModel.h"
+#include "QUIHelper.h"
 #include "QIM.h"
 
 class SessionController : public QObject
@@ -29,6 +30,9 @@ public:
     }
 
     Q_INVOKABLE void loadSessionModel();
+    Q_INVOKABLE void jumpSession(const QString& accid);
+
+    Q_SIGNAL void sessionIndexSelected(int index);
 
 private:
     SessionListModel m_sessionModel;

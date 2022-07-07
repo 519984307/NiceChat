@@ -1,7 +1,5 @@
 ﻿#include "IMDataBase.h"
 
-#include <memory>
-
 IMDataBase::IMDataBase(QObject *parent) : QObject{parent} {
 
 }
@@ -35,72 +33,28 @@ void IMDataBase::initMessageStatus() {
     qx::dao::save(list);
 }
 
-void IMDataBase::syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Message> &messages) {
-    QList<Message> messageList;
-    QMap<QString, Message> map;
-    for (int i = 0; i < messages.size(); ++i) {
-        const im::protocol::Message &item = messages.Get(i);
-        const Message &message = proto2message(item);
-        map.insert(message.getSessionId(), message);
-        messageList.append(message);
-    }
-    QList<Session> sessionList;
-    for (const auto &item: map) {
-        const Session &session = message2Session(item);
-        sessionList.append(session);
-    }
-    qx::dao::insert(messageList);
-    qx::dao::insert(sessionList);
-}
-
-Session IMDataBase::message2Session(const Message &it) {
-    Session session;
-    session.m_id = it.m_session_id;
-    session.m_body = it.m_body;
-    session.m_scene = it.m_scene;
-    session.m_status = it.m_status;
-    session.m_time = it.m_time;
-    session.m_type = it.m_type;
-    return session;
-}
-
-QSqlError IMDataBase::insertMsg(const im::protocol::Message &it) {
-    Message message = proto2message(it);
-    message.setStatus(1);
+QSqlError IMDataBase::insertMessage(const Message &it) {
+    Message message = it;
     return qx::dao::insert(message);
 }
 
-QSqlError IMDataBase::saveOrUpdateMsg(const im::protocol::Message &it) {
-    Message message = proto2message(it);
-    message.setStatus(0);
+QSqlError IMDataBase::saveOrUpdateMessage(const Message &it) {
+    Message message = it;
     return qx::dao::save(message);
 }
 
-QSqlError IMDataBase::saveOrUpdateMsg(const Message &it) {
-    Message msg = it;
-    return qx::dao::save(msg);
+QSqlError IMDataBase::saveOrUpdateSession(const Session &it){
+    Session session = it;
+    return qx::dao::save(session);
 }
 
-uint64_t IMDataBase::getMsgLastTime() {
-    Message msg;
+uint64_t IMDataBase::getMessageLastTime() {
+    Message message;
     qx_query query;
-    query.orderDesc("message.time");
+    query.orderDesc("Message.time");
     query.limit(1);
-    qx::dao::fetch_by_query(query, msg);
-    return msg.getTime().toULongLong();
-}
-
-Message IMDataBase::proto2message(const im::protocol::Message &it) {
-    Message obj;
-    obj.m_id = QString::fromStdString(it.uuid());
-    obj.m_from_accid = QString::fromStdString(it.from());
-    obj.m_to_accid = QString::fromStdString(it.to());
-    obj.m_scene = it.scene();
-    obj.m_type = it.type();
-    obj.m_body = QString::fromStdString(it.body());
-    obj.m_time = QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch());
-    obj.m_session_id = QString::fromStdString(it.to());
-    return obj;
+    qx::dao::fetch_by_query(query, message);
+    return message.getTime().toULongLong();
 }
 
 Message IMDataBase::getMsgByUuid(const QString &uuid) {
@@ -111,14 +65,35 @@ Message IMDataBase::getMsgByUuid(const QString &uuid) {
 }
 
 QList<Message> IMDataBase::getMessageListById(const QString &accid) {
-    qx::QxSqlQuery query(QString("WHERE Message.from_accid = '%1' or Message.to_accid='%1'").arg(accid));
+    qx::QxSqlQuery query(QString("WHERE Message.session_id = '%1'").arg(accid));
     QList<Message> list;
     qx::dao::fetch_by_query(query, list);
     return list;
+}
+
+Session IMDataBase::getSessionById(const QString &id){
+    Session session;
+    session.m_id = id;
+    qx::dao::fetch_by_id<Session>(session);
+    return session;
 }
 
 QList<Session> IMDataBase::getSessionList() {
     QList<Session> list;
     qx::dao::fetch_all(list);
     return list;
+}
+
+QList<Message> IMDataBase::getUnreadMessageList(const QString &sessionId,const QString &accid){
+    qx::QxSqlQuery query(QString("where session_id = '%1' and from_accid != '%2'").arg(sessionId).arg(accid));
+    QList<Message> list;
+    qx::dao::fetch_by_query(query, list);
+    QList<Message> data;
+    for (int i = 0; i < list.size(); ++i) {
+        auto &item = const_cast<Message &>(list.at(i));
+        if (!item.m_read_accids.contains(accid)) {
+            data.append(item);
+        }
+    }
+    return data;
 }

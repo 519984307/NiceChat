@@ -184,3 +184,7 @@ QString QUIHelper::htmlToPlainText(const QString& html){
     doc.setHtml(html);
     return doc.toPlainText();
 }
+
+qint64 QUIHelper::currentTimeMillis(){
+    return QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
+}

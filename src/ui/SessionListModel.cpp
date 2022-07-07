@@ -32,6 +32,8 @@ QVariant SessionListModel::data(const QModelIndex &index, int role) const {
         return Session.getTime();
     else if (role == Status)
         return Session.getStatus();
+    else if (role == UnRead)
+        return Session.getUnread();
     return {};
 }
 
@@ -43,7 +45,7 @@ QHash<int, QByteArray> SessionListModel::roleNames() const {
     roles[Type] = "type";
     roles[Ex] = "ex";
     roles[Time] = "time";
-    roles[Status] = "status";
+    roles[UnRead] = "unread";
     return roles;
 }
 
@@ -68,19 +70,24 @@ void SessionListModel::setNewData(const QList<Session> &list) {
     }
 }
 
-void SessionListModel::addOrUpdateData(const Session &Session){
+void SessionListModel::addOrUpdateData(const Session &session){
     for (int i = 0; i < m_Sessions.size(); ++i)
     {
         auto &item = const_cast<class Session &>(m_Sessions.at(i));
-        if (item.getId() == Session.getId()){
-            item.setTime(Session.getTime());
-            item.setStatus(Session.getStatus());
+        if (item.getId() == session.getId()){
+            item.setTime(session.getTime());
+            item.setStatus(session.getStatus());
+            item.setBody(session.getBody());
+            item.setEx(session.getEx());
+            item.setScene(session.getScene());
+            item.setType(session.getType());
+            item.setUnread(session.getUnread());
             Q_EMIT dataChanged(this->index(i),this->index(i));
             return;
         }
     }
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_Sessions.append(Session);
+    m_Sessions.append(session);
     endInsertRows();
 }
 
@@ -91,4 +98,15 @@ int SessionListModel::count(){
 QJsonObject SessionListModel::getItem(int index){
     const QString &json = qx::serialization::json::to_string(m_Sessions.at(index));
     return QJsonDocument::fromJson(json.toUtf8()).object();
+}
+
+int SessionListModel::getIndexByAccid(const QString& accid){
+    for (int i = 0; i < m_Sessions.size(); ++i)
+    {
+        auto &item = const_cast<class Session &>(m_Sessions.at(i));
+        if (item.getId() == accid){
+            return i;
+        }
+    }
+    return -1;
 }

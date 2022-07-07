@@ -3,13 +3,14 @@
 
 #include <QObject>
 #include <QDebug>
-#include "./precompiled.h"
-#include "./Message.h"
-#include "./proto/im.pb.h"
-#include "./Session.h"
+#include "precompiled.h"
+#include "Message.h"
+#include "proto/im.pb.h"
+#include "Session.h"
+#include "Convert.h"
 
 class IMDataBase : public QObject {
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit IMDataBase(QObject *parent = nullptr);
 
@@ -19,25 +20,23 @@ public:
 
     static void initMessageStatus();
 
-    static void syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Message>& messages);
+    static QSqlError insertMessage(const Message &it);
 
-    static QSqlError insertMsg(const im::protocol::Message &it);
+    static uint64_t getMessageLastTime();
 
-    static uint64_t getMsgLastTime();
+    static QSqlError saveOrUpdateMessage(const Message &it);
 
-    static Message proto2message(const im::protocol::Message &it);
+    static QSqlError saveOrUpdateSession(const Session &it);
 
-    static QSqlError saveOrUpdateMsg(const im::protocol::Message &it);
+    static Message getMsgByUuid(const QString &uuid);
 
-    static QSqlError saveOrUpdateMsg(const Message &it);
+    static Session getSessionById(const QString &id);
 
-    static Session message2Session(const Message &it);
+    static QList<Message> getMessageListById(const QString &accid);
 
-    Message getMsgByUuid(const QString &basicString);
+    static QList<Session> getSessionList();
 
-    QList<Message> getMessageListById(const QString &accid);
-
-    QList<Session> getSessionList();
+    static QList<Message> getUnreadMessageList(const QString &sessionId,const QString &accid);
 };
 
 #endif // IMDATABASE_H

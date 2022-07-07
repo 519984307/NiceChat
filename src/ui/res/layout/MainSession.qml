@@ -25,6 +25,7 @@ Item {
 
     MessageController{
         id:messageController
+        currentId: sessionController.current.id
     }
 
     SessionController{
@@ -42,6 +43,14 @@ Item {
         }
         boundsBehavior: Flickable.StopAtBounds
         model: sessionController.sessionModel
+
+        Connections{
+            target: sessionController
+            function onSessionIndexSelected(index){
+                sessionListView.currentIndex = index
+            }
+        }
+
         delegate: Rectangle{
             color: {
                 if(ListView.isCurrentItem){
@@ -74,9 +83,10 @@ Item {
                     topMargin: -4
                     top: itemAvatar.top
                 }
+                visible: model.unread>0
 
                 Text {
-                    text: qsTr("99")
+                    text: Math.min(model.unread,99)
                     font.pixelSize: 11
                     color: "#FFFFFF"
                     anchors.centerIn: parent
@@ -97,9 +107,10 @@ Item {
             }
 
             Text {
-                text: getEmojiStr(model.body)
+                text: getEmojiStr(model.body,12)
                 color: Theme.colorFontTertiary
                 elide: Text.ElideRight
+                maximumLineCount: 1
                 anchors{
                     bottom:parent.bottom
                     bottomMargin: 9
@@ -122,6 +133,7 @@ Item {
         onCurrentIndexChanged: {
             sessionController.setCurrent(sessionListView.currentIndex)
             messageController.loadMessageData(sessionController.current.id)
+            IM.clearUnreadCount(sessionController.current.id)
         }
     }
 
@@ -225,27 +237,6 @@ Item {
             }
         }
 
-
-        ListModel{
-            id:modelMessage
-            ListElement{
-                icon:""
-                name:"朱子楚"
-                text:" asdf asd"
-            }
-            ListElement{
-                icon:""
-                name:"朱子楚"
-                text:" asdf asd"
-            }
-            ListElement{
-                icon:""
-                name:"朱子楚"
-                text:"阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]阿松大撒旦[EMJ1f62f][EMJ1f62f][EMJ1f632][EMJ1f632]"
-            }
-        }
-
-
         ListView{
             id:listMessage
             width: parent.width
@@ -317,7 +308,7 @@ Item {
                     }
                     CusTextEdit{
                         id:itemMsgText
-                        text: getEmojiStr(model.body)
+                        text: getEmojiStr(model.body,20)
                         wrapMode: Text.WrapAnywhere
                         anchors.centerIn: parent
                         readOnly: true
@@ -439,16 +430,17 @@ Item {
                 }
                 onClicked: {
                     var text  = messageInput.text
-                    if(text === ""){
-                        showToast("内容不能为空")
-                        return
-                    }
                     text = text.replace(
                                 /<img [^>]*src=['"]([^'"]+)[^>]*>/gi,
                                 function (match, capture) {
                                     return capture.replace("qrc:/emojiSvgs/", "[EMJ").replace(".svg", "]")
                                 })
-                    IM.sendTextMessage(userInfo.accid,sessionController.current.id,UIHelper.htmlToPlainText(text))
+                    text = UIHelper.htmlToPlainText(text)
+                    if(text === ""){
+                        showToast("内容不能为空")
+                        return
+                    }
+                    IM.sendTextMessage(userInfo.accid,sessionController.current.id,text)
                     messageInput.text= ""
                 }
             }
@@ -491,27 +483,28 @@ Item {
         })
     }
 
-    function getEmojiStr(str) {
+    function getEmojiStr(str,size) {
         if (str === undefined) {
             return ""
         }
         var reg = /\[EMJ([^\]]+)\]/g
-        var tag = "<img src=\"qrc:/emojiSvgs/$1.svg\" width=\"20\" height=\"20\" style=\"vertical-align: top;\" />"
+        var tag = "<img src=\"qrc:/emojiSvgs/$1.svg\" width=\"%1\" height=\"%1\" style=\"vertical-align: top;\" />".arg(size)
         str = str.replace(reg,tag)
         return str
     }
 
 
     function addSession(user){
-//        for(var i=0;i<sessionModel.length;i++){
-//            var item = sessionModel[i]
-//            if(item.accid === user.accid){
-//                sessionListView.currentIndex = i
-//                return
-//            }
-//        }
-//        sessionModel.push(user)
-//        sessionListView.model = sessionModel
+        sessionController.jumpSession(user.accid)
+        //        for(var i=0;i<sessionModel.length;i++){
+        //            var item = sessionModel[i]
+        //            if(item.accid === user.accid){
+        //                sessionListView.currentIndex = i
+        //                return
+        //            }
+        //        }
+        //        sessionModel.push(user)
+        //        sessionListView.model = sessionModel
     }
 
 }

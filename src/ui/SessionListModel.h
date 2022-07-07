@@ -18,7 +18,8 @@ public:
         Type,
         Ex,
         Time,
-        Status
+        Status,
+        UnRead,
     };
 
     explicit SessionListModel(QObject *parent = nullptr);
@@ -34,11 +35,13 @@ public:
 
     void setNewData(const QList<Session> &list);
 
-    void addOrUpdateData(const Session &Session);
+    void addOrUpdateData(const Session &session);
 
     Q_INVOKABLE int count();
 
     Q_INVOKABLE QJsonObject getItem(int index);
+
+    Q_INVOKABLE int getIndexByAccid(const QString& accid);
 
 private:
     QList<Session> m_Sessions;

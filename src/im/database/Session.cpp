@@ -11,6 +11,7 @@ namespace qx {
         t.data(&Session::m_type, "type");
         t.data(&Session::m_ex, "ex");
         t.data(&Session::m_time, "time");
+        t.data(&Session::m_unread, "unread");
         t.data(&Session::m_status, "status");
     }
 }

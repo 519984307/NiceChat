@@ -12,6 +12,7 @@ namespace qx {
         t.data(&Message::m_scene, "scene");
         t.data(&Message::m_type, "type");
         t.data(&Message::m_ex, "ex");
+        t.data(&Message::m_read_accids, "read_accids");
         t.data(&Message::m_time, "time");
         t.data(&Message::m_status, "status");
         t.data(&Message::m_session_id, "session_id");

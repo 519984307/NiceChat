@@ -56,6 +56,12 @@ public:
 
     void setEx(const QString &val) { m_ex = val; };
 
+    QString m_read_accids;
+
+    [[nodiscard]] QString getReadAccids() const { return m_read_accids; };
+
+    void setReadAccids(const QString &val) { m_read_accids = val; };
+
     QString m_time;
 
     [[nodiscard]] QString getTime() const { return m_time; };

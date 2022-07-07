@@ -4,7 +4,9 @@ MessageController::MessageController(QObject *parent)
     : QObject{parent}
 {
     connect(QIM::instance(),&QIM::receiveMessage,this,[this](const Message &message){
-        m_messageModel.addOrUpdateData(message);
+        if(m_currentId==message.getSessionId()){
+            m_messageModel.addOrUpdateData(message);
+        }
     });
 }
 

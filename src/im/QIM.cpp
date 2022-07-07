@@ -9,7 +9,7 @@ QIM *QIM::instance() {
 }
 
 QIM::QIM(QObject *parent)
-        : QObject{parent} {
+    : QObject{parent} {
 
     socket = new QWebSocket();
 
@@ -27,35 +27,35 @@ QIM::QIM(QObject *parent)
 
     connect(socket, &QWebSocket::stateChanged, this, [this](QAbstractSocket::SocketState state) {
         switch (state) {
-            case QAbstractSocket::UnconnectedState:
-                if (!m_userInfo.isEmpty()) {
-                    m_timer_reconnect->start(2000);
-                }
-                setState(0);
-                break;
-            case QAbstractSocket::HostLookupState:
-                setState(1);
-                break;
-            case QAbstractSocket::ConnectingState:
-                setState(2);
-                break;
-            case QAbstractSocket::ConnectedState:
-                m_heart_count = 0;
-                m_timer_reconnect->stop();
-                setState(3);
-                break;
-            case QAbstractSocket::BoundState:
-                setState(4);
-                break;
-            case QAbstractSocket::ClosingState:
-                setState(5);
-                break;
-            case QAbstractSocket::ListeningState:
-                setState(6);
-                break;
-            default:
-                setState(-1);
-                break;
+        case QAbstractSocket::UnconnectedState:
+            if (!m_userInfo.isEmpty()) {
+                m_timer_reconnect->start(2000);
+            }
+            setState(0);
+            break;
+        case QAbstractSocket::HostLookupState:
+            setState(1);
+            break;
+        case QAbstractSocket::ConnectingState:
+            setState(2);
+            break;
+        case QAbstractSocket::ConnectedState:
+            m_heart_count = 0;
+            m_timer_reconnect->stop();
+            setState(3);
+            break;
+        case QAbstractSocket::BoundState:
+            setState(4);
+            break;
+        case QAbstractSocket::ClosingState:
+            setState(5);
+            break;
+        case QAbstractSocket::ListeningState:
+            setState(6);
+            break;
+        default:
+            setState(-1);
+            break;
         }
     });
 
@@ -91,19 +91,18 @@ QIM::QIM(QObject *parent)
             }
         } else if (type == im::protocol::SyncMsg_rsp_) {
             if (packet.syncmsg_rsp().result().success()) {
-                std::string json;
-                google::protobuf::util::MessageToJsonString(packet.syncmsg_rsp(), &json);
-                qDebug() << QString::fromStdString(json);
-                IMDataBase::syncMessage(packet.syncmsg_rsp().messages());
+                syncMessage(packet.syncmsg_rsp().messages());
             }
         } else if (type == im::protocol::SendMsg_rsp_) {
             if (packet.sendmsg_rsp().result().success()) {
                 const im::protocol::Message &msg = packet.sendmsg_rsp().message();
-                const QSqlError &error = IMDataBase::saveOrUpdateMsg(msg);
-                if (error.type() == QSqlError::NoError) {
-                    const Message &message = m_db.getMsgByUuid(QString::fromStdString(msg.uuid()));
+                Message message = Convert::proto2message(msg);
+                message.setStatus(0);
+                const QSqlError &error = IMDataBase::saveOrUpdateMessage(message);
+                if(error.type() == QSqlError::NoError) {
                     handleMessageBuf(message);
                     Q_EMIT receiveMessage(message);
+                    updateSessionByMessage(message);
                 }
             }
         }
@@ -111,9 +110,46 @@ QIM::QIM(QObject *parent)
 
     connect(socket, QOverload<QAbstractSocket::SocketError>::of(&QWebSocket::error), this,
             [=](QAbstractSocket::SocketError error) {
-                Q_EMIT errorMessage(QMetaEnum::fromType<QAbstractSocket::SocketError>().valueToKey(error));
-            });
+        Q_EMIT errorMessage(QMetaEnum::fromType<QAbstractSocket::SocketError>().valueToKey(error));
+    });
 
+}
+
+void QIM::syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Message> &messages){
+    QList<Message> messageList;
+    QMap<QString, Message> map;
+    QMap<QString,int> mapUnread;
+    for (int i = 0; i < messages.size(); ++i) {
+        const im::protocol::Message &item = messages.Get(i);
+        const Message &message = Convert::proto2message(item);
+        if(message.m_from_accid != m_login_accid){
+            //别人发的消息
+            if(!message.getReadAccids().contains(m_login_accid)){
+                int unread = mapUnread.value(message.getSessionId())+1;
+                mapUnread.insert(message.getSessionId(),unread);
+            }
+        }
+        map.insert(message.getSessionId(), message);
+        messageList.append(message);
+    }
+    QList<Session> sessionList;
+    for (const auto &item: map) {
+        Session session = Convert::message2Session(item);
+        int unread = mapUnread.value(session.getId());
+        session.setUnread(unread);
+        sessionList.append(session);
+    }
+    qx::dao::save(messageList);
+    qx::dao::save(sessionList);
+    Q_EMIT syncMessageCompleted();
+}
+
+void QIM::updateSessionByMessage(const Message& message){
+    Session session = Convert::message2Session(message);
+    const QSqlError &error = IMDataBase::saveOrUpdateSession(session);
+    if (error.type() == QSqlError::NoError) {
+        Q_EMIT updateSession(session);
+    }
 }
 
 void QIM::handleMessageBuf(const Message &message) {
@@ -143,7 +179,6 @@ void QIM::login(const QString &url, const QString &accid, const QString &token) 
     m_ws = url + "?accid=" + accid + "&token=" + token;
     setLoginAccid(accid);
     m_login_token = token;
-    qDebug() << "start login";
     socket->open(m_ws);
 }
 
@@ -180,15 +215,15 @@ void QIM::resendMsg() {
         m_timer_resend_msg->stop();
         return;
     }
-    qDebug() << "resendMsg---------------:" << m_msg_buf.count();
     for (int i = 0; i < m_msg_buf.size(); ++i) {
         auto item = m_msg_buf.at(i);
         if (QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() > item.getTime().toULongLong() + 30000) {
             item.setStatus(2);
-            const QSqlError &error = IMDataBase::saveOrUpdateMsg(item);
+            const QSqlError &error = IMDataBase::saveOrUpdateMessage(item);
             if (error.type() == QSqlError::NoError) {
                 m_msg_buf.removeAt(i);
                 Q_EMIT receiveMessage(item);
+                updateSessionByMessage(item);
             }
         }
     }
@@ -208,17 +243,27 @@ void QIM::sendTextMessage(const QString &from, const QString &to, const QString 
     msg->set_type(0);
     msg_req->set_allocated_message(msg);
     packet.set_allocated_sendmsg_req(msg_req);
-    const QSqlError &error = IMDataBase::insertMsg(*msg);
+    Message message = Convert::proto2message(*msg);
+    message.setStatus(1);
+    const QSqlError &error = IMDataBase::insertMessage(message);
     if (error.type() == QSqlError::NoError) {
-        const Message &message = m_db.getMsgByUuid(QString::fromStdString(msg->uuid()));
+        Q_EMIT receiveMessage(message);
         m_msg_buf.append(message);
         m_timer_resend_msg->start(1000);
-        Q_EMIT receiveMessage(message);
+        socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+        socket->flush();
+        updateSessionByMessage(message);
     }
+}
 
-    qDebug() << "socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString())):"
-             << socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
-    qDebug() << "socket->flush():" << socket->flush();
+void QIM::sendReadMessageByUuids(const QString& uuids){
+    im::protocol::Packet packet;
+    packet.set_type(im::protocol::ReadMsg_req_);
+    auto *request =new im::protocol::ReadMsg_req();
+    request->set_uuids(uuids.toStdString());
+    packet.set_allocated_readmsg_req(request);
+    socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+    socket->flush();
 }
 
 void QIM::initDataBase(const QString &text) {
@@ -231,7 +276,7 @@ void QIM::sendSyncMessage() {
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SyncMsg_req_);
     auto *req = new im::protocol::SyncMsg_req();
-    req->set_lastmsgtime(IMDataBase::getMsgLastTime());
+    req->set_lastmsgtime(IMDataBase::getMessageLastTime());
     packet.set_allocated_syncmsg_req(req);
     socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
     socket->flush();
@@ -265,5 +310,29 @@ QList<Message> QIM::getMessageListById(const QString &accid) {
 }
 
 QList<Session> QIM::getSessionList() {
-    return m_db.getSessionList();
+    return IMDataBase::getSessionList();
+}
+
+void QIM::clearUnreadCount(const QString& sessionId){
+    QList<Message> data =  IMDataBase::getUnreadMessageList(sessionId,m_login_accid);
+    if(data.count() == 0)
+        return;
+    QString uuids;
+    for (int i = 0; i < data.size(); ++i) {
+        auto &item = const_cast<Message &>(data.at(i));
+        const QString &accids = item.getReadAccids();
+        if(accids.isEmpty()){
+            item.setReadAccids(m_login_accid);
+        }else{
+            item.setReadAccids(accids+","+m_login_accid);
+        }
+        uuids.append(item.getId()).append(",");
+    }
+    uuids.chop(1);
+    qx::dao::save(data);
+    Session session = IMDataBase::getSessionById(sessionId);
+    session.setUnread(0);
+    IMDataBase::saveOrUpdateSession(session);
+    Q_EMIT updateSession(session);
+    sendReadMessageByUuids(uuids);
 }

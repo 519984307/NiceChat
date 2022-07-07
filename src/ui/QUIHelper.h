@@ -13,6 +13,7 @@
 #include <QImage>
 #include <QProcess>
 #include <QFile>
+#include <QDateTime>
 #include <QTextDocument>
 #include "glog/logging.h"
 
@@ -54,6 +55,8 @@ public:
     Q_INVOKABLE void setQuitOnLastWindowClosed(bool quit);
 
     Q_INVOKABLE QString htmlToPlainText(const QString& html);
+
+    Q_INVOKABLE qint64 currentTimeMillis();
 
     Q_SIGNAL void checkUpdateResult(int status);
 

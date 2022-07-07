@@ -10,9 +10,20 @@ class MessageController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(MessageListModel* messageModel READ messageModel)
+    Q_PROPERTY(QString currentId READ currentId WRITE setCurrentId NOTIFY currentIdChanged)
 public:
     explicit MessageController(QObject *parent = nullptr);
     ~MessageController() override;
+
+
+    Q_SIGNAL void currentIdChanged();
+    void setCurrentId(QString const& accid){
+        m_currentId = accid;
+        Q_EMIT currentIdChanged();
+    }
+    [[nodiscard]] QString currentId() const{
+        return m_currentId;
+    }
 
 
     [[nodiscard]] MessageListModel* messageModel(){
@@ -23,6 +34,7 @@ public:
 
 private:
     MessageListModel m_messageModel;
+    QString m_currentId;
 };
 
 #endif // MESSAGECONTROLLER_H

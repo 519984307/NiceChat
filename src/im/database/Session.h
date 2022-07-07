@@ -6,7 +6,7 @@
 class QX_IM_DLL_EXPORT Session {
 public:
 
-    Session() : m_id("0"), m_scene(0), m_type(0), m_time("0"),m_status(0) { ; }
+    Session() : m_id("0"), m_scene(0), m_type(0), m_unread(0),m_time("0"),m_status(0) { ; }
 
     Session(const Session &) = default;
 
@@ -38,6 +38,12 @@ public:
 
     void setType(const int &val) { m_type = val; };
 
+    int m_unread;
+
+    [[nodiscard]] int getUnread() const { return m_unread; };
+
+    void setUnread(const int &val) { m_unread = val; };
+
     QString m_ex;
 
     [[nodiscard]] QString getEx() const { return m_ex; };
@@ -59,6 +65,6 @@ public:
 };
 
 QX_REGISTER_PRIMARY_KEY(Session, QString)
-QX_REGISTER_HPP_QX_IM (Session, qx::trait::no_base_class_defined, 0)
+QX_REGISTER_HPP_QX_IM (Session, qx::trait::no_base_class_defined, 1)
 
 #endif // SESSION_H

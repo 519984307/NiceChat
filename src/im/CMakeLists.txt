@@ -7,6 +7,7 @@
         database/export.h
         database/precompiled.h
         database/Session.h
+        Convert.h
         )
 
 set(IM_SRS
@@ -16,6 +17,7 @@ set(IM_SRS
         database/IMDataBase.cpp
         database/Message.cpp
         database/Session.cpp
+        Convert.cpp
         )
 
 add_library(IM STATIC ${IM_SRS})
