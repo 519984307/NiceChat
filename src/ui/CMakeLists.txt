@@ -33,11 +33,11 @@ set(UILibrary_RCC
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     add_executable(${CMAKE_PROJECT_NAME} WIN32 ${UILibrary_SRS} ${UILibrary_RCC})
-    add_custom_command(TARGET ${PROJECT_NAME}
-            POST_BUILD
-            COMMAND ${DEPLOYQT_EXECUTABLE} "$<TARGET_FILE:${PROJECT_NAME}>"
-            --$<LOWER_CASE:$<CONFIG>> --qmldir ${CMAKE_SOURCE_DIR}
-            )
+#    add_custom_command(TARGET ${PROJECT_NAME}
+#            POST_BUILD
+#            COMMAND ${DEPLOYQT_EXECUTABLE} "$<TARGET_FILE:${PROJECT_NAME}>"
+#            --$<LOWER_CASE:$<CONFIG>> --qmldir ${CMAKE_SOURCE_DIR}
+#            )
 else()
     add_executable(${CMAKE_PROJECT_NAME} ${UILibrary_SRS} ${UILibrary_RCC})
 endif()

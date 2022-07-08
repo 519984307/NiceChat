@@ -107,10 +107,11 @@ Item {
             }
 
             Text {
-                text: getEmojiStr(model.body,12)
+                text: getEmojiStr(model.body,12);
                 color: Theme.colorFontTertiary
                 elide: Text.ElideRight
                 maximumLineCount: 1
+                antialiasing: true
                 anchors{
                     bottom:parent.bottom
                     bottomMargin: 9
@@ -251,6 +252,7 @@ Item {
             footer:Item{height: 10}
             header:Item{height: 10}
             ScrollBar.vertical: ScrollBar {
+                id:scrollBar
                 minimumSize: 0.2
                 anchors{
                     right: parent.right
@@ -313,7 +315,6 @@ Item {
                         anchors.centerIn: parent
                         readOnly: true
                         textFormat: Text.RichText
-                        selectByMouse: true
                         width: Math.min(listMessage.width-200,600,itemMsgText.implicitWidth)
                     }
                 }
@@ -436,10 +437,12 @@ Item {
                                     return capture.replace("qrc:/emojiSvgs/", "[EMJ").replace(".svg", "]")
                                 })
                     text = UIHelper.htmlToPlainText(text)
-                    if(text === ""){
+                    if(text.trim() === ""){
                         showToast("内容不能为空")
                         return
                     }
+                    text = text.replace(/ /gi,"&nbsp;")
+                    text = text.replace(/\n/gi,"<br>")
                     IM.sendTextMessage(userInfo.accid,sessionController.current.id,text)
                     messageInput.text= ""
                 }
@@ -468,19 +471,6 @@ Item {
         id:emojiPicker
         target:btnEmoji
         editor: messageInput
-    }
-
-    function escape2Html(str) {
-        var arrEntities = {
-            "lt": '<',
-            "gt": '>',
-            "nbsp": ' ',
-            "amp": '&',
-            "quot": '"'
-        }
-        return str.replace(/&(lt|gt|nbsp|amp|quot);/ig, function (all, t) {
-            return arrEntities[t]
-        })
     }
 
     function getEmojiStr(str,size) {
