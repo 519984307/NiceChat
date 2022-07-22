@@ -62,6 +62,10 @@ public:
 
     Q_SIGNAL void checkUpdateResult(int status);
 
+private:
+    void initFileIcon();
+private:
+    QMap<QString,QString> m_fileIconMap;
 };
 
 #endif // QUIHELPER_H

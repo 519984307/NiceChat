@@ -18,6 +18,28 @@ QUIHelper::~QUIHelper()
 
 }
 
+void QUIHelper::initFileIcon(){
+    m_fileIconMap.insert("xls", "qrc:/image/file_ic_session_excel.png");
+    m_fileIconMap.insert("ppt", "qrc:/image/file_ic_session_ppt.png");
+    m_fileIconMap.insert("doc", "qrc:/image/file_ic_session_word.png");
+    m_fileIconMap.insert("xlsx", "qrc:/image/file_ic_session_excel.png");
+    m_fileIconMap.insert("pptx", "qrc:/image/file_ic_session_ppt.png");
+    m_fileIconMap.insert("docx", "qrc:/image/file_ic_session_word.png");
+    m_fileIconMap.insert("pdf", "qrc:/image/file_ic_session_pdf.png");
+    m_fileIconMap.insert("html", "qrc:/image/file_ic_session_html.png");
+    m_fileIconMap.insert("htm", "qrc:/image/file_ic_session_html.png");
+    m_fileIconMap.insert("txt", "qrc:/image/file_ic_session_txt.png");
+    m_fileIconMap.insert("rar", "qrc:/image/file_ic_session_rar.png");
+    m_fileIconMap.insert("zip", "qrc:/image/file_ic_session_zip.png");
+    m_fileIconMap.insert("7z", "qrc:/image/file_ic_session_zip.png");
+    m_fileIconMap.insert("mp4", "qrc:/image/file_ic_session_mp4.png");
+    m_fileIconMap.insert("mp3", "qrc:/image/file_ic_session_mp3.png");
+    m_fileIconMap.insert("png", "qrc:/image/file_ic_session_png.png");
+    m_fileIconMap.insert("gif", "qrc:/image/file_ic_session_gif.png");
+    m_fileIconMap.insert("jpg", "qrc:/image/file_ic_session_jpg.png");
+    m_fileIconMap.insert("jpeg", "qrc:/image/file_ic_session_jpg.png");
+}
+
 void QUIHelper::setCode()
 {
 #if (QT_VERSION <= QT_VERSION_CHECK(5,0,0))

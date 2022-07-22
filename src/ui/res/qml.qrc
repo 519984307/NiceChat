@@ -204,5 +204,19 @@
         <file>layout/Settings.qml</file>
         <file>component/CusTextDialog.qml</file>
         <file>layout/SendFileDiaog.qml</file>
+        <file>image/file_ic_detail_excel.png</file>
+        <file>image/file_ic_detail_gif.png</file>
+        <file>image/file_ic_detail_html.png</file>
+        <file>image/file_ic_detail_jpg.png</file>
+        <file>image/file_ic_detail_mp3.png</file>
+        <file>image/file_ic_detail_mp4.png</file>
+        <file>image/file_ic_detail_pdf.png</file>
+        <file>image/file_ic_detail_png.png</file>
+        <file>image/file_ic_detail_ppt.png</file>
+        <file>image/file_ic_detail_rar.png</file>
+        <file>image/file_ic_detail_txt.png</file>
+        <file>image/file_ic_detail_unknow.png</file>
+        <file>image/file_ic_detail_word.png</file>
+        <file>image/file_ic_detail_zip.png</file>
     </qresource>
 </RCC>
