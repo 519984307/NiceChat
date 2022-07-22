@@ -23,8 +23,12 @@ QVariant FileListModel::data(const QModelIndex &index, int role) const {
         return file.fileName();
     else if (role == Path)
         return file.absoluteFilePath();
-    else if (role == Icon)
-        return "file:///"+file.absoluteFilePath();
+    else if (role == Icon){
+        if(QUIHelper::instance()->isImage(file.suffix())){
+            return "file:///"+file.absoluteFilePath();
+        }
+        return QUIHelper::instance()->getFileIcon(file.suffix());
+    }
     else if (role == Size)
         return file.size();
     return {};

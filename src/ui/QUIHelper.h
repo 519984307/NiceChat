@@ -52,6 +52,8 @@ public:
     Q_INVOKABLE QString sha384(const QString&);
     Q_INVOKABLE QString sha512(const QString&);
     Q_INVOKABLE QString readFile(const QString &fileName);
+    Q_INVOKABLE bool isImage(const QString&);
+    Q_INVOKABLE QString getFileIcon(const QString&);
     Q_INVOKABLE void setQuitOnLastWindowClosed(bool quit);
 
     Q_INVOKABLE void restart();

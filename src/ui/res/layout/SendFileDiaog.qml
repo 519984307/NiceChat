@@ -109,8 +109,8 @@ Dialog {
 
             Image {
                 id:item_icon
-                width: 46
-                height: 46
+                width: 33
+                height: 40.5
                 source: model.icon
                 fillMode: Image.PreserveAspectCrop
                 clip: true
@@ -154,7 +154,7 @@ Dialog {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    showToast(model.name)
+                    showToast(model.icon)
                 }
             }
 

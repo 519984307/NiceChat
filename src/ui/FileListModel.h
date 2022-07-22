@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QAbstractListModel>
 #include <QJsonDocument>
+#include "QUIHelper.h"
 #include "database/Session.h"
 
 class FileListModel: public QAbstractListModel
