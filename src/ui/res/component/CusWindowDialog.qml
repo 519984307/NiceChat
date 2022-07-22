@@ -8,7 +8,7 @@ import "../global/global.js" as Global
 Window {
 
     id:dialog
-    flags: Qt.Tool | Qt.FramelessWindowHint
+    flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
     property int dialogWidth: 300
     property int dialogHeight: 300
     property var target

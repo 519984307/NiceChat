@@ -54,6 +54,8 @@ public:
     Q_INVOKABLE QString readFile(const QString &fileName);
     Q_INVOKABLE void setQuitOnLastWindowClosed(bool quit);
 
+    Q_INVOKABLE void restart();
+
     Q_INVOKABLE QString htmlToPlainText(const QString& html);
 
     Q_INVOKABLE qint64 currentTimeMillis();

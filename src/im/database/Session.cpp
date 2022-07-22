@@ -13,5 +13,19 @@ namespace qx {
         t.data(&Session::m_time, "time");
         t.data(&Session::m_unread, "unread");
         t.data(&Session::m_status, "status");
+        t.data(&Session::m_top, "top");
+    }
+}
+
+void Session::handleContent(){
+    QJsonDocument doc = QJsonDocument::fromJson(getBody().toUtf8());
+    QJsonObject obj = doc.object();
+    switch(getType()){
+    case 0:
+        setContent(obj["msg"].toString());
+        break;
+    case 1:
+        setContent("[图片]");
+        break;
     }
 }

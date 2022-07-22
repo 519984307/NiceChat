@@ -1,7 +1,4 @@
-﻿
-#include "ByteBuf.h"
-
-#include "ByteBuf.h"
+﻿#include "ByteBuf.h"
 
 namespace
 {

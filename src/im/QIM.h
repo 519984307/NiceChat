@@ -11,6 +11,9 @@
 #include <QList>
 #include "./database/IMDataBase.h"
 #include "Convert.h"
+#include "HttpClient.h"
+#include <QImage>
+#include <QCryptographicHash>
 
 #define REGISTER(x) qDebug() << (#x) << "type id:" << qMetaTypeId<x*>()
 
@@ -20,8 +23,7 @@ class QIM : public QObject
 
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString loginAccid READ loginAccid WRITE setLoginAccid NOTIFY loginAccidChanged)
-    Q_PROPERTY(QString userInfo READ userInfo WRITE setUserInfo NOTIFY userInfoChanged)
-    Q_PROPERTY(QString friends READ friends WRITE setFriends NOTIFY friendsChanged)
+    Q_PROPERTY(QJsonObject profile READ profile NOTIFY profileChanged)
 public:
     explicit QIM(QObject *parent = nullptr);
     ~QIM();
@@ -48,22 +50,14 @@ public:
     }
 
 
-    Q_SIGNAL void userInfoChanged();
-    void setUserInfo(QString const& userInfo){
-        m_userInfo = userInfo;
-        Q_EMIT userInfoChanged();
+    Q_SIGNAL void profileChanged();
+    void setProfile(User const& user){
+        const QString &json = qx::serialization::json::to_string(user);
+        m_profile = QJsonDocument::fromJson(json.toUtf8()).object();
+        Q_EMIT profileChanged();
     }
-    [[nodiscard]] QString userInfo() const{
-        return m_userInfo;
-    }
-
-    Q_SIGNAL void friendsChanged();
-    void setFriends(QString const& friends){
-        m_friends = friends;
-        Q_EMIT friendsChanged();
-    }
-    [[nodiscard]] QString friends() const{
-        return m_friends;
+    [[nodiscard]] QJsonObject profile() const{
+        return m_profile;
     }
 
 
@@ -72,9 +66,12 @@ public:
     Q_SIGNAL void loginFail();
     Q_SIGNAL void loginSuccess();
 
-    Q_SIGNAL void receiveMessage(const Message &message);
-    Q_SIGNAL void updateSession(const Session &session);
+    Q_SIGNAL void receiveMessage(Message &message);
+
+    Q_SIGNAL void updateSessionCompleted(Session &session);
+    Q_SIGNAL void deleteSessionCompleted(const QString& accid);
     Q_SIGNAL void syncMessageCompleted();
+    Q_SIGNAL void syncFriendCompleted();
 
     void heartBeat();
     void heartBeatCount();
@@ -82,32 +79,48 @@ public:
     void resendMsg();
     void updateSessionByMessage(const Message& message);
     void syncMessage(const google::protobuf::RepeatedPtrField<im::protocol::Message> &messages);
+    void syncFriends(const google::protobuf::RepeatedPtrField<im::protocol::User> &friends);
+    void syncProfile(const im::protocol::User &profile);
 
     QList<Message> getMessageListById(const QString& accid);
+    QList<Message> getMessageList(const QString& sessionId,const Message* anchor);
     QList<Session> getSessionList();
+    QList<User> getFriendList();
 
     Q_INVOKABLE void test();
     Q_INVOKABLE void startHeartBeat();
     Q_INVOKABLE void stopHeartBeat();
 
     Q_INVOKABLE void sendTextMessage(const QString& from,const QString& to,const QString& message);
+    Q_INVOKABLE void sendImageMessage(const QString& from,const QString& to,const QString& path);
     Q_INVOKABLE void sendSyncMessage();
     Q_INVOKABLE void sendReadMessageByUuids(const QString& uuids);
 
-    Q_INVOKABLE void getFriends();
-    Q_INVOKABLE void getProfile();
+    Q_INVOKABLE void sendSyncFriend();
+    Q_INVOKABLE void sendSyncProfile();
 
     Q_INVOKABLE void clearUnreadCount(const QString& sessionId);
 
     Q_INVOKABLE void updateMessageModel(const QString& accid);
 
+    Q_INVOKABLE void topSession(const QString& accid,bool top);
+    Q_INVOKABLE void deleteSession(const QString& accid);
+
+    Q_INVOKABLE QString getUserName(const QString& accid);
+    Q_INVOKABLE QJsonObject getUserObject(const QString& accid);
+
 private:
     void initDataBase(const QString &text);
     void handleMessageBuf(const Message &message);
+    QString buildTextBody(const QString &text);
+    QString buildImageBody(const QString &path);
+    QString buildFileBody(const QString &path);
+    void sendMessage(const QString& from,const QString& to,int scene,int type,const QString& body);
 private:
     QWebSocket *socket;
-    QString m_userInfo = "";
-    QString m_friends = "{}";
+
+    QJsonObject m_profile;
+
     QString m_ws ="";
 
     QTimer *m_timer_heart;
@@ -121,6 +134,8 @@ private:
     QString m_login_token;
 
     QList<Message> m_msg_buf;
+
+    QMap<QString,User> m_user_cache;
 
     IMDataBase m_db;
 

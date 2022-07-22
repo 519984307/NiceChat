@@ -20,7 +20,8 @@ public:
         Ex,
         Time,
         Status,
-        SessionId
+        SessionId,
+        Attachment
     };
 
     explicit MessageListModel(QObject *parent = nullptr);
@@ -38,9 +39,12 @@ public:
 
     void addOrUpdateData(const Message &message);
 
+    Message* getFirstMessage();
+
     Q_INVOKABLE int count();
 
     Q_SIGNAL void viewToBottom();
+    Q_SIGNAL void viewToPosition(int position);
 
 private:
     QList<Message> m_messages;

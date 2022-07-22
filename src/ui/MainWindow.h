@@ -13,6 +13,7 @@
 #include "LoginController.h"
 #include "MessageController.h"
 #include "SessionController.h"
+#include "ContactController.h"
 #include <QQuickWindow>
 #include "EmojiModel.h"
 #include "TextDocument.h"

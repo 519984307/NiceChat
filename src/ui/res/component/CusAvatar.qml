@@ -20,6 +20,7 @@ Item {
         visible: false
         smooth: false
         mipmap: true
+        cache: true
     }
 
     Rectangle{

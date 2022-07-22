@@ -1,3 +1,5 @@
+#pragma execution_character_set("utf-8")
+
 #ifndef _QX_IM_EXPORT_H_
 #define _QX_IM_EXPORT_H_
 

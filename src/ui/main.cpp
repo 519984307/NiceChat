@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 #endif
-//    QQuickWindow::setSceneGraphBackend(QSGRendererInterface::Software);
+    //    QQuickWindow::setSceneGraphBackend(QSGRendererInterface::Software);
     QGuiApplication::setApplicationName("NiceChat");
     QGuiApplication::setApplicationVersion("1.0.0.0");
     QGuiApplication::setOrganizationName("zzc");
@@ -27,6 +27,13 @@ int main(int argc, char *argv[])
     });
     MainWindow window(argv);
     window.show();
+
+    int e = app.exec();
+    if(e == 931){
+        QProcess::startDetached(qApp->applicationFilePath());
+        return 0;
+    }
+
     QGuiApplication::exec();
     return 0;
 }

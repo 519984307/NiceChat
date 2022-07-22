@@ -7,7 +7,9 @@
         database/export.h
         database/precompiled.h
         database/Session.h
+        database/User.h
         Convert.h
+        HttpClient.h
         )
 
 set(IM_SRS
@@ -17,7 +19,9 @@ set(IM_SRS
         database/IMDataBase.cpp
         database/Message.cpp
         database/Session.cpp
+        database/User.cpp
         Convert.cpp
+        HttpClient.cpp
         )
 
 add_library(IM STATIC ${IM_SRS})
@@ -29,6 +33,7 @@ install(FILES ${IM_HEADERS} DESTINATION include/${CMAKE_PROJECT_NAME}/im)
 
 target_link_libraries(IM
         Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::WebSockets
         Qt${QT_VERSION_MAJOR}::Concurrent
         Qt${QT_VERSION_MAJOR}::Sql

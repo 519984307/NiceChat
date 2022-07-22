@@ -4,5 +4,5 @@ import "../view"
 
 Rectangle {
     anchors.fill: parent
-    color: Theme.colorBackground
+    color: Theme.colorBackground1
 }

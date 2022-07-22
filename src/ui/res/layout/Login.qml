@@ -1,7 +1,6 @@
 ﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
-import QtWebView 1.1
 import Qt.labs.platform 1.1
 import Controller 1.0
 import "../component"
@@ -49,33 +48,21 @@ CusWindow {
             darkEnable: false
             topEnable: false
             isTop: false
+            title: "NiceChat"
         }
-
-        Text{
-            text: "NiceChat"
-            anchors{
-                left:parent.left
-                top: parent.top
-                topMargin: 6
-                leftMargin: 10
-            }
-        }
-
 
         PrimaryTextField{
             id:fieldUrl
             width: 180
             lableText: "URL"
-            text:"ws://192.168.2.68:9999/ws"
-//            text:"ws://127.0.0.1:9999/ws"
+            text:"ws://192.168.2.34:9999/ws"
+            //            text:"ws://127.0.0.1:9999/ws"
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
                 topMargin: 85
             }
         }
-
-
 
         PrimaryTextField{
             id:fieldAccid
@@ -88,8 +75,6 @@ CusWindow {
                 topMargin: 10
             }
         }
-
-
 
         PrimaryTextField{
             id:fieldToken

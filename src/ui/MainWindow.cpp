@@ -30,6 +30,7 @@ MainWindow::MainWindow(char *argv[]) {
     qmlRegisterType<LoginController>("Controller", 1, 0, "LoginController");
     qmlRegisterType<MessageController>("Controller", 1, 0, "MessageController");
     qmlRegisterType<SessionController>("Controller", 1, 0, "SessionController");
+    qmlRegisterType<ContactController>("Controller", 1, 0, "ContactController");
 
 }
 

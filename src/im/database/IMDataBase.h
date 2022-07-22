@@ -7,6 +7,7 @@
 #include "Message.h"
 #include "proto/im.pb.h"
 #include "Session.h"
+#include "User.h"
 #include "Convert.h"
 
 class IMDataBase : public QObject {
@@ -35,6 +36,8 @@ public:
     static QList<Message> getMessageListById(const QString &accid);
 
     static QList<Session> getSessionList();
+
+    static QList<User> getFriendList();
 
     static QList<Message> getUnreadMessageList(const QString &sessionId,const QString &accid);
 };

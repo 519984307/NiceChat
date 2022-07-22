@@ -18,3 +18,9 @@ namespace qx {
         t.data(&Message::m_session_id, "session_id");
     }
 }
+
+void Message::handleAttachment(){
+    QJsonDocument doc = QJsonDocument::fromJson(getBody().toUtf8());
+    QJsonObject obj = doc.object();
+    setAttachment(obj);
+}

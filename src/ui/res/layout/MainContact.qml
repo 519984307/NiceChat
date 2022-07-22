@@ -2,6 +2,7 @@
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
+import Controller 1.0
 import "../global/global.js" as Global
 import "../storage"
 import "../component"
@@ -9,15 +10,15 @@ import "../view"
 
 Item {
 
-    property var friends : JSON.parse(IM.friends).friends
-
-    property var user: friends[friendListView.currentIndex]
-
     signal clickSend(var user)
 
     FontLoader {
         id: awesome
         source: "qrc:/font/iconfont.ttf"
+    }
+
+    ContactController{
+        id:contactController
     }
 
     Rectangle{
@@ -35,12 +36,11 @@ Item {
             right: centerDivder.left
         }
         boundsBehavior: Flickable.StopAtBounds
-        model: friends
+        model: contactController.contactModel
         delegate: Rectangle{
             color: {
-                if(ListView.isCurrentItem){
+                if(contactController.current.id === model.id)
                     return friendListView.checkItemColor
-                }
                 return itemMouse.containsMouse ? friendListView.hoverItemColor : Theme.colorBackground2
             }
             height: 60
@@ -48,8 +48,8 @@ Item {
 
             CusAvatar{
                 id:itemAvatar
-                avatarName: modelData.name.charAt(0)
-                avatar: modelData.icon
+                avatarName: model.name.charAt(0)
+                avatar: model.icon
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: parent.left
@@ -58,7 +58,7 @@ Item {
             }
 
             Text {
-                text: modelData.name
+                text: model.name
                 color: Theme.colorFontPrimary
                 anchors{
                     verticalCenter: parent.verticalCenter
@@ -71,7 +71,7 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked: {
-                    friendListView.currentIndex = index
+                    contactController.jumpContact(model.id)
                 }
             }
         }
@@ -118,12 +118,12 @@ Item {
                     id:avatar
                     width: 58
                     height: 58
-                    avatar: Global.toString(user.icon)
-                    avatarName: user.name.charAt(0)
+                    avatar: Global.toString(contactController.current.icon)
+                    avatarName: contactController.current.name.charAt(0)
                 }
 
                 Text{
-                    text:Global.toString(user.name)
+                    text:Global.toString(contactController.current.name)
                     anchors{
                         left:avatar.right
                         leftMargin: 14
@@ -148,8 +148,21 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 20
                 onClicked: {
-                    clickSend(user)
+                    clickSend(contactController.current)
                 }
+            }
+        }
+        Rectangle{
+            id:panelEmpty
+            color: Theme.colorBackground1
+            anchors.fill: parent
+            visible: Global.noValue(contactController.current.id)
+
+            Text{
+                anchors.centerIn: parent
+                font.family: awesome.name
+                font.pixelSize: 25
+                text:"\ue6e6"
             }
         }
     }

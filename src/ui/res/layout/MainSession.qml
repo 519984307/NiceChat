@@ -11,8 +11,6 @@ import "../storage"
 
 Item {
 
-    property var userInfo : JSON.parse(IM.userInfo)
-
     FontLoader {
         id: awesome
         source: "qrc:/font/iconfont.ttf"
@@ -32,6 +30,30 @@ Item {
         id:sessionController
     }
 
+    Component{
+        id:com_text
+
+        CusTextEdit{
+            text: getEmojiStr(getBlankWrapStr(attach.msg),18)
+            wrapMode: Text.WrapAnywhere
+            readOnly: true
+            textFormat: Text.RichText
+            width: Math.min(messageListView.width-200,600,implicitWidth)
+        }
+
+    }
+
+    Component{
+        id:com_image
+
+        Rectangle{
+            width: getWH(true,attach.w,attach.h)
+            height: getWH(false,attach.w,attach.h)
+        }
+
+    }
+
+
     ListView{
         id:sessionListView
         property color hoverItemColor : Qt.darker(Theme.colorBackground2,1.1)
@@ -46,25 +68,38 @@ Item {
 
         Connections{
             target: sessionController
-            function onSessionIndexSelected(index){
-                sessionListView.currentIndex = index
+
+            function onCurrentChanged(){
+                messageController.loadMessageData()
+                IM.clearUnreadCount(sessionController.current.id)
             }
         }
 
         delegate: Rectangle{
+
+            property var user : IM.getUserObject(model.id)
+
             color: {
-                if(ListView.isCurrentItem){
+                if(sessionController.current.id === model.id)
                     return sessionListView.checkItemColor
-                }
+                if(model.top)
+                    return sessionListView.hoverItemColor
                 return itemMouse.containsMouse ? sessionListView.hoverItemColor : Theme.colorBackground2
             }
             height: 60
             width: sessionListView.width
-
+            border{
+                width: {
+                    if(sessionMenu.session == null)
+                        return 0
+                    return model.id === sessionMenu.session.id ? 2 : 0
+                }
+                color:Theme.colorPrimary
+            }
             CusAvatar{
-                id:itemAvatar
-                avatarName: model.id.charAt(0)
-                avatar: modelData.icon
+                id:item_session_avatar
+                avatarName: user.name.charAt(0)
+                avatar: user.icon
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: parent.left
@@ -78,10 +113,10 @@ Item {
                 radius: 8
                 color:"#FF3B30"
                 anchors{
-                    right: itemAvatar.right
+                    right: item_session_avatar.right
                     rightMargin: -4
                     topMargin: -4
-                    top: itemAvatar.top
+                    top: item_session_avatar.top
                 }
                 visible: model.unread>0
 
@@ -95,19 +130,35 @@ Item {
             }
 
             Text {
-                text: model.id
+                id:item_session_name
+                text: user.name
                 color: Theme.colorFontPrimary
                 font.pixelSize: 14
+                maximumLineCount: 1
+                elide: Text.ElideRight
                 anchors{
                     top:parent.top
                     topMargin: 9
-                    left: itemAvatar.right
+                    left: item_session_avatar.right
                     leftMargin: 12
+                    right: item_session_time.left
+                }
+            }
+
+            Text{
+                id:item_session_time
+                text:getSessionTime(model.time)
+                color: Theme.colorFontTertiary
+                font.pixelSize: 10
+                anchors{
+                    verticalCenter:item_session_name.verticalCenter
+                    right: parent.right
+                    rightMargin: 12
                 }
             }
 
             Text {
-                text: getEmojiStr(model.body,12);
+                text: getEmojiStr(model.content,12);
                 color: Theme.colorFontTertiary
                 elide: Text.ElideRight
                 maximumLineCount: 1
@@ -115,7 +166,7 @@ Item {
                 anchors{
                     bottom:parent.bottom
                     bottomMargin: 9
-                    left: itemAvatar.right
+                    left: item_session_avatar.right
                     right: parent.right
                     rightMargin: 12
                     leftMargin: 12
@@ -126,15 +177,15 @@ Item {
                 id:itemMouse
                 anchors.fill: parent
                 hoverEnabled: true
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
-                    sessionListView.currentIndex = index
+                    if (mouse.button === Qt.RightButton) {
+                        sessionMenu.show(sessionController.sessionModel.getItem(index))
+                    }else if(mouse.button === Qt.LeftButton){
+                        sessionController.setCurrent(index)
+                    }
                 }
             }
-        }
-        onCurrentIndexChanged: {
-            sessionController.setCurrent(sessionListView.currentIndex)
-            messageController.loadMessageData(sessionController.current.id)
-            IM.clearUnreadCount(sessionController.current.id)
         }
     }
 
@@ -158,6 +209,22 @@ Item {
         }
         height: parent.height
 
+        DropArea{
+            visible: !panel_empty.visible && !send_file_dialg.visible
+            anchors.fill: parent
+            onDropped: {
+                layoutPanel.color = Qt.binding(function(){return Theme.colorBackground1})
+                sessionController.loadFileList(drop.urls)
+                send_file_dialg.show(sessionController.current.id,drop.urls)
+            }
+            onEntered: {
+                layoutPanel.color = Qt.binding(function(){return Theme.colorDivider})
+            }
+            onExited: {
+                layoutPanel.color = Qt.binding(function(){return Theme.colorBackground1})
+            }
+        }
+
         Item{
             width: parent.width
             anchors{
@@ -166,7 +233,7 @@ Item {
             }
 
             Text{
-                text:sessionController.current.id
+                text:IM.getUserName(sessionController.current.id)
                 font.pixelSize: 16
                 color:Theme.colorFontPrimary
                 anchors{
@@ -178,11 +245,11 @@ Item {
 
             CusToolButton {
                 id:btnMenu
-                icon: "\ue61b"
+                icon: "\ueaf1"
                 onClickEvent: {
                 }
                 hoverColor: "#00000000"
-                iconSize : 16
+                iconSize : 20
                 width: 26
                 height: 26
                 anchors{
@@ -234,14 +301,19 @@ Item {
             onPositionChanged: {
                 var delta = Qt.point(mouse.x - clickPos.x, mouse.y - clickPos.y)
                 panelBottomDivider.bottomLenght = Math.min(420,Math.max(130, panelBottomDivider.bottomLenght-delta.y))
-                listMessage.positionViewAtEnd()
+                messageListView.positionViewAtEnd()
             }
         }
 
         ListView{
-            id:listMessage
+            id:messageListView
             width: parent.width
             model: messageController.messageModel
+            onContentYChanged: {
+                if(contentY == originY && !Global.noValue(sessionController.current.id)){
+                    messageController.loadMessageData()
+                }
+            }
             anchors{
                 top: panelDivider.bottom
                 bottom:panelBottomDivider.top
@@ -250,7 +322,47 @@ Item {
             clip: true
             spacing : 10
             footer:Item{height: 10}
-            header:Item{height: 10}
+            header:Item{
+                height: 30
+                width: messageListView.width
+
+                Text {
+                    text: {
+                        if(messageController.loadStatus === 0){
+                            return "加载更多"
+                        }
+                        return ""
+                    }
+                    anchors.centerIn: parent
+                    font.underline: true
+                    visible: false
+                    color:Theme.colorPrimary
+                    MouseArea{
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            messageController.loadMessageData()
+                        }
+                    }
+                }
+
+
+                Text{
+                    anchors.centerIn: parent
+                    font.family: awesome.name
+                    font.pixelSize: 20
+                    text:"\ue756"
+                    antialiasing: true
+                    visible: messageController.loadStatus === 0
+                    color:"#999999"
+                    RotationAnimation on rotation {
+                        from: 0
+                        to: 360
+                        duration: 1500
+                        loops: Animation.Infinite
+                    }
+                }
+            }
             ScrollBar.vertical: ScrollBar {
                 id:scrollBar
                 minimumSize: 0.2
@@ -263,22 +375,28 @@ Item {
             Connections{
                 target: messageController.messageModel
                 function onViewToBottom(){
-                    listMessage.positionViewAtEnd()
+                    messageListView.positionViewAtEnd()
+                    messageListView.positionViewAtEnd()
+                }
+                function onViewToPosition(pos){
+                    messageListView.positionViewAtIndex(pos,ListView.Beginning)
                 }
             }
 
             delegate: Rectangle{
-                width: listMessage.width
+                width: messageListView.width
                 height: childrenRect.height
                 color:"#00000000"
 
                 property bool isMine: IM.loginAccid === model.fromAccid
+                property var user: IM.getUserObject(model.fromAccid)
 
                 CusAvatar{
                     id:itemMsgAvatar
-                    width: 34
-                    height: 34
-                    avatarName: "朱"
+                    width: 26
+                    height: 26
+                    avatarName: user.name.charAt(0)
+                    avatar: user.icon
                     anchors{
                         right: isMine ? parent.right : undefined
                         rightMargin: isMine ? 20 : undefined
@@ -288,17 +406,18 @@ Item {
                         top:parent.top
                     }
                     onClickAvatar: {
-                        console.debug(itemMsgText.implicitWidth)
-                        console.debug(itemMsgText.contentWidth)
-                        console.debug(itemMsgText.paintedWidth)
+                        console.debug("messageListView.contentHeight:"+messageListView.contentHeight)
+                        console.debug("messageListView.contentY:"+messageListView.contentY)
+                        console.debug("messageListView.originY:"+messageListView.originY)
+                        console.debug("messageListView.height:"+messageListView.height)
                     }
                 }
 
                 Rectangle{
                     id:content
                     color: isMine ? "#FF95EC69" : "#FFFFFF"
-                    width: itemMsgText.width+10
-                    height: itemMsgText.height+10
+                    width: item_msg_loader.width+10
+                    height: item_msg_loader.height+10
                     radius: 3
                     anchors{
                         top: itemMsgAvatar.top
@@ -308,14 +427,19 @@ Item {
                         leftMargin: isMine ? undefined : 10
 
                     }
-                    CusTextEdit{
-                        id:itemMsgText
-                        text: getEmojiStr(model.body,20)
-                        wrapMode: Text.WrapAnywhere
+
+                    Loader{
+                        id:item_msg_loader
+                        property var attach: model.attachment
                         anchors.centerIn: parent
-                        readOnly: true
-                        textFormat: Text.RichText
-                        width: Math.min(listMessage.width-200,600,itemMsgText.implicitWidth)
+                        sourceComponent: {
+                            switch(model.type){
+                            case 0:
+                                return com_text
+                            case 1:
+                                return com_image
+                            }
+                        }
                     }
                 }
 
@@ -376,13 +500,12 @@ Item {
 
                 CusToolButton {
                     id:btnEmoji
-                    icon: "\ue7bb"
+                    icon: "\ue63d"
                     onClickEvent: {
                         IM.test()
-                        console.debug("--==-=-=:"+messageController.messageModel.count())
                         emojiPicker.showDialog()
                     }
-                    iconSize : 18
+                    iconSize : 20
                     width: 24
                     height: 24
                     anchors{
@@ -441,9 +564,9 @@ Item {
                         showToast("内容不能为空")
                         return
                     }
-                    text = text.replace(/ /gi,"&nbsp;")
-                    text = text.replace(/\n/gi,"<br>")
-                    IM.sendTextMessage(userInfo.accid,sessionController.current.id,text)
+                    //                    text = text.replace(/ /gi,"&nbsp;")
+                    //                    text = text.replace(/\n/gi,"<br>")
+                    IM.sendTextMessage(IM.profile.id,sessionController.current.id,text)
                     messageInput.text= ""
                 }
             }
@@ -451,26 +574,65 @@ Item {
         }
 
         Rectangle{
-            id:panelEmpty
+            id:panel_empty
             color: Theme.colorBackground1
             anchors.fill: parent
             visible: Global.noValue(sessionController.current.id)
-
             Text{
                 anchors.centerIn: parent
                 font.family: awesome.name
                 font.pixelSize: 25
                 text:"\ue6e6"
             }
+        }
+    }
 
+    CusMenu{
+
+        property var session : null
+
+        id:sessionMenu
+        CusMenuItem{
+            text: {
+                if(sessionMenu.session==null)
+                    return ""
+                return sessionMenu.session.top ? "取消置顶" : "置顶"
+            }
+            onClicked: {
+                IM.topSession(sessionMenu.session.id,!sessionMenu.session.top)
+            }
+        }
+        CusMenuItem{
+            text: "删除"
+            onClicked: {
+                IM.deleteSession(sessionMenu.session.id)
+            }
         }
 
+        function show(item){
+            sessionMenu.session = item
+            popup()
+        }
+
+        onClosed:{
+            sessionMenu.session = null
+        }
     }
+
 
     EmojiPickerWindow{
         id:emojiPicker
         target:btnEmoji
         editor: messageInput
+    }
+
+    SendFileDiaog{
+        id:send_file_dialg
+        model: sessionController.fileModel
+        onClickLeft: {
+            showToast(sessionController.fileModel.getItem(0).path)
+            IM.sendImageMessage(IM.profile.id,sessionController.current.id,sessionController.fileModel.getItem(0).path)
+        }
     }
 
     function getEmojiStr(str,size) {
@@ -483,18 +645,51 @@ Item {
         return str
     }
 
+    function getBlankWrapStr(str){
+        str = str.replace(/ /gi,"&nbsp;")
+        str = str.replace(/\n/gi,"<br>")
+        return str;
+    }
 
-    function addSession(user){
-        sessionController.jumpSession(user.accid)
-        //        for(var i=0;i<sessionModel.length;i++){
-        //            var item = sessionModel[i]
-        //            if(item.accid === user.accid){
-        //                sessionListView.currentIndex = i
-        //                return
-        //            }
-        //        }
-        //        sessionModel.push(user)
-        //        sessionListView.model = sessionModel
+    function getWH(is_w, w, h) {
+         var ref_w = 200
+         var flag = w > h
+         var realW
+         var realH
+         if (w > ref_w) {
+             var proportion = ref_w / w
+             realW = w * proportion
+             realH = h * proportion
+         } else {
+             realW = w
+             realH = h
+         }
+         if (is_w) {
+             return realW
+         } else {
+             return realH
+         }
+     }
+
+
+    function getSessionTime(str){
+        var date = new Date(parseInt(str));//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var year = date.getFullYear(),
+        month = ("0" + (date.getMonth() + 1)).slice(-2),
+        sdate = ("0" + date.getDate()).slice(-2),
+        hour = ("0" + date.getHours()).slice(-2),
+        minute = ("0" + date.getMinutes()).slice(-2),
+        second = ("0" + date.getSeconds()).slice(-2);
+        if (date.toDateString() === new Date().toDateString()) {
+            return hour +":"+ minute;
+        } else if (date < new Date()){
+            return  year + "/"+ month +"/"+ sdate;
+        }
+        return result
+    }
+
+    function jumpSession(user){
+        sessionController.jumpSession(user.id)
     }
 
 }

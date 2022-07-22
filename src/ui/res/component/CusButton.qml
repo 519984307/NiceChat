@@ -1,5 +1,6 @@
 ﻿import QtQuick 2.15
 import "../storage"
+import "../view"
 
 Rectangle {
 
@@ -7,7 +8,7 @@ Rectangle {
     property string text : "Button"
     property color backColor: AppStorage.isDark ? "#333333" : "#EEEEEE"
     property color hoveColor: Qt.darker(backColor,1.2)
-    radius: 5
+    radius: 3
     border{
         width: 1
         color:Theme.colorDivider

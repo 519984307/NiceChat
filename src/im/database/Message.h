@@ -79,6 +79,15 @@ public:
     [[nodiscard]] QString getSessionId() const { return m_session_id; };
 
     void setSessionId(const QString &val) { m_session_id = val; };
+
+
+    QJsonObject m_attachment;
+
+    [[nodiscard]] QJsonObject getAttachment() const { return m_attachment; };
+
+    void setAttachment(const QJsonObject &val) { m_attachment = val; };
+
+    void handleAttachment();
 };
 
 QX_REGISTER_PRIMARY_KEY(Message, QString)

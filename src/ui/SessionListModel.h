@@ -20,6 +20,8 @@ public:
         Time,
         Status,
         UnRead,
+        Top,
+        Content,
     };
 
     explicit SessionListModel(QObject *parent = nullptr);
@@ -37,11 +39,17 @@ public:
 
     void addOrUpdateData(const Session &session);
 
+    void removeDataById(const QString& id);
+
     Q_INVOKABLE int count();
 
     Q_INVOKABLE QJsonObject getItem(int index);
 
-    Q_INVOKABLE int getIndexByAccid(const QString& accid);
+    Q_INVOKABLE int getIndexById(const QString& id);
+
+
+private:
+    void sortByTime();
 
 private:
     QList<Session> m_Sessions;

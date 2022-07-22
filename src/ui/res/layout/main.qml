@@ -2,7 +2,6 @@
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
-import QtWebView 1.1
 import Qt.labs.platform 1.1
 import "../component"
 import "../storage"
@@ -13,24 +12,13 @@ CusWindow {
     title: qsTr(UIHelper.appName())
     width: 700
     height: 500
-    property var userInfo : JSON.parse(IM.userInfo)
-
-    Connections{
-        target: IM
-        function userInfoChanged(){
-            console.debug(IM.userInfo)
-        }
-    }
+    closeDestory: false
 
     Component.onCompleted: {
         window.minimumWidth = 700
         window.minimumHeight = 500
     }
 
-    onClosing: function(closeevent){
-        window.visible = false
-        closeevent.accepted = false
-    }
 
     SystemTrayIcon {
         id:systemTray
@@ -74,10 +62,13 @@ CusWindow {
         CusSliderBar{
             id:slider
             model: sliderModel
-            avatar: userInfo.icon
-            avatarName: userInfo.name.charAt(0)
+            avatar: IM.profile.icon
+            avatarName: IM.profile.name.charAt(0)
             onClickAvatar:{
                 showToast("点击头像")
+            }
+            onClickMenu:{
+                main_menu.popup()
             }
         }
 
@@ -99,7 +90,7 @@ CusWindow {
                 onClickSend:
                     (user)=>{
                         slider.setIndex(0)
-                        session.addSession(Global.deepCopy(user))
+                        session.jumpSession(Global.deepCopy(user))
                     }
             }
         }
@@ -113,6 +104,21 @@ CusWindow {
         }
     }
 
+    CusMenu{
+        id:main_menu
+        CusMenuItem{
+            text:"意见反馈"
+            onClicked: {
+
+            }
+        }
+        CusMenuItem{
+            text:"设置"
+            onClicked: {
+                navigate(Router.window_settings)
+            }
+        }
+    }
 
     NetWorkStatus{
         id:networkWindow

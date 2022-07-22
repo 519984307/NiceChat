@@ -17,23 +17,27 @@ int SessionListModel::rowCount(const QModelIndex &parent) const {
 QVariant SessionListModel::data(const QModelIndex &index, int role) const {
     if (index.row() < 0 || index.row() >= m_Sessions.count())
         return {};
-    const Session &Session = m_Sessions[index.row()];
+    const Session &session = m_Sessions[index.row()];
     if (role == Id)
-        return Session.getId();
+        return session.getId();
     else if (role == Body)
-        return Session.getBody();
+        return session.getBody();
     else if (role == Scene)
-        return Session.getScene();
+        return session.getScene();
     else if (role == Type)
-        return Session.getType();
+        return session.getType();
     else if (role == Ex)
-        return Session.getEx();
+        return session.getEx();
     else if (role == Time)
-        return Session.getTime();
+        return session.getTime();
     else if (role == Status)
-        return Session.getStatus();
+        return session.getStatus();
     else if (role == UnRead)
-        return Session.getUnread();
+        return session.getUnread();
+    else if (role == Top)
+        return session.getTop();
+    else if (role == Content)
+        return session.getContent();
     return {};
 }
 
@@ -46,6 +50,8 @@ QHash<int, QByteArray> SessionListModel::roleNames() const {
     roles[Ex] = "ex";
     roles[Time] = "time";
     roles[UnRead] = "unread";
+    roles[Top] = "top";
+    roles[Content] = "content";
     return roles;
 }
 
@@ -54,6 +60,7 @@ void SessionListModel::addData(const QList<Session> &list) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount() + list.count() - 1);
         m_Sessions.append(list);
         endInsertRows();
+        sortByTime();
     }
 }
 
@@ -67,6 +74,16 @@ void SessionListModel::setNewData(const QList<Session> &list) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount() + list.count() - 1);
         m_Sessions.append(list);
         endInsertRows();
+        sortByTime();
+    }
+}
+
+void SessionListModel::removeDataById(const QString& id){
+    int index = getIndexById(id);
+    if(index != -1){
+        beginRemoveRows(QModelIndex(),index,index);
+        m_Sessions.removeAt(index);
+        endRemoveRows();
     }
 }
 
@@ -82,13 +99,17 @@ void SessionListModel::addOrUpdateData(const Session &session){
             item.setScene(session.getScene());
             item.setType(session.getType());
             item.setUnread(session.getUnread());
+            item.setTop(session.getTop());
+            item.setContent(session.getContent());
             Q_EMIT dataChanged(this->index(i),this->index(i));
+            sortByTime();
             return;
         }
     }
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_Sessions.append(session);
     endInsertRows();
+    sortByTime();
 }
 
 int SessionListModel::count(){
@@ -100,11 +121,24 @@ QJsonObject SessionListModel::getItem(int index){
     return QJsonDocument::fromJson(json.toUtf8()).object();
 }
 
-int SessionListModel::getIndexByAccid(const QString& accid){
+void SessionListModel::sortByTime(){
+    qSort(m_Sessions.begin(),m_Sessions.end(),[](const Session &left,const Session &right){
+        if(left.getTop() && !right.getTop()){
+            return true;
+        }else if(!left.getTop() && right.getTop()){
+            return false;
+        }else{
+            return left.getTime().toULongLong()>right.getTime().toULongLong();
+        }
+    });
+    Q_EMIT dataChanged(this->index(0),this->index(rowCount()-1));
+}
+
+int SessionListModel::getIndexById(const QString& id){
     for (int i = 0; i < m_Sessions.size(); ++i)
     {
         auto &item = const_cast<class Session &>(m_Sessions.at(i));
-        if (item.getId() == accid){
+        if (item.getId() == id){
             return i;
         }
     }

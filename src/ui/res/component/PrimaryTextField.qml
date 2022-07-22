@@ -29,6 +29,9 @@ Item {
             topMargin: 5
         }
         width: parent.width
+        selectionColor: "#9BCAEF"
+        selectByMouse: true
+        selectedTextColor: color
         background: Rectangle{
             radius: 3
             border{

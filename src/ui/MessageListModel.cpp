@@ -14,6 +14,12 @@ int MessageListModel::rowCount(const QModelIndex &parent) const {
     return m_messages.count();
 }
 
+Message* MessageListModel::getFirstMessage(){
+    if(m_messages.isEmpty())
+        return nullptr;
+    return &m_messages.first();
+}
+
 QVariant MessageListModel::data(const QModelIndex &index, int role) const {
     if (index.row() < 0 || index.row() >= m_messages.count())
         return {};
@@ -38,6 +44,8 @@ QVariant MessageListModel::data(const QModelIndex &index, int role) const {
         return message.getStatus();
     else if (role == SessionId)
         return message.getSessionId();
+    else if (role == Attachment)
+        return message.getAttachment();
     return {};
 }
 
@@ -53,16 +61,21 @@ QHash<int, QByteArray> MessageListModel::roleNames() const {
     roles[Time] = "time";
     roles[Status] = "status";
     roles[SessionId] = "sessionId";
+    roles[Attachment] = "attachment";
     return roles;
 }
 
 void MessageListModel::addData(const QList<Message> &list) {
     if(list.count() > 0){
-        beginInsertRows(QModelIndex(), rowCount(), rowCount() + list.count() - 1);
-        m_messages.append(list);
+        beginInsertRows(QModelIndex(), 0, list.count() - 1);
+        for (int i = 0; i < list.size(); ++i)
+        {
+            const Message &item = list.at(i);
+            m_messages.insert(0,item);
+        }
         endInsertRows();
-        Q_EMIT viewToBottom();
     }
+    Q_EMIT viewToPosition(list.count());
 }
 
 void MessageListModel::setNewData(const QList<Message> &list) {
@@ -72,8 +85,12 @@ void MessageListModel::setNewData(const QList<Message> &list) {
         endRemoveRows();
     }
     if(list.count()>0){
-        beginInsertRows(QModelIndex(), rowCount(), rowCount() + list.count() - 1);
-        m_messages.append(list);
+        beginInsertRows(QModelIndex(), 0, list.count() - 1);
+        for (int i = 0; i < list.size(); ++i)
+        {
+            const Message &item = list.at(i);
+            m_messages.insert(0,item);
+        }
         endInsertRows();
         Q_EMIT viewToBottom();
     }

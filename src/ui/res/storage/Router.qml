@@ -5,11 +5,15 @@ QtObject {
 
     property string window_main: "qrc:/layout/main.qml"
     property string window_colorpicker: "qrc:/layout/ColorPickerWindow.qml"
-
+    property string window_settings: "qrc:/layout/Settings.qml"
 
     property var router_table: [
         {
             path:window_main,
+            onlyOne:true
+        },
+        {
+            path:window_settings,
             onlyOne:true
         },
         {

@@ -11,6 +11,7 @@ Rectangle {
     property alias avatar: cusAvatar.avatar
     property alias avatarName: cusAvatar.avatarName
     signal clickAvatar
+    signal clickMenu
 
     width: 56
     height: parent.height
@@ -62,6 +63,27 @@ Rectangle {
                 onClicked: {
                     listView.currentIndex = index
                 }
+            }
+        }
+    }
+
+    Text{
+        font.family: awesome.name
+        font.pixelSize: 26
+        text:"\ueaf1"
+        color: item_mouse.containsMouse? "#FFFFFF" : "#999999"
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 20
+        }
+        MouseArea{
+            id:item_mouse
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                clickMenu()
             }
         }
     }

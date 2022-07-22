@@ -11,6 +11,9 @@
         MessageController.cpp
         MessageListModel.cpp
         SessionListModel.cpp
+        ContactController.cpp
+        ContactListModel.cpp
+        FileListModel.cpp
         )
 
 set(UILibrary_HEADERS
@@ -25,6 +28,9 @@ set(UILibrary_HEADERS
         MessageController.h
         MessageListModel.h
         SessionListModel.h
+        ContactController.h
+        ContactListModel.h
+        FileListModel.h
         )
 
 set(UILibrary_RCC

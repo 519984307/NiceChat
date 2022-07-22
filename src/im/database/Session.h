@@ -6,7 +6,7 @@
 class QX_IM_DLL_EXPORT Session {
 public:
 
-    Session() : m_id("0"), m_scene(0), m_type(0), m_unread(0),m_time("0"),m_status(0) { ; }
+    Session() : m_id("0"), m_scene(0), m_type(0), m_unread(0),m_time("0"),m_status(0) ,m_top(false){ ; }
 
     Session(const Session &) = default;
 
@@ -61,6 +61,20 @@ public:
     [[nodiscard]] int getStatus() const { return m_status; };
 
     void setStatus(const int &val) { m_status = val; };
+
+    bool m_top;
+
+    [[nodiscard]] bool getTop() const { return m_top; };
+
+    void setTop(const bool &val) { m_top = val; };
+
+    QString m_content;
+
+    [[nodiscard]] QString getContent() const { return m_content; };
+
+    void setContent(const QString &val) { m_content = val; };
+
+    void handleContent();
 
 };
 

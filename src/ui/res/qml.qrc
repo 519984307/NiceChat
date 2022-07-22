@@ -201,5 +201,8 @@
         <file>emojiSvgs/1f923.svg</file>
         <file>emojiSvgs/1f929.svg</file>
         <file>emojiSvgs/1f970.svg</file>
+        <file>layout/Settings.qml</file>
+        <file>component/CusTextDialog.qml</file>
+        <file>layout/SendFileDiaog.qml</file>
     </qresource>
 </RCC>

@@ -19,6 +19,8 @@ void IMDataBase::initDb(const QString &base64) {
     qx::QxSqlDatabase::getSingleton()->setVerifyOffsetRelation(true);
     QSqlError daoError = qx::dao::create_table<Message>();
     daoError = qx::dao::create_table<Session>();
+    daoError = qx::dao::create_table<User>();
+    daoError = qx::dao::delete_all<User>();
     initMessageStatus();
 }
 
@@ -80,6 +82,12 @@ Session IMDataBase::getSessionById(const QString &id){
 
 QList<Session> IMDataBase::getSessionList() {
     QList<Session> list;
+    qx::dao::fetch_all(list);
+    return list;
+}
+
+QList<User> IMDataBase::getFriendList() {
+    QList<User> list;
     qx::dao::fetch_all(list);
     return list;
 }

@@ -188,3 +188,7 @@ QString QUIHelper::htmlToPlainText(const QString& html){
 qint64 QUIHelper::currentTimeMillis(){
     return QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
 }
+
+void QUIHelper::restart(){
+    qApp->exit(931);
+}
