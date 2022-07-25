@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE void jumpSession(const QString& accid);
 
     Q_INVOKABLE void loadFileList(const QVariant& var);
+    Q_INVOKABLE void sendSelectedFile(const QString& sessionId,int scene);
 
     Q_SIGNAL void sessionIndexSelected(int index);
 

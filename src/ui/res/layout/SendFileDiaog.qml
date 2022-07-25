@@ -1,4 +1,4 @@
-import QtQuick 2.15
+﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import "../component"
@@ -119,6 +119,8 @@ Dialog {
                     left:parent.left
                     leftMargin: 7
                 }
+                smooth: true
+                mipmap: true
             }
 
             Text{

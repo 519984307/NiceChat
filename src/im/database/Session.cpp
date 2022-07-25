@@ -27,5 +27,8 @@ void Session::handleContent(){
     case 1:
         setContent("[图片]");
         break;
+    case 2:
+        setContent("[文件]");
+        break;
     }
 }

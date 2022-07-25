@@ -1,4 +1,4 @@
-#ifndef CONVERT_H
+﻿#ifndef CONVERT_H
 #define CONVERT_H
 
 #include <QObject>
@@ -13,6 +13,8 @@ public:
     explicit Convert(QObject *parent = nullptr);
 
     static Message proto2message(const im::protocol::Message &it);
+
+    static im::protocol::Message* message2proto(const Message &it);
 
     static User proto2user(const im::protocol::User &it);
 

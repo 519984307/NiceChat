@@ -6,6 +6,9 @@ MessageController::MessageController(QObject *parent)
     connect(QIM::instance(),&QIM::receiveMessage,this,[this](Message &message){
         if(m_currentId==message.getSessionId()){
             message.handleAttachment();
+            const QString &json = qx::serialization::json::to_string(message);
+            qDebug()<<"---------------------MessageController---------------------";
+            qDebug()<<json;
             m_messageModel.addOrUpdateData(message);
         }
     });

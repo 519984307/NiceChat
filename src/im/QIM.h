@@ -17,6 +17,8 @@
 
 #define REGISTER(x) qDebug() << (#x) << "type id:" << qMetaTypeId<x*>()
 
+using namespace AeaQt;
+
 class QIM : public QObject
 {
     Q_OBJECT
@@ -91,8 +93,10 @@ public:
     Q_INVOKABLE void startHeartBeat();
     Q_INVOKABLE void stopHeartBeat();
 
-    Q_INVOKABLE void sendTextMessage(const QString& from,const QString& to,const QString& message);
-    Q_INVOKABLE void sendImageMessage(const QString& from,const QString& to,const QString& path);
+    Q_INVOKABLE void sendTextMessage(const QString& sessionId,int scene,const QString& text);
+    Q_INVOKABLE void sendImageMessage(const QString& sessionId,int scene,const QString& path);
+    Q_INVOKABLE void sendFileMessage(const QString& sessionId,int scene,const QString& path);
+
     Q_INVOKABLE void sendSyncMessage();
     Q_INVOKABLE void sendReadMessageByUuids(const QString& uuids);
 
@@ -112,10 +116,12 @@ public:
 private:
     void initDataBase(const QString &text);
     void handleMessageBuf(const Message &message);
+    Message buildMessage(const QString &sessionId, int scene, int type, const QString &body);
     QString buildTextBody(const QString &text);
-    QString buildImageBody(const QString &path);
+    QString buildImageBody(const QString &path,const QString& url = "");
     QString buildFileBody(const QString &path);
-    void sendMessage(const QString& from,const QString& to,int scene,int type,const QString& body);
+    void sendMessage(const Message& message);
+    void sendMessageToLocal(Message& message);
 private:
     QWebSocket *socket;
 
@@ -133,8 +139,7 @@ private:
     QString m_login_accid;
     QString m_login_token;
 
-    QList<Message> m_msg_buf;
-
+    QMap<QString,Message> m_msg_buf;
     QMap<QString,User> m_user_cache;
 
     IMDataBase m_db;

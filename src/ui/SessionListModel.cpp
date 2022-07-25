@@ -144,3 +144,7 @@ int SessionListModel::getIndexById(const QString& id){
     }
     return -1;
 }
+
+const QList<Session>& SessionListModel::getData(){
+    return m_Sessions;
+}

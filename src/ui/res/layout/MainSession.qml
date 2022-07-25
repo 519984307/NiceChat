@@ -47,8 +47,86 @@ Item {
         id:com_image
 
         Rectangle{
+            color:Theme.colorBackground
             width: getWH(true,attach.w,attach.h)
             height: getWH(false,attach.w,attach.h)
+
+            Image{
+                anchors.fill: parent
+                source:"http://127.0.0.1:8889/oss/%1".arg(attach.url)
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        showToast(attach.url)
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    Component{
+        id:com_file
+
+        Rectangle{
+            width: 220
+            height: 60
+
+            color: item_mouse.containsMouse? Theme.colorBackground2 : Theme.colorBackground
+
+            Text{
+                text:attach.name
+                font.pixelSize: 12
+                color:Theme.colorFontPrimary
+                elide: Text.ElideMiddle
+                anchors{
+                    top: item_icon.top
+                    right: item_icon.left
+                    rightMargin: 10
+                    left: parent.left
+                    leftMargin: 10
+                }
+            }
+
+            Text{
+                text: formatBytes(attach.size)
+                font.pixelSize: 12
+                color:Theme.colorFontSecondary
+                anchors{
+                    bottom: item_icon.bottom
+                    left: parent.left
+                    leftMargin: 10
+                }
+            }
+
+
+            Image {
+                id:item_icon
+                width: 33
+                height: 40.5
+                mipmap: true
+                smooth: true
+                source: UIHelper.getFileIcon(attach.ext)
+                anchors{
+                    verticalCenter: parent.verticalCenter
+                    right:parent.right
+                    rightMargin: 10
+                }
+            }
+
+            MouseArea{
+                id:item_mouse
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+
+                }
+            }
+
         }
 
     }
@@ -438,6 +516,8 @@ Item {
                                 return com_text
                             case 1:
                                 return com_image
+                            case 2:
+                                return com_file
                             }
                         }
                     }
@@ -566,7 +646,7 @@ Item {
                     }
                     //                    text = text.replace(/ /gi,"&nbsp;")
                     //                    text = text.replace(/\n/gi,"<br>")
-                    IM.sendTextMessage(IM.profile.id,sessionController.current.id,text)
+                    IM.sendTextMessage(sessionController.current.id,0,text)
                     messageInput.text= ""
                 }
             }
@@ -630,9 +710,14 @@ Item {
         id:send_file_dialg
         model: sessionController.fileModel
         onClickLeft: {
-            showToast(sessionController.fileModel.getItem(0).path)
-            IM.sendImageMessage(IM.profile.id,sessionController.current.id,sessionController.fileModel.getItem(0).path)
+            sessionController.sendSelectedFile(sessionController.current.id,0)
         }
+    }
+
+    function formatBytes(a, b) {
+        if (0 === a) return "0 B";
+        var c = 1024, d = b || 2, e = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], f = Math.floor(Math.log(a) / Math.log(c));
+        return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f];
     }
 
     function getEmojiStr(str,size) {
@@ -652,24 +737,24 @@ Item {
     }
 
     function getWH(is_w, w, h) {
-         var ref_w = 200
-         var flag = w > h
-         var realW
-         var realH
-         if (w > ref_w) {
-             var proportion = ref_w / w
-             realW = w * proportion
-             realH = h * proportion
-         } else {
-             realW = w
-             realH = h
-         }
-         if (is_w) {
-             return realW
-         } else {
-             return realH
-         }
-     }
+        var ref_w = 200
+        var flag = w > h
+        var realW
+        var realH
+        if (w > ref_w) {
+            var proportion = ref_w / w
+            realW = w * proportion
+            realH = h * proportion
+        } else {
+            realW = w
+            realH = h
+        }
+        if (is_w) {
+            return realW
+        } else {
+            return realH
+        }
+    }
 
 
     function getSessionTime(str){

@@ -47,6 +47,7 @@ public:
 
     Q_INVOKABLE int getIndexById(const QString& id);
 
+    const QList<Session>& getData();
 
 private:
     void sortByTime();

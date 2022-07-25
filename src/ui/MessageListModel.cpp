@@ -103,6 +103,10 @@ void MessageListModel::addOrUpdateData(const Message &message){
         if (item.getId() == message.getId()){
             item.setTime(message.getTime());
             item.setStatus(message.getStatus());
+            item.setBody(message.getBody());
+            item.setAttachment(message.getAttachment());
+            item.setLocalEx(message.getLocalEx());
+            item.setEx(message.getEx());
             Q_EMIT dataChanged(this->index(i),this->index(i));
             return;
         }

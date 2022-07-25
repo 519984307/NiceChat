@@ -24,6 +24,7 @@ endif()
 add_definitions(-DGLOG_NO_ABBREVIATED_SEVERITIES)
 add_definitions(-DPROTOBUF_USE_DLLS)
 add_definitions(-D_BUILDING_QX_IM)
+add_definitions(-DQT_APP_MODE)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 Concurrent Sql WebSockets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 WebSockets Sql Concurrent REQUIRED)

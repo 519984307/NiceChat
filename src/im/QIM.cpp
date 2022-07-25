@@ -122,9 +122,9 @@ void QIM::syncFriends(const google::protobuf::RepeatedPtrField<im::protocol::Use
     Q_EMIT syncFriendCompleted();
 }
 
-void QIM::syncProfile(const im::protocol::User &profile){
+void QIM::syncProfile(const im::protocol::User &profile) {
     const User &user = Convert::proto2user(profile);
-    m_user_cache.insert(user.getAccid(),user);
+    m_user_cache.insert(user.getAccid(), user);
     setProfile(user);
 }
 
@@ -178,10 +178,11 @@ void QIM::updateSessionByMessage(const Message &message) {
 }
 
 void QIM::handleMessageBuf(const Message &message) {
-    for (int i = 0; i < m_msg_buf.size(); ++i) {
-        auto &item = const_cast<Message &>(m_msg_buf.at(i));
+    foreach(const QString id,m_msg_buf.keys())
+    {
+        const Message& item = m_msg_buf.value(id);
         if (item.getId() == message.getId()) {
-            m_msg_buf.removeAt(i);
+            m_msg_buf.remove(id);
             return;
         }
     }
@@ -240,29 +241,58 @@ void QIM::resendMsg() {
         m_timer_resend_msg->stop();
         return;
     }
-    for (int i = 0; i < m_msg_buf.size(); ++i) {
-        auto item = m_msg_buf.at(i);
+
+    foreach(const QString id,m_msg_buf.keys())
+    {
+        Message item = m_msg_buf.value(id);
         if (QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() > item.getTime().toULongLong() + 30000) {
             item.setStatus(2);
             const QSqlError &error = IMDataBase::saveOrUpdateMessage(item);
             if (error.type() == QSqlError::NoError) {
-                m_msg_buf.removeAt(i);
+                m_msg_buf.remove(id);
                 Q_EMIT receiveMessage(item);
                 updateSessionByMessage(item);
             }
         }
     }
+
 }
 
-void QIM::sendTextMessage(const QString &from, const QString &to, const QString &text) {
-    sendMessage(from,to,0,0,buildTextBody(text));
+void QIM::sendTextMessage(const QString &sessionId, int scene, const QString &text) {
+    Message message = buildMessage(sessionId, scene, 0, buildTextBody(text));
+    sendMessageToLocal(message);
+    sendMessage(message);
 }
 
-void QIM::sendImageMessage(const QString &from, const QString &to, const QString &path) {
-    sendMessage(from,to,0,1,buildImageBody(path));
-    //    HttpClient("http://192.168.2.34:8889/api/storage/upload").success([this](const QString& response){
-    //        qDebug()<<response;
-    //    }).upload(path);
+void QIM::sendImageMessage(const QString &sessionId, int scene, const QString &path) {
+    Message message = buildMessage(sessionId, scene, 1, buildImageBody(path));
+    sendMessageToLocal(message);
+    HttpClient &client = *HttpClient::instance();
+    client.post("http://127.0.0.1:8889/api/storage/upload")
+            .bodyWithFile("file", path)
+            .onUploadProgress([](qint64 bytesSent, qint64 bytesTotal) {
+        qDebug() << "lambda bytes sent: " << bytesSent
+                 << "bytes total: " << bytesTotal;
+    })
+    .onSuccess([this,message,sessionId,path](QString result) mutable {
+        QJsonDocument doc = QJsonDocument::fromJson(result.toUtf8());
+        QJsonObject obj = doc.object();
+        if(obj["success"].toBool() == true){
+            message.setBody(buildImageBody(path,obj["data"].toString()));
+            sendMessageToLocal(message);
+            sendMessage(message);
+            qDebug() << "result: " << result.left(100);
+        }
+    }).onFailed([](QString error) {
+        qDebug() << "error: " << error;
+    })
+    .exec();
+}
+
+void QIM::sendFileMessage(const QString &sessionId, int scene, const QString &path) {
+    Message message = buildMessage(sessionId, scene, 2, buildFileBody(path));
+    sendMessageToLocal(message);
+    sendMessage(message);
 }
 
 void QIM::sendReadMessageByUuids(const QString &uuids) {
@@ -317,16 +347,18 @@ void QIM::test() {
 
 QList<Message> QIM::getMessageListById(const QString &accid) {
     const QList<Message> &list = m_db.getMessageListById(accid);
-    getMessageList(accid,nullptr);
+    getMessageList(accid, nullptr);
     return list;
 }
 
-QList<Message> QIM::getMessageList(const QString& sessionId,const Message* anchor){
+QList<Message> QIM::getMessageList(const QString &sessionId, const Message *anchor) {
     qulonglong anchorTime = QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
-    if(anchor!=nullptr){
+    if (anchor != nullptr) {
         anchorTime = anchor->getTime().toULongLong();
     }
-    qx::QxSqlQuery query(QString("WHERE Message.session_id = '%1' and Message.time < %2 order by Message.time desc limit %3").arg(sessionId).arg(anchorTime).arg(20));
+    qx::QxSqlQuery query(
+                QString("WHERE Message.session_id = '%1' and Message.time < %2 order by Message.time desc limit %3").arg(
+                    sessionId).arg(anchorTime).arg(20));
     QList<Message> list;
     qx::dao::fetch_by_query(query, list);
     //    for(int k=0, s=list.size(), max=(s/2); k<max; k++) list.swap(k,s-(1+k));
@@ -370,13 +402,13 @@ QString QIM::getUserName(const QString &accid) {
     return user.getName();
 }
 
-QJsonObject QIM::getUserObject(const QString& accid){
+QJsonObject QIM::getUserObject(const QString &accid) {
     const User &user = m_user_cache.value(accid);
     const QString &json = qx::serialization::json::to_string(user);
     return QJsonDocument::fromJson(json.toUtf8()).object();
 }
 
-void QIM::topSession(const QString& accid,bool top){
+void QIM::topSession(const QString &accid, bool top) {
     Session session = IMDataBase::getSessionById(accid);
     session.setTop(top);
     const QSqlError &error = IMDataBase::saveOrUpdateSession(session);
@@ -385,7 +417,7 @@ void QIM::topSession(const QString& accid,bool top){
     }
 }
 
-void QIM::deleteSession(const QString& accid){
+void QIM::deleteSession(const QString &accid) {
     Session session;
     session.setId(accid);
     const QSqlError &error = qx::dao::delete_by_id(session);
@@ -394,16 +426,30 @@ void QIM::deleteSession(const QString& accid){
     }
 }
 
-QString QIM::buildTextBody(const QString &text){
+Message QIM::buildMessage(const QString &sessionId, int scene, int type, const QString &body){
+    Message message;
+    message.setId(QUuid::createUuid().toString().remove("{").remove("}"));
+    message.setBody(body);
+    message.setFromAccid(m_login_accid);
+    message.setToAccid(sessionId);
+    message.setSessionId(sessionId);
+    message.setScene(scene);
+    message.setType(type);
+    message.setTime(QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()));
+    message.setStatus(1);
+    return message;
+}
+
+QString QIM::buildTextBody(const QString &text) {
     QJsonObject obj;
     obj["msg"] = text;
     QJsonDocument doc(obj);
     return QString(doc.toJson(QJsonDocument::Compact));
 }
 
-QString QIM::buildImageBody(const QString &path){
+QString QIM::buildImageBody(const QString &path,const QString& url) {
     QFile file(path);
-    const QFileInfo& fileInfo = QFileInfo(file);
+    const QFileInfo &fileInfo = QFileInfo(file);
     QJsonObject obj;
     obj["name"] = fileInfo.fileName();
     obj["ext"] = fileInfo.suffix();
@@ -412,43 +458,44 @@ QString QIM::buildImageBody(const QString &path){
     img.load(path);
     obj["w"] = img.width();
     obj["h"] = img.height();
-    if(file.open(QIODevice::ReadOnly)){
-        obj["md5"] = QString(QCryptographicHash::hash(file.readAll(),QCryptographicHash::Md5).toHex());
+    obj["url"] = url;
+    if (file.open(QIODevice::ReadOnly)) {
+        obj["md5"] = QString(QCryptographicHash::hash(file.readAll(), QCryptographicHash::Md5).toHex());
     }
     QJsonDocument doc(obj);
     return QString(doc.toJson(QJsonDocument::Compact));
 }
 
-QString QIM::buildFileBody(const QString &path){
+QString QIM::buildFileBody(const QString &path) {
+    QFile file(path);
+    const QFileInfo &fileInfo = QFileInfo(file);
     QJsonObject obj;
+    obj["name"] = fileInfo.fileName();
+    obj["ext"] = fileInfo.suffix();
+    obj["size"] = fileInfo.size();
+    if (file.open(QIODevice::ReadOnly)) {
+        obj["md5"] = QString(QCryptographicHash::hash(file.readAll(), QCryptographicHash::Md5).toHex());
+    }
     QJsonDocument doc(obj);
     return QString(doc.toJson(QJsonDocument::Compact));
 }
 
-void QIM::sendMessage(const QString& from,const QString& to,int scene,int type,const QString& body){
+void QIM::sendMessage(const Message &message) {
     im::protocol::Packet packet;
     packet.set_type(im::protocol::SendMsg_req_);
     auto *msg_req = new im::protocol::SendMsg_req();
-    auto *msg = new im::protocol::Message();
-    msg->set_uuid(QUuid::createUuid().toString().remove("{").remove("}").toStdString());
-    msg->set_body(body.toStdString());
-    msg->set_from(from.toStdString());
-    msg->set_to(to.toStdString());
-    msg->set_sessionid(to.toStdString());
-    msg->set_scene(scene);
-    msg->set_type(type);
-    msg->set_time(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch());
+    auto *msg = Convert::message2proto(message);
     msg_req->set_allocated_message(msg);
     packet.set_allocated_sendmsg_req(msg_req);
-    Message message = Convert::proto2message(*msg);
-    message.setStatus(1);
-    const QSqlError &error = IMDataBase::insertMessage(message);
-    if (error.type() == QSqlError::NoError) {
-        Q_EMIT receiveMessage(message);
-        m_msg_buf.append(message);
-        m_timer_resend_msg->start(1000);
-        socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
-        socket->flush();
-        updateSessionByMessage(message);
-    }
+    socket->sendBinaryMessage(QByteArray::fromStdString(packet.SerializeAsString()));
+    socket->flush();
 }
+
+void QIM::sendMessageToLocal(Message &message) {
+    IMDataBase::saveOrUpdateMessage(message);
+    Q_EMIT receiveMessage(message);
+    updateSessionByMessage(message);
+    m_msg_buf.insert(message.getId(),message);
+    m_timer_resend_msg->start(1000);
+}
+

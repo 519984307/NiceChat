@@ -1,4 +1,4 @@
-#include "Convert.h"
+﻿#include "Convert.h"
 
 Convert::Convert(QObject *parent)
     : QObject{parent}
@@ -18,6 +18,19 @@ Message Convert::proto2message(const im::protocol::Message &it) {
     obj.m_read_accids = QString::fromStdString(it.readaccids());
     obj.m_session_id = QString::fromStdString(it.sessionid());
     return obj;
+}
+
+im::protocol::Message* Convert::message2proto(const Message &it){
+    auto *message = new im::protocol::Message();
+    message->set_uuid(it.getId().toStdString());
+    message->set_body(it.getBody().toStdString());
+    message->set_from(it.getFromAccid().toStdString());
+    message->set_to(it.getToAccid().toStdString());
+    message->set_sessionid(it.getSessionId().toStdString());
+    message->set_scene(it.getScene());
+    message->set_type(it.getType());
+    message->set_time(it.getTime().toULongLong());
+    return message;
 }
 
 User Convert::proto2user(const im::protocol::User &it) {

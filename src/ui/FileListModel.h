@@ -1,4 +1,4 @@
-#ifndef FILELISTMODEL_H
+﻿#ifndef FILELISTMODEL_H
 #define FILELISTMODEL_H
 
 #include <QObject>
@@ -32,7 +32,7 @@ public:
 
     void setNewData(const QList<QFileInfo> &list);
 
-     Q_INVOKABLE QVariantMap getItem(int index);
+    const QList<QFileInfo>& getData();
 
 private:
     QList<QFileInfo> m_files;

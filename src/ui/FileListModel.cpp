@@ -1,4 +1,4 @@
-#include "FileListModel.h"
+﻿#include "FileListModel.h"
 
 
 FileListModel::FileListModel(QObject *parent) : QAbstractListModel(parent) {
@@ -64,9 +64,7 @@ void FileListModel::setNewData(const QList<QFileInfo> &list) {
     }
 }
 
-QVariantMap FileListModel::getItem(int index){
-    auto file = m_files.at(index);
-    QVariantMap map;
-    map.insert("path",file.absoluteFilePath());
-    return map;
+const QList<QFileInfo>& FileListModel::getData(){
+    return m_files;
 }
+

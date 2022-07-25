@@ -51,3 +51,14 @@ void SessionController::loadFileList(const QVariant& var){
     }
     m_fileModel.setNewData(list);
 }
+
+void SessionController::sendSelectedFile(const QString& sessionId,int scene){
+    foreach (const QFileInfo &item, m_fileModel.getData())
+    {
+        if(QUIHelper::instance()->isImage(item.suffix())){
+            QIM::instance()->sendImageMessage(sessionId,scene,item.absoluteFilePath());
+        }else{
+            QIM::instance()->sendFileMessage(sessionId,scene,item.absoluteFilePath());
+        }
+    }
+}

@@ -56,6 +56,12 @@ public:
 
     void setEx(const QString &val) { m_ex = val; };
 
+    QString m_local_ex;
+
+    [[nodiscard]] QString getLocalEx() const { return m_ex; };
+
+    void setLocalEx(const QString &val) { m_ex = val; };
+
     QString m_read_accids;
 
     [[nodiscard]] QString getReadAccids() const { return m_read_accids; };
